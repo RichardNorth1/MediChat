@@ -83,39 +83,44 @@ def escalation_check(input_text):
         ]
     return any(escalate_phrase in input_text.lower() for escalate_phrase in escalate_text)
 
+def get_response(intents, intent):
+    for data in intents:
+        for i in data['intents']:
+            if i['tag'] == intent:
+                return np.random.choice(i['responses'])
+    return "Sorry, I didn't understand that."
+
+
+def predict_intent(text):
+    sequences = tokenizer.texts_to_sequences([text])
+    padded_sequences = pad_sequences(sequences, truncating='post', maxlen=20)
+    predictions = model.predict(padded_sequences)
+    predicted_label = np.argmax(predictions)
+    intent = label_encoder.inverse_transform([predicted_label])[0]
+    return intent
+
+
+def handle_chat(input_text):
+    # Correct grammar in the input text
+    corrected_inp = correct_grammar(input_text)
+
+    # Check for symptoms that require escalation
+    detected_symptoms = symptom_checker(corrected_inp)
+    if detected_symptoms:
+        return f"Escalating the conversation to a human agent due to detected symptoms: {', '.join(detected_symptoms)}."
+
+    # Predict the intent of the user input
+    intent = predict_intent(corrected_inp)
+
+    if escalation_check(corrected_inp):
+        return "Escalating the conversation to a human agent."
+    else:
+        return get_response(all_intents, intent)
+
 def chat():
-    print(Fore.GREEN + "Start talking with the bot (type 'quit' to stop)!" + Style.RESET_ALL)
     while True:
-        inp = input(Fore.LIGHTBLUE_EX + "User: " + Style.RESET_ALL)
-        if inp.lower() == "quit":
-            break
-
-        # Correct grammar in the input text
-        corrected_inp = correct_grammar(inp)
-
-        # Check for symptoms that require escalation
-        detected_symptoms = symptom_checker(corrected_inp)
-        if detected_symptoms:
-            print(Fore.RED + f"ChatBot: Escalating the conversation to a human agent due to detected symptoms: {', '.join(detected_symptoms)}." + Style.RESET_ALL)
-            continue
-
-        # Preprocess the input for the deep learning model
-        sequences = tokenizer.texts_to_sequences([corrected_inp])
-        padded_sequences = pad_sequences(sequences, truncating='post', maxlen=20)
-        
-        # Predict the intent using the deep learning model
-        predictions = model.predict(padded_sequences)
-        predicted_label = np.argmax(predictions)
-        intent = label_encoder.inverse_transform([predicted_label])[0]
-
-        if escalation_check(corrected_inp):
-            print(Fore.RED + "ChatBot: Escalating the conversation to a human agent." + Style.RESET_ALL)
-        else:
-            for data in all_intents:
-                if intent in [intent['tag'] for intent in data['intents']]:
-                    response = get_response([{'intent': intent}], data)
-                    print(Fore.YELLOW + "ChatBot: " + response + Style.RESET_ALL)
-                    break
-
+        user_input = input(Fore.LIGHTBLUE_EX + "User: " + Style.RESET_ALL)
+        response = handle_chat(user_input)
+        print(Fore.YELLOW + "ChatBot: " + response + Style.RESET_ALL)
 if __name__ == "__main__":
     chat()
