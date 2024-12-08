@@ -1,0 +1,187 @@
+{
+    "intents": [
+      {
+        "tag": "menstrual_cycle_questions",
+        "patterns": [
+          "What is a normal menstrual cycle?",
+          "How long should a period last?",
+          "Why is my period irregular?",
+          "I have questions about my menstrual cycle."
+        ],
+        "responses": [
+          "A typical menstrual cycle lasts 21 to 35 days, and periods usually last 2 to 7 days. Irregular cycles can result from stress, hormonal changes, or underlying health issues. Consult a healthcare provider for concerns."
+        ],
+        "action": "provide_menstrual_cycle_info"
+      },
+      {
+        "tag": "pregnancy_symptoms",
+        "patterns": [
+          "What are the early signs of pregnancy?",
+          "I missed my period; could I be pregnant?",
+          "What symptoms indicate pregnancy?",
+          "How do I know if I'm pregnant?"
+        ],
+        "responses": [
+          "Early pregnancy symptoms include missed periods, nausea, fatigue, and tender breasts. Taking a home pregnancy test or consulting a doctor can confirm pregnancy."
+        ],
+        "action": "provide_pregnancy_symptoms_info"
+      },
+      {
+        "tag": "prenatal_care",
+        "patterns": [
+          "What is prenatal care?",
+          "How often should I see a doctor during pregnancy?",
+          "What tests do I need during pregnancy?",
+          "Why is prenatal care important?"
+        ],
+        "responses": [
+          "Prenatal care involves regular medical check-ups during pregnancy to monitor the health of the mother and baby. Consult your doctor to create a schedule that suits your needs."
+        ],
+        "action": "provide_prenatal_care_info"
+      },
+      {
+        "tag": "menopause_symptoms",
+        "patterns": [
+          "What are the symptoms of menopause?",
+          "I'm having hot flashes; is it menopause?",
+          "What happens during menopause?",
+          "When does menopause start?"
+        ],
+        "responses": [
+          "Menopause often occurs between ages 45 and 55 and may cause hot flashes, night sweats, mood changes, and irregular periods. Consult a doctor for symptom management."
+        ],
+        "action": "provide_menopause_info"
+      },
+      {
+        "tag": "breast_health",
+        "patterns": [
+          "How do I do a breast self-exam?",
+          "What are the signs of breast cancer?",
+          "My breasts feel tender; is that normal?",
+          "When should I get a mammogram?"
+        ],
+        "responses": [
+          "Perform regular self-exams to check for lumps or changes. Tenderness can be normal, but report unusual changes to a doctor. Mammograms are typically recommended starting at age 40 or earlier if there's a family history."
+        ],
+        "action": "provide_breast_health_info"
+      },
+      {
+        "tag": "birth_control",
+        "patterns": [
+          "What are my birth control options?",
+          "How does hormonal contraception work?",
+          "What is the best birth control for me?",
+          "Can birth control cause side effects?"
+        ],
+        "responses": [
+          "Birth control options include pills, IUDs, implants, and barrier methods. The best choice depends on your lifestyle and health. Consult a doctor to discuss the right option for you."
+        ],
+        "action": "provide_birth_control_info"
+      },
+      {
+        "tag": "pcos_symptoms",
+        "patterns": [
+          "What are the symptoms of PCOS?",
+          "How do I know if I have PCOS?",
+          "Can PCOS cause irregular periods?",
+          "Why am I gaining weight and losing hair?"
+        ],
+        "responses": [
+          "PCOS symptoms include irregular periods, weight gain, acne, and excess hair growth. A doctor can diagnose PCOS through tests and help manage symptoms."
+        ],
+        "action": "provide_pcos_info"
+      },
+      {
+        "tag": "postpartum_health",
+        "patterns": [
+          "What is postpartum depression?",
+          "How do I recover after giving birth?",
+          "Why do I feel emotional after delivery?",
+          "What should I expect after childbirth?"
+        ],
+        "responses": [
+          "Postpartum health includes physical recovery and emotional well-being. If you're feeling overly emotional or overwhelmed, reach out to a healthcare provider for support."
+        ],
+        "action": "provide_postpartum_info"
+      },
+      {
+        "tag": "pelvic_pain",
+        "patterns": [
+          "I have pelvic pain; what could it be?",
+          "What causes pain during intercourse?",
+          "Why does my lower abdomen hurt?",
+          "Is pelvic pain normal?"
+        ],
+        "responses": [
+          "Pelvic pain can result from conditions like endometriosis, infections, or fibroids. Persistent or severe pain should be evaluated by a doctor."
+        ],
+        "action": "provide_pelvic_pain_info"
+      },
+      {
+        "tag": "vaginal_health",
+        "patterns": [
+          "What is a normal vaginal discharge?",
+          "Why do I have itching and burning?",
+          "How do I prevent vaginal infections?",
+          "What causes an unusual smell?"
+        ],
+        "responses": [
+          "Vaginal discharge varies but should not cause itching, burning, or strong odors. These may indicate an infection like yeast or bacterial vaginosis. Consult a doctor for proper treatment."
+        ],
+        "action": "provide_vaginal_health_info"
+      },
+      {
+        "tag": "fertility_questions",
+        "patterns": [
+          "How can I increase my chances of getting pregnant?",
+          "What affects fertility in women?",
+          "Why am I having trouble conceiving?",
+          "How do ovulation and fertility work?"
+        ],
+        "responses": [
+          "Factors like age, health, and lifestyle affect fertility. Tracking ovulation and maintaining a healthy lifestyle can help. A doctor can provide personalized guidance."
+        ],
+        "action": "provide_fertility_info"
+      },
+      {
+        "tag": "osteoporosis",
+        "patterns": [
+          "What is osteoporosis?",
+          "How do I prevent bone loss?",
+          "Why are women at higher risk for osteoporosis?",
+          "What are the symptoms of osteoporosis?"
+        ],
+        "responses": [
+          "Osteoporosis weakens bones, making them prone to fractures. Calcium, vitamin D, weight-bearing exercises, and regular check-ups can help reduce risks."
+        ],
+        "action": "provide_osteoporosis_info"
+      },
+      {
+        "tag": "sexual_health",
+        "patterns": [
+          "How do I talk about sexual health with my doctor?",
+          "What are common STIs in women?",
+          "How do I know if I have an STI?",
+          "How can I protect my sexual health?"
+        ],
+        "responses": [
+          "Regular STI testing, safe sex practices, and open communication with your doctor are essential for sexual health. If you have concerns, consult a healthcare provider."
+        ],
+        "action": "provide_sexual_health_info"
+      },
+      {
+        "tag": "urinary_health",
+        "patterns": [
+          "Why do I feel pain while urinating?",
+          "What causes frequent urination?",
+          "How do I treat a UTI?",
+          "What is urinary incontinence?"
+        ],
+        "responses": [
+          "Urinary symptoms can indicate infections or other conditions. Stay hydrated and seek medical advice if symptoms persist or worsen."
+        ],
+        "action": "provide_urinary_health_info"
+      }
+    ]
+  }
+  

@@ -1,0 +1,137 @@
+{
+    "intents": [
+      {
+        "tag": "flu_symptoms",
+        "patterns": ["What are the symptoms of the flu?", "How do I know if I have the flu?", "What should I look for with the flu?"],
+        "responses": ["Common symptoms of the flu include fever, chills, muscle aches, cough, congestion, runny nose, headaches, and fatigue."],
+        "action": "provide_flu_symptoms_info"
+      },
+      {
+        "tag": "cold_symptoms",
+        "patterns": ["What are the symptoms of a cold?", "How do I know if I have a cold?", "What should I look for with a cold?"],
+        "responses": ["Common symptoms of a cold include a runny or stuffy nose, sore throat, cough, congestion, slight body aches, sneezing, and low-grade fever."],
+        "action": "provide_cold_symptoms_info"
+      },
+      {
+        "tag": "flu_prevention",
+        "patterns": ["How can I prevent the flu?", "What are the preventive measures for the flu?", "How do I protect myself from the flu?"],
+        "responses": ["To prevent the flu, get vaccinated annually, wash your hands frequently, avoid close contact with sick people, and maintain a healthy lifestyle."],
+        "action": "provide_flu_prevention_info"
+      },
+      {
+        "tag": "cold_prevention",
+        "patterns": ["How can I prevent a cold?", "What are the preventive measures for a cold?", "How do I protect myself from a cold?"],
+        "responses": ["To prevent a cold, wash your hands frequently, avoid touching your face, stay away from sick people, and maintain a healthy lifestyle."],
+        "action": "provide_cold_prevention_info"
+      },
+      {
+        "tag": "flu_treatment",
+        "patterns": ["What is the treatment for the flu?", "How is the flu treated?", "What should I do if I have the flu?"],
+        "responses": ["Treatment for the flu includes rest, hydration, and over-the-counter medications to relieve symptoms. In some cases, antiviral medications may be prescribed. Always follow your doctor's advice."],
+        "action": "provide_flu_treatment_info"
+      },
+      {
+        "tag": "cold_treatment",
+        "patterns": ["What is the treatment for a cold?", "How is a cold treated?", "What should I do if I have a cold?"],
+        "responses": ["Treatment for a cold includes rest, hydration, and over-the-counter medications to relieve symptoms. There is no cure for the common cold, so treatment focuses on symptom relief."],
+        "action": "provide_cold_treatment_info"
+      },
+      {
+        "tag": "flu_vaccine",
+        "patterns": ["Should I get the flu vaccine?", "Is the flu vaccine safe?", "What are the benefits of the flu vaccine?"],
+        "responses": ["The flu vaccine is safe and effective. It helps protect you from the flu and reduces the severity of symptoms if you do get sick. Consult with your healthcare provider for more information."],
+        "action": "provide_flu_vaccine_info"
+      },
+      {
+        "tag": "flu_side_effects",
+        "patterns": ["What are the side effects of the flu vaccine?", "Are there any side effects from the flu vaccine?", "What should I expect after getting the flu vaccine?"],
+        "responses": ["Common side effects of the flu vaccine include soreness at the injection site, low-grade fever, and mild muscle aches. These side effects are usually mild and go away on their own."],
+        "action": "provide_flu_vaccine_side_effects_info"
+      },
+      {
+        "tag": "flu_testing",
+        "patterns": ["Where can I get tested for the flu?", "How do I get a flu test?", "What are the types of flu tests?"],
+        "responses": ["You can get tested for the flu at healthcare facilities, clinics, and some pharmacies. There are different types of tests, including rapid flu tests and PCR tests. Consult with your healthcare provider for more information."],
+        "action": "provide_flu_testing_info"
+      },
+      {
+        "tag": "flu_recovery",
+        "patterns": ["How long does it take to recover from the flu?", "What is the recovery time for the flu?", "When will I feel better after the flu?"],
+        "responses": ["Recovery from the flu varies for each individual. Most people recover within a week, but some symptoms may last longer. It's important to rest and follow your doctor's advice."],
+        "action": "provide_flu_recovery_info"
+      },
+      {
+        "tag": "cold_recovery",
+        "patterns": ["How long does it take to recover from a cold?", "What is the recovery time for a cold?", "When will I feel better after a cold?"],
+        "responses": ["Recovery from a cold usually takes about 7 to 10 days. It's important to rest, stay hydrated, and follow your doctor's advice if symptoms persist."],
+        "action": "provide_cold_recovery_info"
+      },
+      {
+        "tag": "flu_vs_cold",
+        "patterns": ["What is the difference between the flu and a cold?", "How can I tell if I have the flu or a cold?", "Is it the flu or a cold?"],
+        "responses": ["The flu and a cold have similar symptoms, but the flu is usually more severe and comes on suddenly. The flu often includes fever, chills, and body aches, while a cold is more likely to cause a runny or stuffy nose."],
+        "action": "provide_flu_vs_cold_info"
+      },
+      {
+        "tag": "flu_complications",
+        "patterns": ["What are the complications of the flu?", "Can the flu cause serious health issues?", "What should I know about flu complications?"],
+        "responses": ["Complications of the flu can include pneumonia, bronchitis, sinus infections, and worsening of chronic medical conditions. It's important to seek medical attention if you experience severe symptoms."],
+        "action": "provide_flu_complications_info"
+      },
+      {
+        "tag": "cold_complications",
+        "patterns": ["What are the complications of a cold?", "Can a cold cause serious health issues?", "What should I know about cold complications?"],
+        "responses": ["Complications of a cold can include sinus infections, ear infections, and worsening of asthma. It's important to seek medical attention if you experience severe symptoms."],
+        "action": "provide_cold_complications_info"
+      },
+      {
+        "tag": "flu_myths",
+        "patterns": ["What are some common myths about the flu?", "Are there any misconceptions about the flu?", "What should I know about flu myths?"],
+        "responses": ["There are many myths about the flu. It's important to rely on credible sources for information. Consult with your healthcare provider or trusted health organizations for accurate information."],
+        "action": "provide_flu_myths_info"
+      },
+      {
+        "tag": "cold_myths",
+        "patterns": ["What are some common myths about colds?", "Are there any misconceptions about colds?", "What should I know about cold myths?"],
+        "responses": ["There are many myths about colds. It's important to rely on credible sources for information. Consult with your healthcare provider or trusted health organizations for accurate information."],
+        "action": "provide_cold_myths_info"
+      },
+      {
+        "tag": "flu_risk_factors",
+        "patterns": ["Who is at risk for the flu?", "What are the risk factors for the flu?", "Am I at risk for the flu?"],
+        "responses": ["People at higher risk for the flu include young children, elderly individuals, pregnant women, and those with chronic medical conditions. It's important to take preventive measures and get vaccinated."],
+        "action": "provide_flu_risk_factors_info"
+      },
+      {
+        "tag": "cold_risk_factors",
+        "patterns": ["Who is at risk for a cold?", "What are the risk factors for a cold?", "Am I at risk for a cold?"],
+        "responses": ["Everyone is at risk for a cold, but young children and individuals with weakened immune systems are more susceptible. It's important to take preventive measures to reduce your risk."],
+        "action": "provide_cold_risk_factors_info"
+      },
+      {
+        "tag": "flu_contagious",
+        "patterns": ["Is the flu contagious?", "How does the flu spread?", "Can I spread the flu to others?"],
+        "responses": ["The flu is highly contagious and spreads through respiratory droplets when an infected person coughs, sneezes, or talks. It's important to take preventive measures to protect yourself and others."],
+        "action": "provide_flu_contagious_info"
+      },
+      {
+        "tag": "cold_contagious",
+        "patterns": ["Is a cold contagious?", "How does a cold spread?", "Can I spread a cold to others?"],
+        "responses": ["Colds are contagious and spread through respiratory droplets when an infected person coughs, sneezes, or talks. It's important to take preventive measures to protect yourself and others."],
+        "action": "provide_cold_contagious_info"
+      },
+      {
+        "tag": "has_flu",
+        "patterns": ["I think I have the flu", "I have flu symptoms", "Do I have the flu?"],
+        "responses": ["If you have flu-like symptoms, it's important to rest, stay hydrated, and monitor your temperature. If your symptoms worsen or persist, consult with your healthcare provider."],
+        "action": "provide_has_flu_info"
+      },
+      {
+        "tag": "has_cold",
+        "patterns": ["I think I have a cold", "I have cold symptoms", "Do I have a cold?"],
+        "responses": ["If you have cold symptoms, it's important to rest, stay hydrated, and take over-the-counter medications to relieve your symptoms. If your symptoms worsen or persist, consult with your healthcare provider."],
+        "action": "provide_has_cold_info"
+      }
+      
+    ]
+  }

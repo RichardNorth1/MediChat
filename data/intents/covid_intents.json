@@ -1,0 +1,100 @@
+{
+    "intents": [
+      {
+        "tag": "covid_symptoms",
+        "patterns": ["What are the symptoms of COVID-19?", "How do I know if I have COVID-19?", "What should I look for with COVID-19?"],
+        "responses": ["Common symptoms of COVID-19 include fever, cough, and shortness of breath. Other symptoms may include fatigue, body aches, loss of taste or smell, sore throat, and headache."],
+        "action": "provide_covid_symptoms_info"
+      },
+      {
+        "tag": "covid_prevention",
+        "patterns": ["How can I prevent COVID-19?", "What are the preventive measures for COVID-19?", "How do I protect myself from COVID-19?"],
+        "responses": ["To prevent COVID-19, wear a mask, maintain social distancing, wash your hands frequently, and get vaccinated. Avoid crowded places and close contact with people who are sick."],
+        "action": "provide_covid_prevention_info"
+      },
+      {
+        "tag": "covid_treatment",
+        "patterns": ["What is the treatment for COVID-19?", "How is COVID-19 treated?", "What should I do if I have COVID-19?"],
+        "responses": ["Treatment for COVID-19 includes rest, hydration, and over-the-counter medications to relieve symptoms. Severe cases may require hospitalization. Always follow your doctor's advice."],
+        "action": "provide_covid_treatment_info"
+      },
+      {
+        "tag": "covid_vaccine",
+        "patterns": ["Should I get the COVID-19 vaccine?", "Is the COVID-19 vaccine safe?", "What are the benefits of the COVID-19 vaccine?"],
+        "responses": ["The COVID-19 vaccine is safe and effective. It helps protect you from severe illness and reduces the spread of the virus. Consult with your healthcare provider for more information."],
+        "action": "provide_covid_vaccine_info"
+      },
+      {
+        "tag": "covid_side_effects",
+        "patterns": ["What are the side effects of the COVID-19 vaccine?", "Are there any side effects from the COVID-19 vaccine?", "What should I expect after getting the COVID-19 vaccine?"],
+        "responses": ["Common side effects of the COVID-19 vaccine include pain at the injection site, fatigue, headache, muscle pain, chills, fever, and nausea. These side effects are usually mild and go away on their own."],
+        "action": "provide_covid_vaccine_side_effects_info"
+      },
+      {
+        "tag": "covid_testing",
+        "patterns": ["Where can I get tested for COVID-19?", "How do I get a COVID-19 test?", "What are the types of COVID-19 tests?"],
+        "responses": ["You can get tested for COVID-19 at healthcare facilities, pharmacies, and testing centers. There are different types of tests, including PCR tests and rapid antigen tests. Consult with your healthcare provider for more information."],
+        "action": "provide_covid_testing_info"
+      },
+      {
+        "tag": "covid_recovery",
+        "patterns": ["How long does it take to recover from COVID-19?", "What is the recovery time for COVID-19?", "When will I feel better after COVID-19?"],
+        "responses": ["Recovery from COVID-19 varies for each individual. It's important to follow your doctor's advice and rest properly."],
+        "action": "provide_covid_recovery_info"
+      },
+      {
+        "tag": "covid_variant",
+        "patterns": ["What are COVID-19 variants?", "How do COVID-19 variants affect us?", "Are COVID-19 variants more dangerous?"],
+        "responses": ["COVID-19 variants are mutations of the virus that may impact transmission and severity. Vaccination and preventive measures are important to control variants."],
+        "action": "provide_covid_variant_info"
+      },
+      {
+        "tag": "covid_travel",
+        "patterns": ["Is it safe to travel during COVID-19?", "What precautions should I take when traveling?", "Can I travel if I'm vaccinated?"],
+        "responses": ["Traveling during COVID-19 carries risks. Follow health guidelines, check travel restrictions, and take necessary precautions if you must travel."],
+        "action": "provide_covid_travel_info"
+      },
+      {
+        "tag": "covid_long_term_effects",
+        "patterns": ["What are the long-term effects of COVID-19?", "Can COVID-19 cause long-term health issues?", "What should I know about long COVID?"],
+        "responses": ["Some people experience long-term effects after recovering from COVID-19, known as long COVID. Symptoms may include fatigue, shortness of breath, and cognitive issues. Consult with your healthcare provider for more information."],
+        "action": "provide_covid_long_term_effects_info"
+      },
+      {
+        "tag": "covid_myths",
+        "patterns": ["What are some common myths about COVID-19?", "Are there any misconceptions about COVID-19?", "What should I know about COVID-19 myths?"],
+        "responses": ["There are many myths about COVID-19. It's important to rely on credible sources for information. Consult with your healthcare provider or trusted health organizations for accurate information."],
+        "action": "provide_covid_myths_info"
+      },
+      {
+        "tag": "covid_quarantine",
+        "patterns": ["How long should I quarantine if I have COVID-19?", "What are the quarantine guidelines for COVID-19?", "When can I end my quarantine?"],
+        "responses": ["Quarantine guidelines for COVID-19 vary based on your situation. Generally, you should quarantine for at least 10 days from the onset of symptoms or a positive test. Follow your healthcare provider's advice."],
+        "action": "provide_covid_quarantine_info"
+      },
+      {
+        "tag": "covid_exposure",
+        "patterns": ["What should I do if I was exposed to COVID-19?", "How do I know if I was exposed to COVID-19?", "What are the steps to take after COVID-19 exposure?"],
+        "responses": ["If you were exposed to COVID-19, monitor for symptoms, get tested, and follow quarantine guidelines. Consult with your healthcare provider for specific advice."],
+        "action": "provide_covid_exposure_info"
+      },
+      {
+        "tag": "covid_mental_health",
+        "patterns": ["How can I manage stress during the COVID-19 pandemic?", "What are some mental health tips for COVID-19?", "How do I take care of my mental health during COVID-19?"],
+        "responses": ["Managing stress during the COVID-19 pandemic is important. Stay connected with loved ones, practice self-care, and seek support from mental health professionals if needed."],
+        "action": "provide_covid_mental_health_info"
+      },
+      {
+        "tag": "covid_vaccine_eligibility",
+        "patterns": ["Who is eligible for the COVID-19 vaccine?", "Am I eligible for the COVID-19 vaccine?", "What are the eligibility criteria for the COVID-19 vaccine?"],
+        "responses": ["Eligibility for the COVID-19 vaccine varies by location and guidelines. Generally, adults and certain age groups of children are eligible. Check with your local health department or healthcare provider for specific eligibility criteria."],
+        "action": "provide_covid_vaccine_eligibility_info"
+      },
+      {
+        "tag": "covid_vaccine_booster",
+        "patterns": ["Do I need a COVID-19 booster shot?", "What is a COVID-19 booster shot?", "When should I get a COVID-19 booster?"],
+        "responses": ["COVID-19 booster shots help maintain vaccine effectiveness over time. Eligibility and timing for booster shots vary. Consult with your healthcare provider for guidance."],
+        "action": "provide_covid_vaccine_booster_info"
+      }
+    ]
+  }

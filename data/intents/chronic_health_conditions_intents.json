@@ -1,0 +1,187 @@
+{
+    "intents": [
+      {
+        "tag": "diabetes_management",
+        "patterns": [
+          "How do I manage diabetes?",
+          "What should I eat if I have diabetes?",
+          "How do I monitor my blood sugar?",
+          "Can you provide tips for managing diabetes?"
+        ],
+        "responses": [
+          "Managing diabetes involves monitoring blood sugar levels, following a balanced diet, regular exercise, and taking prescribed medications. Work with your doctor to create a management plan."
+        ],
+        "action": "provide_diabetes_management_info"
+      },
+      {
+        "tag": "hypertension_management",
+        "patterns": [
+          "How can I control high blood pressure?",
+          "What lifestyle changes help with hypertension?",
+          "What foods should I avoid with high blood pressure?",
+          "How do I monitor my blood pressure?"
+        ],
+        "responses": [
+          "Controlling hypertension includes a low-sodium diet, regular exercise, stress management, and taking prescribed medications. Monitor blood pressure regularly and consult your doctor for adjustments to your care plan."
+        ],
+        "action": "provide_hypertension_info"
+      },
+      {
+        "tag": "arthritis_symptoms_and_care",
+        "patterns": [
+          "What are the symptoms of arthritis?",
+          "How do I manage arthritis pain?",
+          "Can exercise help with arthritis?",
+          "What treatments are available for arthritis?"
+        ],
+        "responses": [
+          "Arthritis symptoms include joint pain, stiffness, and swelling. Management may involve physical therapy, medications, and lifestyle adjustments. Consult a doctor for personalized treatment options."
+        ],
+        "action": "provide_arthritis_care_info"
+      },
+      {
+        "tag": "asthma_management",
+        "patterns": [
+          "How do I manage asthma?",
+          "What triggers asthma attacks?",
+          "How often should I use my inhaler?",
+          "What are some tips for living with asthma?"
+        ],
+        "responses": [
+          "Asthma management includes avoiding triggers, using prescribed inhalers, and having an asthma action plan. Regular check-ups with your doctor are essential for effective control."
+        ],
+        "action": "provide_asthma_management_info"
+      },
+      {
+        "tag": "heart_disease_prevention",
+        "patterns": [
+          "How can I prevent heart disease?",
+          "What are the symptoms of heart disease?",
+          "What lifestyle changes reduce the risk of heart disease?",
+          "Can diet and exercise help with heart disease?"
+        ],
+        "responses": [
+          "Heart disease prevention involves a heart-healthy diet, regular exercise, quitting smoking, and managing conditions like diabetes or high blood pressure. Regular check-ups are key for early detection."
+        ],
+        "action": "provide_heart_disease_info"
+      },
+      {
+        "tag": "chronic_kidney_disease",
+        "patterns": [
+          "What are the signs of chronic kidney disease?",
+          "How can I protect my kidneys?",
+          "What diet is best for kidney disease?",
+          "How is chronic kidney disease treated?"
+        ],
+        "responses": [
+          "Chronic kidney disease symptoms include fatigue, swelling, and changes in urination. Management includes a kidney-friendly diet, controlling blood pressure, and working closely with your doctor."
+        ],
+        "action": "provide_kidney_disease_info"
+      },
+      {
+        "tag": "chronic_pain_management",
+        "patterns": [
+          "How do I deal with chronic pain?",
+          "What are treatments for chronic pain?",
+          "Can physical therapy help with chronic pain?",
+          "What lifestyle changes can ease chronic pain?"
+        ],
+        "responses": [
+          "Chronic pain management includes medications, physical therapy, mindfulness techniques, and lifestyle adjustments. A pain specialist can provide tailored treatment options."
+        ],
+        "action": "provide_chronic_pain_management_info"
+      },
+      {
+        "tag": "copd_management",
+        "patterns": [
+          "What is COPD and how is it managed?",
+          "How do I improve my breathing with COPD?",
+          "What triggers COPD flare-ups?",
+          "What lifestyle changes help with COPD?"
+        ],
+        "responses": [
+          "COPD management includes quitting smoking, using prescribed medications, and pulmonary rehabilitation exercises. Avoiding triggers and regular check-ups with a pulmonologist are crucial."
+        ],
+        "action": "provide_copd_management_info"
+      },
+      {
+        "tag": "mental_health_conditions",
+        "patterns": [
+          "How do I manage anxiety long-term?",
+          "What treatments are available for depression?",
+          "Can chronic stress affect my health?",
+          "What are coping strategies for mental health issues?"
+        ],
+        "responses": [
+          "Mental health management includes therapy, medications, and self-care techniques like exercise and mindfulness. Seek help from a mental health professional for personalized care."
+        ],
+        "action": "provide_mental_health_support"
+      },
+      {
+        "tag": "chronic_migraine",
+        "patterns": [
+          "What causes chronic migraines?",
+          "How do I prevent migraines?",
+          "What treatments are available for migraines?",
+          "How can I manage frequent headaches?"
+        ],
+        "responses": [
+          "Chronic migraines can be managed with preventive medications, stress management, and avoiding known triggers. Consult a neurologist for tailored treatment options."
+        ],
+        "action": "provide_migraine_management_info"
+      },
+      {
+        "tag": "obesity_management",
+        "patterns": [
+          "How can I manage obesity?",
+          "What is the best diet for weight loss?",
+          "How does obesity affect chronic health?",
+          "Can exercise alone help with obesity?"
+        ],
+        "responses": [
+          "Obesity management involves a balanced diet, regular physical activity, and addressing underlying medical issues. A doctor or dietitian can help develop a personalized plan."
+        ],
+        "action": "provide_obesity_management_info"
+      },
+      {
+        "tag": "cancer_support",
+        "patterns": [
+          "What are the early signs of cancer?",
+          "How is cancer treated?",
+          "What lifestyle changes help during cancer treatment?",
+          "Where can I find support for cancer patients?"
+        ],
+        "responses": [
+          "Cancer treatment options depend on the type and stage of cancer and may include surgery, chemotherapy, or radiation. Support groups and a strong care team can help with coping."
+        ],
+        "action": "provide_cancer_support_info"
+      },
+      {
+        "tag": "chronic_fatigue",
+        "patterns": [
+          "What causes chronic fatigue?",
+          "How do I manage chronic fatigue syndrome?",
+          "What are the symptoms of chronic fatigue?",
+          "Can lifestyle changes help with chronic fatigue?"
+        ],
+        "responses": [
+          "Chronic fatigue can result from underlying conditions, stress, or lifestyle factors. Management includes pacing activities, stress reduction, and working with a healthcare provider to identify causes."
+        ],
+        "action": "provide_chronic_fatigue_info"
+      },
+      {
+        "tag": "autoimmune_conditions",
+        "patterns": [
+          "What are common autoimmune diseases?",
+          "How do I manage an autoimmune condition?",
+          "What treatments are available for autoimmune diseases?",
+          "Can lifestyle changes help with autoimmune conditions?"
+        ],
+        "responses": [
+          "Autoimmune conditions like lupus or rheumatoid arthritis often require medications, stress management, and a healthy lifestyle. Consult your specialist for personalized care."
+        ],
+        "action": "provide_autoimmune_condition_info"
+      }
+    ]
+  }
+  

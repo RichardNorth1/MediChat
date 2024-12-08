@@ -1,0 +1,99 @@
+{
+    "intents": [
+        {
+            "tag": "allergy_general",
+            "patterns": [
+                "I think I have allergies",
+                "I have allergy symptoms",
+                "Do I have allergies?",
+                "I am sneezing a lot",
+                "I have itchy eyes",
+                "I have a runny nose",
+                "I have a stuffy nose",
+                "I have a rash",
+                "I have hives",
+                "I have seasonal allergies"
+            ],
+            "responses": [
+                "It sounds like you might have allergies. Common symptoms include sneezing, itchy eyes, runny or stuffy nose, and skin rashes. Avoid allergens, take antihistamines, and use nasal sprays to relieve your symptoms. If your symptoms are severe, consult with your healthcare provider.",
+                "Allergies can cause symptoms like sneezing, itchy eyes, and a runny or stuffy nose. Avoid allergens, take medications, and use nasal sprays to ease your symptoms. If your symptoms persist, seek medical advice.",
+                "Having allergies can be uncomfortable. Avoid allergens, take antihistamines, and use nasal sprays to relieve your symptoms. If you have any concerns, contact your healthcare provider."
+            ]
+        },
+        {
+            "tag": "pollen_allergy",
+            "patterns": [
+                "I have a pollen allergy",
+                "I am allergic to pollen",
+                "Pollen makes me sneeze",
+                "I have hay fever",
+                "I have seasonal allergies"
+            ],
+            "responses": [
+                "Pollen allergies, also known as hay fever, can cause sneezing, itchy eyes, and a runny or stuffy nose. Avoid outdoor activities during high pollen counts, keep windows closed, and use air purifiers. Take antihistamines and nasal sprays to relieve your symptoms. If your symptoms are severe, consult with your healthcare provider.",
+                "If you have a pollen allergy, try to stay indoors during high pollen counts, keep windows closed, and use air purifiers. Take medications to relieve your symptoms. If your symptoms persist, seek medical advice.",
+                "Pollen allergies can be uncomfortable. Avoid outdoor activities during high pollen counts, keep windows closed, and use air purifiers. Take antihistamines and nasal sprays to ease your symptoms. If you have any concerns, contact your healthcare provider."
+            ]
+        },
+        {
+            "tag": "food_allergy",
+            "patterns": [
+                "I have a food allergy",
+                "I am allergic to certain foods",
+                "I have a reaction to certain foods",
+                "I get hives when I eat certain foods",
+                "I have a food intolerance"
+            ],
+            "responses": [
+                "Food allergies can cause symptoms like hives, swelling, and difficulty breathing. Avoid foods that trigger your allergies and read food labels carefully. If you have a severe reaction, seek emergency medical attention immediately.",
+                "If you have a food allergy, avoid foods that trigger your allergies and read food labels carefully. Carry an epinephrine auto-injector if prescribed by your doctor. If you have a severe reaction, seek emergency medical attention immediately.",
+                "Food allergies can be serious. Avoid foods that trigger your allergies, read food labels carefully, and carry an epinephrine auto-injector if prescribed. If you have any concerns, contact your healthcare provider."
+            ]
+        },
+        {
+            "tag": "pet_allergy",
+            "patterns": [
+                "I have a pet allergy",
+                "I am allergic to cats",
+                "I am allergic to dogs",
+                "Pet dander makes me sneeze",
+                "I have a reaction to pet hair"
+            ],
+            "responses": [
+                "Pet allergies can cause symptoms like sneezing, itchy eyes, and a runny or stuffy nose. Avoid contact with pets, keep your home clean, and use air purifiers. Take antihistamines and nasal sprays to relieve your symptoms. If your symptoms are severe, consult with your healthcare provider.",
+                "If you have a pet allergy, try to avoid contact with pets, keep your home clean, and use air purifiers. Take medications to relieve your symptoms. If your symptoms persist, seek medical advice.",
+                "Pet allergies can be uncomfortable. Avoid contact with pets, keep your home clean, and use air purifiers. Take antihistamines and nasal sprays to ease your symptoms. If you have any concerns, contact your healthcare provider."
+            ]
+        },
+        {
+            "tag": "dust_allergy",
+            "patterns": [
+                "I have a dust allergy",
+                "I am allergic to dust",
+                "Dust makes me sneeze",
+                "I have a reaction to dust mites",
+                "I have a dust mite allergy"
+            ],
+            "responses": [
+                "Dust allergies can cause symptoms like sneezing, itchy eyes, and a runny or stuffy nose. Keep your home clean, use dust mite covers on bedding, and use air purifiers. Take antihistamines and nasal sprays to relieve your symptoms. If your symptoms are severe, consult with your healthcare provider.",
+                "If you have a dust allergy, keep your home clean, use dust mite covers on bedding, and use air purifiers. Take medications to relieve your symptoms. If your symptoms persist, seek medical advice.",
+                "Dust allergies can be uncomfortable. Keep your home clean, use dust mite covers on bedding, and use air purifiers. Take antihistamines and nasal sprays to ease your symptoms. If you have any concerns, contact your healthcare provider."
+            ]
+        },
+        {
+            "tag": "mold_allergy",
+            "patterns": [
+                "I have a mold allergy",
+                "I am allergic to mold",
+                "Mold makes me sneeze",
+                "I have a reaction to mold spores",
+                "I have a mold spore allergy"
+            ],
+            "responses": [
+                "Mold allergies can cause symptoms like sneezing, itchy eyes, and a runny or stuffy nose. Keep your home dry and clean, fix any leaks, and use air purifiers. Take antihistamines and nasal sprays to relieve your symptoms. If your symptoms are severe, consult with your healthcare provider.",
+                "If you have a mold allergy, keep your home dry and clean, fix any leaks, and use air purifiers. Take medications to relieve your symptoms. If your symptoms persist, seek medical advice.",
+                "Mold allergies can be uncomfortable. Keep your home dry and clean, fix any leaks, and use air purifiers. Take antihistamines and nasal sprays to ease your symptoms. If you have any concerns, contact your healthcare provider."
+            ]
+        }
+    ]
+}

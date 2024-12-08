@@ -1,0 +1,111 @@
+{
+    "intents": [
+        {
+            "tag": "lumps_general",
+            "patterns": [
+                "I found a lump",
+                "I have a bump on my skin",
+                "I discovered a lump",
+                "I have a lump under my skin",
+                "I noticed a bump",
+                "I have a lump and I'm worried",
+                "I found a lump on my body"
+            ],
+            "responses": [
+                "Finding a lump can be concerning. It's important to monitor the lump for any changes in size, shape, or color. If you are worried or if the lump is painful, consult with your healthcare provider for a proper evaluation.",
+                "Lumps can be caused by various factors, including infections, cysts, or other medical conditions. Monitor the lump for any changes and consult with your healthcare provider if you have any concerns.",
+                "If you find a lump, it's important to keep an eye on it and note any changes. If the lump is painful, growing, or causing you concern, seek medical advice from your healthcare provider."
+            ]
+        },
+        {
+            "tag": "lumps_painful",
+            "patterns": [
+                "I have a painful lump",
+                "The lump I found hurts",
+                "I have a lump that is painful",
+                "The bump on my skin is painful",
+                "I have a sore lump"
+            ],
+            "responses": [
+                "A painful lump can be a sign of an infection or other medical condition. It's important to consult with your healthcare provider for a proper evaluation and treatment.",
+                "If you have a painful lump, seek medical advice from your healthcare provider. They can help determine the cause and provide appropriate treatment.",
+                "Painful lumps should be evaluated by a healthcare provider. Make an appointment to discuss your symptoms and receive proper care."
+            ]
+        },
+        {
+            "tag": "lumps_changing",
+            "patterns": [
+                "The lump is growing",
+                "The lump is changing shape",
+                "The lump is changing color",
+                "The lump is getting bigger",
+                "The lump is changing"
+            ],
+            "responses": [
+                "If a lump is changing in size, shape, or color, it's important to consult with your healthcare provider for a proper evaluation. Changes in a lump can be a sign of an underlying medical condition.",
+                "Monitor the lump for any changes and seek medical advice if you notice any growth or changes in shape or color. Your healthcare provider can help determine the cause and provide appropriate care.",
+                "Changes in a lump should be evaluated by a healthcare provider. Make an appointment to discuss your symptoms and receive proper care."
+            ]
+        },
+        {
+            "tag": "lumps_soft",
+            "patterns": [
+                "I have a soft lump",
+                "The lump is soft",
+                "I found a soft bump",
+                "The lump feels soft",
+                "I have a soft lump under my skin"
+            ],
+            "responses": [
+                "Soft lumps can be caused by various factors, including cysts or lipomas. It's important to monitor the lump and consult with your healthcare provider if you have any concerns.",
+                "If you have a soft lump, keep an eye on it and note any changes. Consult with your healthcare provider if you are worried or if the lump is causing you discomfort.",
+                "Soft lumps should be monitored for any changes. If you have any concerns, seek medical advice from your healthcare provider."
+            ]
+        },
+        {
+            "tag": "lumps_hard",
+            "patterns": [
+                "I have a hard lump",
+                "The lump is hard",
+                "I found a hard bump",
+                "The lump feels hard",
+                "I have a hard lump under my skin"
+            ],
+            "responses": [
+                "Hard lumps can be caused by various factors and should be evaluated by a healthcare provider. Make an appointment to discuss your symptoms and receive proper care.",
+                "If you have a hard lump, it's important to consult with your healthcare provider for a proper evaluation. They can help determine the cause and provide appropriate treatment.",
+                "Hard lumps should be monitored for any changes. If you have any concerns, seek medical advice from your healthcare provider."
+            ]
+        },
+        {
+            "tag": "lumps_in_children",
+            "patterns": [
+                "My child has a lump",
+                "I found a lump on my child",
+                "My child has a bump on their skin",
+                "My child has a lump under their skin",
+                "I noticed a lump on my child"
+            ],
+            "responses": [
+                "Finding a lump on your child can be concerning. It's important to monitor the lump for any changes and consult with your child's healthcare provider for a proper evaluation.",
+                "Lumps in children can be caused by various factors, including infections or cysts. Monitor the lump and seek medical advice from your child's healthcare provider if you have any concerns.",
+                "If you find a lump on your child, it's important to keep an eye on it and note any changes. Consult with your child's healthcare provider for a proper evaluation and care."
+            ]
+        },
+        {
+            "tag": "lumps_in_adults",
+            "patterns": [
+                "I have a lump and I'm an adult",
+                "I found a lump on my body",
+                "I have a bump on my skin",
+                "I have a lump under my skin",
+                "I noticed a lump and I'm worried"
+            ],
+            "responses": [
+                "Finding a lump can be concerning. It's important to monitor the lump for any changes in size, shape, or color. If you are worried or if the lump is painful, consult with your healthcare provider for a proper evaluation.",
+                "Lumps can be caused by various factors, including infections, cysts, or other medical conditions. Monitor the lump for any changes and consult with your healthcare provider if you have any concerns.",
+                "If you find a lump, it's important to keep an eye on it and note any changes. If the lump is painful, growing, or causing you concern, seek medical advice from your healthcare provider."
+            ]
+        }
+    ]
+}

@@ -1,0 +1,106 @@
+{
+    "intents": [
+      {
+        "tag": "travel_vaccines_purpose",
+        "patterns": ["What are travel vaccines?", "Why do I need travel vaccines?", "What is the purpose of travel vaccines?"],
+        "responses": ["Travel vaccines are immunizations you may need before traveling to certain areas to protect against diseases that are not common in your home country. They help prevent illnesses and ensure a safe and healthy trip."],
+        "action": "provide_travel_vaccines_purpose_info"
+      },
+      {
+        "tag": "travel_vaccines_required",
+        "patterns": ["Which travel vaccines are required?", "What vaccines do I need for travel?", "Are there mandatory travel vaccines?"],
+        "responses": ["The required travel vaccines depend on your destination. Common travel vaccines include those for yellow fever, typhoid, hepatitis A and B, rabies, and Japanese encephalitis. Check with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_required_info"
+      },
+      {
+        "tag": "travel_vaccines_recommended",
+        "patterns": ["Which travel vaccines are recommended?", "What vaccines should I get for travel?", "Are there recommended travel vaccines?"],
+        "responses": ["Recommended travel vaccines vary by destination and personal health. Common recommendations include vaccines for hepatitis A and B, typhoid, cholera, rabies, Japanese encephalitis, and meningitis. Consult with your healthcare provider or travel clinic for personalized advice."],
+        "action": "provide_travel_vaccines_recommended_info"
+      },
+      {
+        "tag": "travel_vaccines_timing",
+        "patterns": ["When should I get travel vaccines?", "How far in advance should I get travel vaccines?", "What is the timing for travel vaccines?"],
+        "responses": ["It's best to get travel vaccines at least 4 to 6 weeks before your trip to ensure full protection. Some vaccines require multiple doses over a period of time, so plan ahead and consult with your healthcare provider or travel clinic."],
+        "action": "provide_travel_vaccines_timing_info"
+      },
+      {
+        "tag": "travel_vaccines_yellow_fever",
+        "patterns": ["Do I need a yellow fever vaccine?", "Where do I need a yellow fever vaccine?", "Is the yellow fever vaccine required for travel?"],
+        "responses": ["The yellow fever vaccine is required for travel to certain countries in Africa and South America. Some countries may also require proof of vaccination for entry. Check with your healthcare provider or travel clinic for specific requirements."],
+        "action": "provide_travel_vaccines_yellow_fever_info"
+      },
+      {
+        "tag": "travel_vaccines_typhoid",
+        "patterns": ["Do I need a typhoid vaccine?", "Where do I need a typhoid vaccine?", "Is the typhoid vaccine recommended for travel?"],
+        "responses": ["The typhoid vaccine is recommended for travel to areas with poor sanitation and limited access to clean water, such as parts of Asia, Africa, and Latin America. Consult with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_typhoid_info"
+      },
+      {
+        "tag": "travel_vaccines_hepatitis_a",
+        "patterns": ["Do I need a hepatitis A vaccine?", "Where do I need a hepatitis A vaccine?", "Is the hepatitis A vaccine recommended for travel?"],
+        "responses": ["The hepatitis A vaccine is recommended for travel to areas with poor sanitation and high rates of hepatitis A, such as parts of Asia, Africa, and Latin America. Consult with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_hepatitis_a_info"
+      },
+      {
+        "tag": "travel_vaccines_hepatitis_b",
+        "patterns": ["Do I need a hepatitis B vaccine?", "Where do I need a hepatitis B vaccine?", "Is the hepatitis B vaccine recommended for travel?"],
+        "responses": ["The hepatitis B vaccine is recommended for travel to areas with high rates of hepatitis B, such as parts of Asia, Africa, and Eastern Europe. It's especially important for travelers who may have close contact with local residents or require medical care. Consult with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_hepatitis_b_info"
+      },
+      {
+        "tag": "travel_vaccines_rabies",
+        "patterns": ["Do I need a rabies vaccine?", "Where do I need a rabies vaccine?", "Is the rabies vaccine recommended for travel?"],
+        "responses": ["The rabies vaccine is recommended for travel to areas where rabies is common, especially if you will be spending time outdoors or in rural areas, or working with animals. Consult with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_rabies_info"
+      },
+      {
+        "tag": "travel_vaccines_japanese_encephalitis",
+        "patterns": ["Do I need a Japanese encephalitis vaccine?", "Where do I need a Japanese encephalitis vaccine?", "Is the Japanese encephalitis vaccine recommended for travel?"],
+        "responses": ["The Japanese encephalitis vaccine is recommended for travel to rural areas in Asia where the disease is common, especially if you will be spending a lot of time outdoors. Consult with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_japanese_encephalitis_info"
+      },
+      {
+        "tag": "travel_vaccines_meningitis",
+        "patterns": ["Do I need a meningitis vaccine?", "Where do I need a meningitis vaccine?", "Is the meningitis vaccine recommended for travel?"],
+        "responses": ["The meningitis vaccine is recommended for travel to areas with high rates of meningitis, such as parts of Africa's meningitis belt. It's also required for pilgrims traveling to Saudi Arabia for Hajj or Umrah. Consult with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_meningitis_info"
+      },
+      {
+        "tag": "travel_vaccines_cholera",
+        "patterns": ["Do I need a cholera vaccine?", "Where do I need a cholera vaccine?", "Is the cholera vaccine recommended for travel?"],
+        "responses": ["The cholera vaccine is recommended for travel to areas with active cholera transmission, especially if you will be working in healthcare or humanitarian aid settings. Consult with your healthcare provider or travel clinic for specific recommendations."],
+        "action": "provide_travel_vaccines_cholera_info"
+      },
+      {
+        "tag": "travel_vaccines_cost",
+        "patterns": ["How much do travel vaccines cost?", "Are travel vaccines covered by insurance?", "What are the costs associated with travel vaccines?"],
+        "responses": ["The cost of travel vaccines varies depending on the vaccine and your location. Some insurance plans may cover travel vaccines, while others may not. Consult with your healthcare provider or insurance company for more information."],
+        "action": "provide_travel_vaccines_cost_info"
+      },
+      {
+        "tag": "travel_vaccines_availability",
+        "patterns": ["Where can I get travel vaccines?", "How do I access travel vaccines?", "Are travel vaccines available at my clinic?"],
+        "responses": ["Travel vaccines are available at travel clinics, some pharmacies, and healthcare providers. It's important to schedule an appointment well in advance of your trip to ensure you receive all necessary vaccines."],
+        "action": "provide_travel_vaccines_availability_info"
+      },
+      {
+        "tag": "travel_vaccines_side_effects",
+        "patterns": ["What are the side effects of travel vaccines?", "Are there any risks with travel vaccines?", "What should I expect from travel vaccines?"],
+        "responses": ["Side effects of travel vaccines vary depending on the vaccine. Common side effects include soreness at the injection site, mild fever, and fatigue. Serious side effects are rare. Consult with your healthcare provider for more information."],
+        "action": "provide_travel_vaccines_side_effects_info"
+      },
+      {
+        "tag": "travel_vaccines_consultation",
+        "patterns": ["How do I choose the right travel vaccines?", "Can you help me choose travel vaccines?", "What should I consider when choosing travel vaccines?"],
+        "responses": ["Choosing the right travel vaccines depends on your destination, health, and travel plans. It's important to discuss your options with your healthcare provider or travel clinic to make an informed decision."],
+        "action": "provide_travel_vaccines_consultation_info"
+      },
+      {
+        "tag": "travel_vaccines_myths",
+        "patterns": ["What are some common myths about travel vaccines?", "Are there any misconceptions about travel vaccines?", "What should I know about travel vaccine myths?"],
+        "responses": ["There are many myths about travel vaccines. It's important to rely on credible sources for information. Consult with your healthcare provider or trusted health organizations for accurate information."],
+        "action": "provide_travel_vaccines_myths_info"
+      }
+    ]
+  }

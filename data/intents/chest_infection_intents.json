@@ -1,0 +1,82 @@
+{
+    "intents": [
+      {
+        "tag": "chest_infection_symptoms",
+        "patterns": ["What are the symptoms of a chest infection?", "How do I know if I have a chest infection?", "What should I look for with a chest infection?"],
+        "responses": ["Common symptoms of a chest infection include a persistent cough, coughing up mucus, shortness of breath, chest pain, fever, and fatigue."],
+        "action": "provide_chest_infection_symptoms_info"
+      },
+      {
+        "tag": "chest_infection_causes",
+        "patterns": ["What causes chest infections?", "How do chest infections occur?", "What are the common causes of chest infections?"],
+        "responses": ["Chest infections are commonly caused by bacteria or viruses. They often occur after a cold or flu. Other causes include smoking, chronic lung diseases, and weakened immune systems."],
+        "action": "provide_chest_infection_causes_info"
+      },
+      {
+        "tag": "chest_infection_prevention",
+        "patterns": ["How can I prevent a chest infection?", "What are the preventive measures for chest infections?", "How do I protect myself from chest infections?"],
+        "responses": ["To prevent chest infections, practice good hygiene, avoid smoking and exposure to secondhand smoke, get vaccinated against flu and pneumonia, and maintain a healthy lifestyle."],
+        "action": "provide_chest_infection_prevention_info"
+      },
+      {
+        "tag": "chest_infection_treatment",
+        "patterns": ["What is the treatment for a chest infection?", "How is a chest infection treated?", "What should I do if I have a chest infection?"],
+        "responses": ["Treatment for a chest infection may include rest, hydration, over-the-counter pain relievers, and sometimes antibiotics if the infection is bacterial. It's important to follow your doctor's advice and complete the full course of any prescribed medication."],
+        "action": "provide_chest_infection_treatment_info"
+      },
+      {
+        "tag": "chest_infection_duration",
+        "patterns": ["How long does a chest infection last?", "What is the recovery time for a chest infection?", "When will I feel better after a chest infection?"],
+        "responses": ["The duration of a chest infection varies, but most people start to feel better within a week to 10 days. It's important to rest and follow your doctor's advice."],
+        "action": "provide_chest_infection_duration_info"
+      },
+      {
+        "tag": "chest_infection_complications",
+        "patterns": ["What are the complications of a chest infection?", "Can a chest infection cause serious health issues?", "What should I know about chest infection complications?"],
+        "responses": ["Complications of a chest infection can include pneumonia, pleurisy, and worsening of chronic lung conditions. It's important to seek medical attention if you experience severe symptoms or if symptoms persist."],
+        "action": "provide_chest_infection_complications_info"
+      },
+      {
+        "tag": "chest_infection_risk_factors",
+        "patterns": ["Who is at risk for a chest infection?", "What are the risk factors for a chest infection?", "Am I at risk for a chest infection?"],
+        "responses": ["People at higher risk for chest infections include young children, elderly individuals, smokers, and those with chronic lung diseases or weakened immune systems. It's important to take preventive measures to reduce your risk."],
+        "action": "provide_chest_infection_risk_factors_info"
+      },
+      {
+        "tag": "chest_infection_vs_pneumonia",
+        "patterns": ["What is the difference between a chest infection and pneumonia?", "How can I tell if I have a chest infection or pneumonia?", "Is it a chest infection or pneumonia?"],
+        "responses": ["A chest infection can refer to any infection in the chest, including bronchitis and pneumonia. Pneumonia is a specific type of chest infection that affects the air sacs in the lungs and can be more severe. Both conditions require medical attention for proper diagnosis and treatment."],
+        "action": "provide_chest_infection_vs_pneumonia_info"
+      },
+      {
+        "tag": "chest_infection_myths",
+        "patterns": ["What are some common myths about chest infections?", "Are there any misconceptions about chest infections?", "What should I know about chest infection myths?"],
+        "responses": ["There are many myths about chest infections. It's important to rely on credible sources for information. Consult with your healthcare provider or trusted health organizations for accurate information."],
+        "action": "provide_chest_infection_myths_info"
+      },
+      {
+        "tag": "chest_infection_home_remedies",
+        "patterns": ["Are there any home remedies for chest infections?", "Can I treat a chest infection at home?", "What home remedies can help with a chest infection?"],
+        "responses": ["Home remedies for chest infections include staying hydrated, using a humidifier, resting, and taking over-the-counter pain relievers. However, it's important to consult with your healthcare provider for proper diagnosis and treatment."],
+        "action": "provide_chest_infection_home_remedies_info"
+      },
+      {
+        "tag": "chest_infection_follow_up",
+        "patterns": ["What should I do after a chest infection?", "Is there any follow-up needed after a chest infection?", "What are the next steps after a chest infection?"],
+        "responses": ["After a chest infection, it's important to complete any prescribed medication and follow your doctor's instructions. Schedule a follow-up appointment if symptoms persist or if you experience any complications."],
+        "action": "provide_chest_infection_follow_up_info"
+      },
+      {
+        "tag": "chest_infection_in_children",
+        "patterns": ["How do chest infections affect children?", "What should I know about chest infections in children?", "Are chest infections common in children?"],
+        "responses": ["Chest infections are common in children and can cause symptoms such as cough, fever, and difficulty breathing. It's important to seek medical attention for proper diagnosis and treatment."],
+        "action": "provide_chest_infection_in_children_info"
+      },
+      {
+        "tag": "chest_infection_in_adults",
+        "patterns": ["Can adults get chest infections?", "What should I know about chest infections in adults?", "Are chest infections common in adults?"],
+        "responses": ["Chest infections can affect adults and cause symptoms such as cough, chest pain, and shortness of breath. It's important to seek medical attention for proper diagnosis and treatment."],
+        "action": "provide_chest_infection_in_adults_info"
+      }
+    ]
+  }

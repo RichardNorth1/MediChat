@@ -1,0 +1,187 @@
+{
+    "intents": [
+      {
+        "tag": "heart_attack_symptoms",
+        "patterns": [
+          "I feel chest pain and tightness.",
+          "I think I might be having a heart attack.",
+          "What are the symptoms of a heart attack?",
+          "I have pain in my chest and left arm."
+        ],
+        "responses": [
+          "Heart attack symptoms can include chest pain, shortness of breath, pain in the arm, neck, or jaw, and nausea. Please call emergency services immediately!"
+        ],
+        "action": "alert_heart_attack"
+      },
+      {
+        "tag": "stroke_symptoms",
+        "patterns": [
+          "I feel numbness on one side of my body.",
+          "I can't move my arm properly.",
+          "I have trouble speaking and feel dizzy.",
+          "What are the symptoms of a stroke?"
+        ],
+        "responses": [
+          "Stroke symptoms include sudden numbness or weakness, difficulty speaking, confusion, and vision problems. Call emergency services immediately and note the time the symptoms started!"
+        ],
+        "action": "alert_stroke"
+      },
+      {
+        "tag": "allergic_reaction",
+        "patterns": [
+          "My throat is closing up.",
+          "I have swelling and can't breathe.",
+          "I think I'm having a severe allergic reaction.",
+          "What should I do for anaphylaxis?"
+        ],
+        "responses": [
+          "Severe allergic reactions (anaphylaxis) require immediate medical attention. Use an epinephrine auto-injector if available and call emergency services right away."
+        ],
+        "action": "alert_anaphylaxis"
+      },
+      {
+        "tag": "severe_bleeding",
+        "patterns": [
+          "I'm bleeding a lot.",
+          "How do I stop severe bleeding?",
+          "What should I do if someone is bleeding heavily?",
+          "I can't stop the bleeding."
+        ],
+        "responses": [
+          "For severe bleeding, apply firm pressure to the wound with a clean cloth. Keep the area elevated if possible and call emergency services immediately."
+        ],
+        "action": "provide_severe_bleeding_advice"
+      },
+      {
+        "tag": "choking_emergency",
+        "patterns": [
+          "I'm choking and can't breathe.",
+          "What should I do if someone is choking?",
+          "I can't speak or breathe properly.",
+          "Help, I think I'm choking."
+        ],
+        "responses": [
+          "For choking, try to cough forcefully. If you're assisting someone, use abdominal thrusts (Heimlich maneuver). Call emergency services if the airway remains blocked."
+        ],
+        "action": "provide_choking_advice"
+      },
+      {
+        "tag": "burn_emergency",
+        "patterns": [
+          "I have a severe burn.",
+          "What should I do for a bad burn?",
+          "My skin is blistering and red.",
+          "How do I treat a deep burn?"
+        ],
+        "responses": [
+          "For severe burns, cool the area under running water for 10-20 minutes but avoid ice. Cover the burn with a clean, non-stick dressing and seek emergency medical help."
+        ],
+        "action": "provide_burn_advice"
+      },
+      {
+        "tag": "unconscious_person",
+        "patterns": [
+          "Someone is unconscious and not breathing.",
+          "I found someone unconscious.",
+          "What should I do if someone faints?",
+          "Help, someone collapsed and isn't responding."
+        ],
+        "responses": [
+          "Check if the person is breathing. If not, begin CPR and call emergency services immediately. If they're breathing, place them in the recovery position and monitor them."
+        ],
+        "action": "handle_unconscious_person"
+      },
+      {
+        "tag": "poisoning",
+        "patterns": [
+          "I think I was poisoned.",
+          "What should I do for poisoning?",
+          "I accidentally ingested something harmful.",
+          "Help, I think someone is poisoned."
+        ],
+        "responses": [
+          "For poisoning, call poison control or emergency services immediately. Do not induce vomiting unless instructed by a medical professional."
+        ],
+        "action": "alert_poisoning"
+      },
+      {
+        "tag": "seizure_emergency",
+        "patterns": [
+          "Someone is having a seizure.",
+          "What should I do during a seizure?",
+          "Help, I think someone is having a fit.",
+          "How do I handle a seizure?"
+        ],
+        "responses": [
+          "During a seizure, keep the person safe by removing objects that may cause harm. Do not restrain them or put anything in their mouth. Call emergency services if the seizure lasts more than 5 minutes or if it's their first seizure."
+        ],
+        "action": "provide_seizure_advice"
+      },
+      {
+        "tag": "difficulty_breathing",
+        "patterns": [
+          "I'm struggling to breathe.",
+          "I feel like I'm suffocating.",
+          "What should I do if I can't breathe?",
+          "Help, I can't get enough air."
+        ],
+        "responses": [
+          "Difficulty breathing can be a sign of a serious condition. Sit upright, try to stay calm, and call emergency services immediately."
+        ],
+        "action": "alert_breathing_difficulty"
+      },
+      {
+        "tag": "electric_shock",
+        "patterns": [
+          "I got an electric shock.",
+          "What should I do after an electric shock?",
+          "Someone was electrocuted, help!",
+          "Is an electric shock dangerous?"
+        ],
+        "responses": [
+          "If someone is electrocuted, do not touch them directly. Turn off the power source, if possible, and call emergency services immediately. Check for breathing and provide CPR if necessary."
+        ],
+        "action": "handle_electric_shock"
+      },
+      {
+        "tag": "drowning_emergency",
+        "patterns": [
+          "Someone is drowning, help!",
+          "What should I do if someone is drowning?",
+          "I found someone unconscious in water.",
+          "How do you save someone from drowning?"
+        ],
+        "responses": [
+          "If someone is drowning, get them out of the water if it's safe to do so. Begin CPR if they are not breathing and call emergency services immediately."
+        ],
+        "action": "handle_drowning_emergency"
+      },
+      {
+        "tag": "broken_bone",
+        "patterns": [
+          "I think I broke a bone.",
+          "What should I do for a fracture?",
+          "My arm is swollen and painful after a fall.",
+          "How do I treat a broken leg?"
+        ],
+        "responses": [
+          "For a suspected broken bone, immobilize the area with a splint or sling, apply ice to reduce swelling, and seek medical help immediately."
+        ],
+        "action": "provide_broken_bone_advice"
+      },
+      {
+        "tag": "suicidal_thoughts",
+        "patterns": [
+          "I feel like ending my life.",
+          "I'm having suicidal thoughts.",
+          "I need help, I'm feeling hopeless.",
+          "What should I do if I feel suicidal?"
+        ],
+        "responses": [
+          "I'm sorry you're feeling this way. Please know that you're not alone, and there are people who care about you. Reach out to a trusted friend, family member, or mental health professional immediately. You can also call a suicide hotline for urgent support."
+        ],
+        "action": "alert_mental_health_crisis"
+      }
+    ]
+  }
+  
