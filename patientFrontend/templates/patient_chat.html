@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .typing-indicator {
+            display: none;
+            font-style: italic;
+            color: gray;
+            margin: 10px 0;
+        }
+
+        .spinner {
+            display: inline-block;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="message-list" id="message-list" style="overflow-y: auto; height: 80vh;"></div>
+        <div class="input-container">
+            <input type="text" id="message-input" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="typing-indicator">
+            <span id="typing-text">Patient is typing...</span>
+            <div class="spinner" id="typing-spinner" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        let ws;
+        let chatId = "";  // Variable to hold the UUID for the chat session
+        let typingTimeout; // Timeout for clearing the typing indicator
+
+        // Generate a new UUID for each session
+        function generateUUID() {
+            chatId = crypto.randomUUID(); // Generates a unique ID
+            console.log("Generated chat ID:", chatId);
+        }
+
+        function connectWebSocket() {
+            if (!chatId) {
+                console.error('Chat ID is not set');
+                return;
+            }
+
+            ws = new WebSocket(`ws://localhost:8000/ws/chatbot/${chatId}`);
+
+            ws.onopen = function() {
+                console.log('WebSocket connection established');
+            };
+
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+
+                // Handle typing status
+                if (data.status === "typing") {
+                    showTypingIndicator('bot');
+                    return;
+                }
+
+                // Check if the conversation has been escalated
+                if (data.status === "escalated") {
+                    console.log('Conversation escalated, switching to doctor chat...');
+                    connectDoctorWebSocket(data.client_id);
+                    return;
+                }
+
+                // Handle received message
+                const message = data.message || "No message received";
+                console.log('Received message:', message);
+                addMessageToList(message, 'bot-message');
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket connection closed');
+            };
+        }
+
+        // Connect to the doctor WebSocket
+        function connectDoctorWebSocket(clientId) {
+            console.log("Attempting to connect to doctor WebSocket with clientId:", clientId);
+
+            // Close the current WebSocket (chatbot connection) if escalated
+            if (ws) {
+                ws.close();
+            }
+
+            // Establish a new WebSocket connection for the doctor
+            ws = new WebSocket(`ws://localhost:8000/ws/doctor/${clientId}`);
+
+            ws.onopen = function() {
+                console.log('Doctor WebSocket connection established');
+            };
+
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+
+                // Handle typing status
+                if (data.status === "typing") {
+                    showTypingIndicator('doctor');
+                    return;
+                }
+
+                // Handle received message
+                const message = data.message || "No message received";
+                console.log('Doctor received message:', message);
+                addMessageToList(message, 'doctor-message');
+            };
+
+            ws.onerror = function(error) {
+                console.error('Doctor WebSocket error:', error);
+            };
+
+            ws.onclose = function() {
+                console.log('Doctor WebSocket connection closed');
+            };
+        }
+
+        // Send a message
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value;
+            if (message.trim()) {
+                console.log('Sending message:', message);
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(message);
+                    addMessageToList(message, 'user-message'); // Add to the message list
+                    input.value = '';  // Clear input field
+                } else {
+                    console.error('WebSocket is not open');
+                }
+            }
+        }
+
+        // Add a message to the chat UI
+        function addMessageToList(message, sender) {
+            const messageList = document.getElementById('message-list');
+
+            // Remove typing indicator if present
+            removeTypingIndicator();
+
+            // Create message element
+            const messageElement = document.createElement('div');
+            messageElement.className = `message ${sender}`;
+            messageElement.textContent = message;
+            messageList.appendChild(messageElement);
+
+            // Auto-scroll to the bottom
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTypingIndicator(sender) {
+            const typingIndicator = document.getElementById('typing-indicator');
+            const typingText = document.getElementById('typing-text');
+            const typingSpinner = document.getElementById('typing-spinner');
+
+            typingText.style.display = 'none'; // Hide text
+            typingSpinner.style.display = 'inline-block'; // Show spinner
+            typingIndicator.style.display = 'block'; // Show typing indicator
+
+            // Change the text based on the sender (bot or doctor)
+            typingText.textContent = sender === 'bot' ? "Chatbot is typing..." : "Doctor is typing...";
+
+            // Auto-scroll to the bottom
+            const messageList = document.getElementById('message-list');
+            messageList.scrollTop = messageList.scrollHeight;
+
+            // Clear typing indicator after a timeout (e.g., 3 seconds)
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(removeTypingIndicator, 3000);
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.style.display = 'none'; // Hide the indicator
+            }
+        }
+
+        // Add an event listener for the Enter key
+        document.getElementById('message-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();  // Trigger the send message function when Enter is pressed
+                event.preventDefault();  // Prevent default behavior (e.g., creating a new line)
+            }
+        });
+
+        // Initialize chat session
+        window.onload = function() {
+            generateUUID();
+            connectWebSocket();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.chat-container {
+    width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.message-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+/* User message (sent by the patient, aligned to the right) */
+.user-message {
+    align-self: flex-end;
+    background-color: #007aff;
+    color: white;
+    margin-right: 10px; /* Optional: Space between user messages and chat edge */
+}
+
+/* Bot message (received, aligned to the left) */
+.bot-message {
+    align-self: flex-start;
+    background-color: #e5e5ea;
+    color: black;
+    margin-left: 10px; /* Optional: Space between bot messages and chat edge */
+}
+
+/* Doctor message (received, aligned to the left, same as bot) */
+.doctor-message {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    color: black;
+    margin-left: 10px; /* Optional: Space between doctor messages and chat edge */
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: white;
+    border-top: 1px solid #ddd;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007aff;
+    color: white;
+    cursor: pointer;
+}
+
+.bot-typing, .doctor-typing {
+    font-style: italic;
+    color: gray;
+    margin: 5px;
+}
+

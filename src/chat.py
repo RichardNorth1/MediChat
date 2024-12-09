@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -11,7 +12,7 @@ colorama.init()
 from colorama import Fore, Style
 import random
 import language_tool_python
-import data_loader
+from . import data_loader
 
 # Load the trained deep learning model
 model = keras.models.load_model('data/models/chat_model.h5')
@@ -56,32 +57,37 @@ def correct_grammar(input_text):
 
 def escalation_check(input_text):
     escalate_text = [
-            "I need to speak to a human",
-            "Can I talk to a real person?",
-            "I want to escalate this issue",
-            "I need help from a human",
-            "Can you transfer me to a human agent?",
-            "I am not satisfied with this response",
-            "I need more assistance",
-            "This is not helping",
-            "I need to talk to someone",
-            "Can you connect me to a human?",
-            "I need to speak with a representative",
-            "I want to talk to a human",
-            "I need human assistance",
-            "Can I get help from a person?",
-            "I need to escalate this",
-            "I need to speak to customer service",
-            "I want to talk to a support agent",
-            "Can you escalate this issue?",
-            "I need to speak to someone in charge",
-            "I need to talk to a manager",
-            "can i speak to a doctor",
-            "can i speak to a nurse",
-            "can i speak to a physician",
-            "i need to speak to someone"
-        ]
+        "I need to speak to a human",
+        "Can I talk to a real person?",
+        "I want to escalate this issue",
+        "I need help from a human",
+        "Can you transfer me to a human agent?",
+        "I am not satisfied with this response",
+        "I need more assistance",
+        "This is not helping",
+        "I need to talk to someone",
+        "Can you connect me to a human?",
+        "I need to speak with a representative",
+        "I want to talk to a human",
+        "I need human assistance",
+        "Can I get help from a person?",
+        "I need to escalate this",
+        "I need to speak to customer service",
+        "I want to talk to a support agent",
+        "Can you escalate this issue?",
+        "I need to speak to someone in charge",
+        "I need to talk to a manager",
+        "can i speak to a doctor",
+        "can i speak to a nurse",
+        "can i speak to a physician",
+        "i need to speak to someone"
+    ]
+    
+    # Log the input text being checked for escalation
+    logging.info(f"Checking for escalation in input: {input_text}")
+    
     return any(escalate_phrase in input_text.lower() for escalate_phrase in escalate_text)
+
 
 def get_response(intents, intent):
     for data in intents:
@@ -107,15 +113,19 @@ def handle_chat(input_text):
     # Check for symptoms that require escalation
     detected_symptoms = symptom_checker(corrected_inp)
     if detected_symptoms:
-        return f"Escalating the conversation to a human agent due to detected symptoms: {', '.join(detected_symptoms)}."
+        return {"message": f"Escalating the conversation to a human agent due to detected symptoms: {', '.join(detected_symptoms)}.", "escalate": True}
+
+    # Check if the input text contains any escalation trigger
+    if escalation_check(corrected_inp):
+        return {"message": "Escalating the conversation to a human agent.", "escalate": True}
 
     # Predict the intent of the user input
     intent = predict_intent(corrected_inp)
 
-    if escalation_check(corrected_inp):
-        return "Escalating the conversation to a human agent."
-    else:
-        return get_response(all_intents, intent)
+    # Get response based on the intent
+    response_message = get_response(all_intents, intent)
+    return {"message": response_message, "escalate": False}
+
 
 def chat():
     while True:
