@@ -35,7 +35,7 @@ body {
 
 /* User message (sent by the patient, aligned to the right) */
 .user-message {
-    align-self: flex-end;
+    justify-self: flex-end;
     background-color: #007aff;
     color: white;
     margin-right: 10px; /* Optional: Space between user messages and chat edge */
@@ -87,3 +87,25 @@ button {
     margin: 5px;
 }
 
+.typing-indicator {
+    display: none;
+    font-style: italic;
+    color: gray;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.spinner {
+    display: inline-block;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

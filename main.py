@@ -63,6 +63,13 @@ class ConnectionManager:
             await self.broadcast_to_doctors(escalation_message)
             logging.info(f"Escalated chat for client {client_id}")
 
+    async def send_typing_status(self, client_id: str, sender: str):
+        """Send typing status to the specified client."""
+        message = json.dumps({"status": "typing", "sender": sender})
+        if client_id in self.active_connections:
+            for connection in self.active_connections[client_id]:
+                await connection.send_text(message)
+
 # Instantiate the connection manager
 connection_manager = ConnectionManager()
 
@@ -70,8 +77,6 @@ connection_manager = ConnectionManager()
 async def get_chats():
     """Return the statuses of all clients and their escalated chats."""
     return {"client_statuses": connection_manager.client_statuses, "escalated_chats": connection_manager.escalated_chats}
-
-# In your FastAPI application
 
 @app.get("/api/escalated_chats")
 async def get_escalated_chats():
@@ -82,22 +87,26 @@ async def get_escalated_chats():
     ]
     return escalated_chats
 
+
+# Update chatbot_endpoint to handle typing status
 @app.websocket("/ws/chatbot/{client_id}")
 async def chatbot_endpoint(websocket: WebSocket, client_id: str):
-    """WebSocket endpoint for chatbot interactions."""
     await connection_manager.connect(websocket, client_id)
     try:
         while True:
             data = await websocket.receive_text()
             logging.info(f"Received from user {client_id}: {data}")
 
-            # Call the handle_chat function (assumed to process the message)
-            response = handle_chat(data)
+            # Handle typing status
+            if data == "typing":
+                logging.info(f"User {client_id} is typing")
+                await connection_manager.send_typing_status(client_id, "chatbot")
+                continue
 
+            response = handle_chat(data)
             if not response or "message" not in response:
                 response = {"message": "No message received"}
 
-            # Send the chatbot response to the client
             await websocket.send_text(json.dumps(response))
             logging.info(f"Sent to user {client_id}: {response}")
 
@@ -113,25 +122,20 @@ async def chatbot_endpoint(websocket: WebSocket, client_id: str):
 
 @app.websocket("/ws/doctor/{client_id}")
 async def doctor_patient_endpoint(websocket: WebSocket, client_id: str):
-    """
-    WebSocket endpoint for direct communication between a doctor and a specific patient.
-    """
     await connection_manager.connect(websocket, client_id)
     try:
         while True:
-            # Receive message from doctor
             data = await websocket.receive_text()
             logging.debug(f"Received from doctor for patient {client_id}: {data}")
 
-            # Find the patient's WebSocket connection
+            if data == "typing":
+                await connection_manager.send_typing_status(client_id, "doctor")
+                continue
+
             patient_connections = connection_manager.active_connections.get(client_id)
             if patient_connections:
-                # Prepare the message to send to the patient (ensure it's in JSON format)
                 message = {"message": data}
-
-                # Send the message to the patient (client) as JSON-encoded text
                 for patient_connection in patient_connections:
-                    # Only send the message to the patient (not the doctor)
                     if patient_connection != websocket:
                         await connection_manager.send_personal_message(json.dumps(message), patient_connection)
                 logging.debug(f"Sent message from doctor to patient #{client_id}: {message}")

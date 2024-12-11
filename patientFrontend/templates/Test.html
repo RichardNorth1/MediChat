@@ -45,26 +45,26 @@
             document.getElementById('chatbot-typing-indicator').style.display = 'none';
         }
 
-        function showTypingIndicator(sender) {
-            // const typingText = document.getElementById('typing-text');
-            // typingText.textContent = sender === 'bot' ? "Chatbot is typing..." : "Doctor is typing...";
-            // const messageList = document.getElementById('message-list');
-            messageList.scrollTop = messageList.scrollHeight;
-            clearTimeout(typingTimeout);
-            typingTimeout = setTimeout(removeTypingIndicator, 3000);
-        }
+        // function showTypingIndicator(sender) {
+        //     // const typingText = document.getElementById('typing-text');
+        //     // typingText.textContent = sender === 'bot' ? "Chatbot is typing..." : "Doctor is typing...";
+        //     // const messageList = document.getElementById('message-list');
+        //     messageList.scrollTop = messageList.scrollHeight;
+        //     clearTimeout(typingTimeout);
+        //     typingTimeout = setTimeout(removeTypingIndicator, 3000);
+        // }
 
-        function showBlock() {
-            document.getElementById('typing-indicator').style.display = 'block';
+        // function showBlock() {
+        //     document.getElementById('typing-indicator').style.display = 'block';
 
-        }
+        // }
 
-        function removeTypingIndicator() {
-            const typingIndicator = document.getElementById('typing-indicator');
-            if (typingIndicator) {
-                typingIndicator.style.display = 'none';
-            }
-        }
+        // function removeTypingIndicator() {
+        //     const typingIndicator = document.getElementById('typing-indicator');
+        //     if (typingIndicator) {
+        //         typingIndicator.style.display = 'none';
+        //     }
+        // }
 
         function connectWebSocket() {
             if (!chatId) {
@@ -149,11 +149,20 @@
                 // hideDoctorTypingIndicator();
             };
 
-            document.getElementById('message-input').addEventListener('keydown', function() {
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.send("typing");
+
+            document.getElementById('message-input').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                    event.preventDefault();
+                } else {
+                    const typingMessage = JSON.stringify({
+                        status: "typing",
+                        sender: "patient",
+                    });
+                    ws.send(typingMessage); // Use 'ws' instead of 'socket'
                 }
             });
+
 
             ws.onerror = function(error) {
                 console.error('Doctor WebSocket error:', error);
@@ -164,23 +173,37 @@
             };
         }
 
-        function sendMessage() {
-            const input = document.getElementById('message-input');
-            const message = input.value;
-            if (message.trim()) {
-                console.log('Sending message:', message);
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.send(message);
-                    addMessageToList(message, 'user-message');
-                    input.value = '';
-                } else {
-                    console.error('WebSocket is not open');
-                }
+        const sendMessage = function() {
+            const message = document.getElementById('input').value;
+            if (message.trim() === "") return;
+
+            const messagePayload = JSON.stringify({
+                status: "message",
+                sender: senderId,
+                content: message,
+            });
+
+            ws.send(messagePayload);
+
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'outgoing');
+            messageElement.textContent = message;
+            document.getElementById('messages').appendChild(messageElement);
+
+            if (!chatHistory[currentChat]) {
+                chatHistory[currentChat] = [];
             }
-        }
+            chatHistory[currentChat].push({ type: 'outgoing', content: message });
+            localStorage.setItem(`chatHistory_${currentChat}`, JSON.stringify(chatHistory[currentChat]));
+
+            document.getElementById('input').value = '';
+            scrollToBottom();
+        };
+
 
         function addMessageToList(message, sender) {
             const messageList = document.getElementById('message-list');
+
             const messageElement = document.createElement('div');
             messageElement.className = `message ${sender}`;
             messageElement.textContent = message;
@@ -189,16 +212,16 @@
             messageList.scrollTop = messageList.scrollHeight;
         }
 
-        document.getElementById('message-input').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-                event.preventDefault();
-            }
-        });
+        // document.getElementById('message-input').addEventListener('keydown', function(event) {
+        //     if (event.key === 'Enter') {
+        //         sendMessage();
+        //         event.preventDefault();
+        //     }
+        // });
 
         window.onload = function() {
             generateUUID();
-            connectWebSocket();
+            connectDoctorWebSocket();
         };
     </script>
 </body>
