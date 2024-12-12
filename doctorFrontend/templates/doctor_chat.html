@@ -71,23 +71,26 @@
             socket = new WebSocket(`ws://localhost:8000/ws/doctor/${clientId}`);
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                if (data.status === "typing" && data.sender === "doctor") {
-                    showTypingIndicator();
-                    setTimeout(hideTypingIndicator, 3000);
-                } else {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('message', 'incoming');
-                    messageElement.textContent = data.message;
-                    document.getElementById('messages').appendChild(messageElement);
-                    scrollToBottom();
-                    hideTypingIndicator();
+                if (data.status === "typing") {
+                    if (data.sender === "patient") {
+                        showTypingIndicator();
+                        setTimeout(hideTypingIndicator, 3000);
+                    }
+                    return;
                 }
+
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'incoming');
+                messageElement.textContent = data.message;
+                document.getElementById('messages').appendChild(messageElement);
+                scrollToBottom();
+                hideTypingIndicator();
             };
 
             const sendMessage = function() {
                 const message = document.getElementById('input').value;
                 if (message.trim() === "") return;
-                socket.send(message);
+                socket.send(JSON.stringify({ message: message, sender: "doctor" }));
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message', 'outgoing');
                 messageElement.textContent = message;
@@ -106,9 +109,9 @@
                 if (event.key === 'Enter') {
                     sendMessage();
                     event.preventDefault();
-                }else {
+                } else {
                     console.log('Typing');
-                    socket.send("typing");
+                    socket.send(JSON.stringify({ status: "typing", sender: "doctor" }));
                 }
             });
 
@@ -119,8 +122,6 @@
             const messages = document.getElementById('messages');
             messages.scrollTop = messages.scrollHeight;
         }
-
-        
 
         loadEscalatedChats();
         setInterval(loadEscalatedChats, 5000);

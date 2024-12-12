@@ -10,7 +10,7 @@
     <div class="chat-container">
         <div class="message-list" id="message-list" style="overflow-y: auto; height: 80vh;"></div>
         <div id="typing-indicator" class="typing-indicator" style="display: none;">Chatbot is typing...</div>
-        <div id="doctor-typing-text" class="typing-indicator" style="display: nfone;">Doctor is typing...</div>
+        <div id="doctor-typing-text" class="typing-indicator" style="display: none;">Doctor is typing...</div>
         <div class="input-container">
             <input type="text" id="message-input" placeholder="Type a message...">
             <button onclick="sendMessage()">Send</button>
@@ -22,51 +22,35 @@
         let chatId = "";
         let endpoint = "chatbot";
         let typingTimeout;
+        let isWebSocketOpen = false;
 
         function generateUUID() {
             chatId = crypto.randomUUID();
             console.log("Generated chat ID:", chatId);
         }
+
         function showDoctorTypingIndicator() {
-            console.log('showdoctor');
             document.getElementById('doctor-typing-text').style.display = 'block';
         }
 
         function showChatbotTypingIndicator() {
-            document.getElementById('chatbot-typing-text').style.display = 'block';
+            document.getElementById('typing-indicator').style.display = 'block';
         }
 
         function hideDoctorTypingIndicator() {
-            console.log('hidedoctor');
             document.getElementById('doctor-typing-text').style.display = 'none';
         }
 
         function hideChatbotTypingIndicator() {
-            document.getElementById('chatbot-typing-indicator').style.display = 'none';
-        }
-
-        function showTypingIndicator(sender) {
-            // const typingText = document.getElementById('typing-text');
-            // typingText.textContent = sender === 'bot' ? "Chatbot is typing..." : "Doctor is typing...";
-            // const messageList = document.getElementById('message-list');
-            messageList.scrollTop = messageList.scrollHeight;
-            clearTimeout(typingTimeout);
-            typingTimeout = setTimeout(removeTypingIndicator, 3000);
-        }
-
-        function showBlock() {
-            document.getElementById('typing-indicator').style.display = 'block';
-
-        }
-
-        function removeTypingIndicator() {
-            const typingIndicator = document.getElementById('typing-indicator');
-            if (typingIndicator) {
-                typingIndicator.style.display = 'none';
-            }
+            document.getElementById('typing-indicator').style.display = 'none';
         }
 
         function connectWebSocket() {
+            if (isWebSocketOpen) {
+                console.log("WebSocket is already open");
+                return;  // Don't open a new connection if one is already active
+            }
+
             if (!chatId) {
                 console.error('Chat ID is not set');
                 return;
@@ -77,23 +61,27 @@
             console.log('endpoint = ', endpoint);
 
             ws.onopen = function() {
+                isWebSocketOpen = true;
                 console.log('WebSocket connection established');
             };
 
             ws.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                console.log('data = ', data);
+                console.log('Received message:', data);
+                
                 if (data.status === "typing") {
-                    if (endpoint === "chatbot") {
-                        console.log('in if')
-                    } 
-                    else {
-                        console.log('in else')
-                    }       
-                    console.log(`${endpoint.charAt(0).toUpperCase() + endpoint.slice(1)} is typing...`);
+                    console.log('Typing indicator received');
+                    if (data.sender === "chatbot") {
+                        showChatbotTypingIndicator();
+                        setTimeout(hideChatbotTypingIndicator, 3000);
+                    } else if (data.sender === "doctor") {
+                        showDoctorTypingIndicator();
+                        setTimeout(hideDoctorTypingIndicator, 3000);
+                    }
                     return;
                 }
 
+                // Handle escalation to doctor
                 if (data.status === "escalated") {
                     console.log('Conversation escalated, switching to doctor chat...');
                     connectDoctorWebSocket(data.client_id);
@@ -102,9 +90,7 @@
                 }
 
                 const message = data.message || "No message received";
-                console.log('Received message:', message);
-                addMessageToList(message, 'bot-message');
-                // hideChatbotTypingIndicator();
+                addMessageToList(message, data.sender === "doctor" ? 'doctor-message' : 'bot-message');
             };
 
             ws.onerror = function(error) {
@@ -113,6 +99,9 @@
 
             ws.onclose = function() {
                 console.log('WebSocket connection closed');
+                isWebSocketOpen = false;
+                // Attempt to reconnect
+                setTimeout(connectWebSocket, 1000);
             };
         }
 
@@ -129,31 +118,24 @@
 
             ws.onopen = function() {
                 console.log('Doctor WebSocket connection established');
-                console.log('endpointdoc = ', endpoint);
             };
 
             ws.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-
-                if (data.status === "typing"&& data.sender === "doctor") {
-                    console.log("sender:" , data.sender);
-                    showDoctorTypingIndicator();
-                    setTimeout(hideDoctorTypingIndicator, 3000);
-                    
+                if (data.status === "typing") {
+                    if (data.sender === "doctor") {
+                        showDoctorTypingIndicator();
+                        setTimeout(hideDoctorTypingIndicator, 3000);
+                    } else if (data.sender === "chatbot") {
+                        showChatbotTypingIndicator();
+                        setTimeout(hideChatbotTypingIndicator, 3000);
+                    }
                     return;
                 }
-                
-                const message = data.message || "No message received";
-                console.log('Doctor received message:', message);
-                addMessageToList(message, 'doctor-message');
-                // hideDoctorTypingIndicator();
-            };
 
-            document.getElementById('message-input').addEventListener('keydown', function() {
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.send("typing");
-                }
-            });
+                const message = data.message || "No message received";
+                addMessageToList(message, data.sender === "doctor" ? 'doctor-message' : 'bot-message');
+            };
 
             ws.onerror = function(error) {
                 console.error('Doctor WebSocket error:', error);
@@ -161,6 +143,9 @@
 
             ws.onclose = function() {
                 console.log('Doctor WebSocket connection closed');
+                isWebSocketOpen = false;
+                // Attempt to reconnect
+                setTimeout(() => connectDoctorWebSocket(clientId), 1000);
             };
         }
 
@@ -170,7 +155,7 @@
             if (message.trim()) {
                 console.log('Sending message:', message);
                 if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.send(message);
+                    ws.send(JSON.stringify({ message: message, sender: "patient" }));
                     addMessageToList(message, 'user-message');
                     input.value = '';
                 } else {
@@ -180,7 +165,17 @@
         }
 
         function addMessageToList(message, sender) {
+            console.log('Adding message:', message); // Log message before appending to the DOM
+
             const messageList = document.getElementById('message-list');
+            const lastMessage = messageList.lastElementChild;
+
+            // Check if the last message is from the same sender and contains the same text
+            if (lastMessage && lastMessage.textContent === message && lastMessage.classList.contains(sender)) {
+                console.log('Duplicate message from the same sender, not adding.');
+                return;
+            }
+
             const messageElement = document.createElement('div');
             messageElement.className = `message ${sender}`;
             messageElement.textContent = message;
@@ -189,10 +184,16 @@
             messageList.scrollTop = messageList.scrollHeight;
         }
 
+
         document.getElementById('message-input').addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 sendMessage();
                 event.preventDefault();
+            } else {
+                console.log('Typing');
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({ status: "typing", sender: "patient" }));
+                }
             }
         });
 
