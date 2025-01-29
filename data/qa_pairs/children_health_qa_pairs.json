@@ -1,0 +1,101 @@
+{
+    "qa_pairs": [
+      {
+        "question": "What are the common developmental milestones for a 1-year-old?",
+        "answer": "At 1 year, most babies can sit without support, crawl, stand while holding onto something, say simple words like 'mama' or 'dada,' and imitate simple actions like clapping hands."
+      },
+      {
+        "question": "What are common signs of teething in babies?",
+        "answer": "Common signs of teething include drooling, fussiness, gum swelling or tenderness, chewing on objects, and sometimes a slight fever."
+      },
+      {
+        "question": "When should my child get their first vaccination?",
+        "answer": "A child should receive their first vaccinations at 2 months of age. These typically include the DTaP (diphtheria, tetanus, and pertussis), Hib (Haemophilus influenzae type b), IPV (inactivated polio vaccine), and the first dose of the hepatitis B vaccine."
+      },
+      {
+        "question": "What is the MMR vaccine and when should my child receive it?",
+        "answer": "The MMR vaccine protects against measles, mumps, and rubella. It is typically given in two doses: the first at 12-15 months and the second at 4-6 years."
+      },
+      {
+        "question": "How can I tell if my child has a fever?",
+        "answer": "A fever in children is generally considered a temperature of 100.4°F (38°C) or higher. You can check for fever using a thermometer, and other signs may include feeling hot to the touch, sweating, chills, or flushed skin."
+      },
+      {
+        "question": "What should I do if my child has a fever?",
+        "answer": "If your child has a fever, keep them hydrated, dress them in lightweight clothing, and monitor their temperature. You can give them fever-reducing medication like acetaminophen (Tylenol) or ibuprofen (Advil), but always follow your doctor’s guidance. If the fever persists for more than 2-3 days or exceeds 104°F (40°C), consult a doctor."
+      },
+      {
+        "question": "How do I know if my child has a cold or the flu?",
+        "answer": "Colds usually cause symptoms like a runny nose, sneezing, and mild coughing, while the flu tends to cause more severe symptoms such as high fever, body aches, chills, and fatigue. A flu test can confirm the diagnosis."
+      },
+      {
+        "question": "What is ADHD and how can it be diagnosed in children?",
+        "answer": "ADHD (Attention-Deficit/Hyperactivity Disorder) is a condition that affects a child's ability to focus and regulate behavior. It can be diagnosed through a combination of behavioral assessments, questionnaires, and a medical evaluation. Common signs include difficulty paying attention, excessive movement, and impulsivity."
+      },
+      {
+        "question": "What are some common childhood allergies?",
+        "answer": "Common childhood allergies include allergies to pollen, dust mites, mold, pet dander, and foods like peanuts, milk, eggs, shellfish, and soy."
+      },
+      {
+        "question": "How can I treat my child's allergy symptoms?",
+        "answer": "Allergy symptoms can be treated with antihistamines, nasal sprays, and allergy shots. It's important to avoid allergens and keep your child's environment clean. For severe reactions, an epinephrine injector (EpiPen) may be prescribed."
+      },
+      {
+        "question": "When should I take my child to the doctor for a cough?",
+        "answer": "If your child’s cough lasts longer than 2 weeks, is accompanied by a high fever, difficulty breathing, wheezing, or coughing up thick green or yellow mucus, take them to the doctor."
+      },
+      {
+        "question": "What is the best way to prevent ear infections in children?",
+        "answer": "To prevent ear infections, avoid exposing your child to smoke, keep their vaccinations up to date, and ensure they avoid colds and respiratory infections. If they have recurrent ear infections, your doctor may suggest ear tubes."
+      },
+      {
+        "question": "What is chickenpox and when should my child get vaccinated?",
+        "answer": "Chickenpox is a highly contagious viral infection that causes an itchy rash. Children should receive the chickenpox vaccine at 12-15 months, with a second dose at 4-6 years old."
+      },
+      {
+        "question": "What are the signs of asthma in children?",
+        "answer": "Signs of asthma in children include frequent coughing, wheezing, shortness of breath, and chest tightness, especially during physical activity or at night."
+      },
+      {
+        "question": "How is asthma treated in children?",
+        "answer": "Asthma is typically treated with inhaled medications such as bronchodilators (e.g., albuterol) and corticosteroids. A management plan is often created with a pediatrician to control symptoms and prevent flare-ups."
+      },
+      {
+        "question": "What is colic and how can I help my baby?",
+        "answer": "Colic is excessive crying in a baby, typically occurring in the first few months. It can be caused by gas, an immature digestive system, or overstimulation. Holding the baby, using soothing techniques like rocking or swaddling, and checking for discomfort or hunger may help."
+      },
+      {
+        "question": "What should I do if my child eats something toxic?",
+        "answer": "If your child eats something toxic, immediately call Poison Control at 1-800-222-1222. If your child is having trouble breathing, is unconscious, or shows signs of severe poisoning, call 911 or go to the emergency room."
+      },
+      {
+        "question": "What are the signs of dehydration in children?",
+        "answer": "Signs of dehydration in children include dry mouth, fewer wet diapers, lethargy, dark yellow urine, and a sunken fontanel (in babies). Severe dehydration can cause dizziness, rapid heartbeat, and confusion."
+      },
+      {
+        "question": "How do I treat my child’s cuts and scrapes?",
+        "answer": "Clean the wound with water and mild soap, apply an antiseptic, and cover with a sterile bandage. If the cut is deep or does not stop bleeding, seek medical attention."
+      },
+      {
+        "question": "How can I help my child sleep better?",
+        "answer": "To help your child sleep better, establish a consistent bedtime routine, keep their sleep environment dark and quiet, limit screen time before bed, and avoid caffeine or sugary foods late in the day."
+      },
+      {
+        "question": "What are the signs of a concussion in children?",
+        "answer": "Signs of a concussion in children include confusion, dizziness, headache, nausea, vomiting, sensitivity to light or noise, and difficulty concentrating. If a concussion is suspected, seek immediate medical attention."
+      },
+      {
+        "question": "How can I prevent my child from getting the flu?",
+        "answer": "The best way to prevent the flu is through vaccination. In addition, encourage frequent hand washing, avoid close contact with sick individuals, and practice good hygiene by covering coughs and sneezes."
+      },
+      {
+        "question": "When should my child get a physical exam?",
+        "answer": "Children should have a physical exam annually to monitor growth, development, and prevent diseases. A pediatrician will check height, weight, vision, hearing, and overall health during the exam."
+      },
+      {
+        "question": "What are the signs of autism in children?",
+        "answer": "Signs of autism can include delayed speech development, difficulty with social interactions, limited eye contact, repetitive movements, and intense focus on specific interests."
+      }
+    ]
+  }
+  

@@ -1,11 +1,9 @@
-/* Main container */
 .chat-container {
     display: flex;
     height: 100vh;
     background-color: #f2f3f5;
 }
 
-/* Sidebar for escalated chats */
 .sidebar {
     width: 300px;
     background-color: #2c2f36;
@@ -42,7 +40,6 @@
     background-color: #666;
 }
 
-/* Main chat window */
 .chat-window {
     flex-grow: 1;
     background-color: #ffffff;
@@ -79,7 +76,7 @@
     color: #333;
 }
 
-/* Input area */
+
 .input-area {
     padding: 10px;
     background-color: #f1f3f5;

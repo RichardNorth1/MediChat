@@ -18,7 +18,7 @@
     </div>
 
     <script>
-        let ws;
+        let socket;
         let chatId = "";
         let endpoint = "chatbot";
         let typingTimeout;
@@ -48,7 +48,7 @@
         function connectWebSocket() {
             if (isWebSocketOpen) {
                 console.log("WebSocket is already open");
-                return;  // Don't open a new connection if one is already active
+                return;
             }
 
             if (!chatId) {
@@ -56,16 +56,16 @@
                 return;
             }
 
-            ws = new WebSocket(`ws://localhost:8000/ws/${endpoint}/${chatId}`);
-            console.log('websocket = ', ws);
+            socket = new WebSocket(`ws://localhost:8000/ws/${endpoint}/${chatId}`);
+            console.log('websocket = ', socket);
             console.log('endpoint = ', endpoint);
 
-            ws.onopen = function() {
+            socket.onopen = function() {
                 isWebSocketOpen = true;
                 console.log('WebSocket connection established');
             };
 
-            ws.onmessage = function(event) {
+            socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
                 console.log('Received message:', data);
                 
@@ -81,7 +81,6 @@
                     return;
                 }
 
-                // Handle escalation to doctor
                 if (data.status === "escalated") {
                     console.log('Conversation escalated, switching to doctor chat...');
                     connectDoctorWebSocket(data.client_id);
@@ -93,14 +92,13 @@
                 addMessageToList(message, data.sender === "doctor" ? 'doctor-message' : 'bot-message');
             };
 
-            ws.onerror = function(error) {
+            socket.onerror = function(error) {
                 console.error('WebSocket error:', error);
             };
 
-            ws.onclose = function() {
+            socket.onclose = function() {
                 console.log('WebSocket connection closed');
                 isWebSocketOpen = false;
-                // Attempt to reconnect
                 setTimeout(connectWebSocket, 1000);
             };
         }
@@ -108,19 +106,19 @@
         function connectDoctorWebSocket(clientId) {
             console.log("Attempting to connect to doctor WebSocket with clientId:", clientId);
 
-            if (ws) {
-                ws.close();
+            if (socket) {
+                socket.close();
             }
 
             let endpoint = "doctor";
 
-            ws = new WebSocket(`ws://localhost:8000/ws/${endpoint}/${clientId}`);
+            socket = new WebSocket(`ws://localhost:8000/ws/${endpoint}/${clientId}`);
 
-            ws.onopen = function() {
+            socket.onopen = function() {
                 console.log('Doctor WebSocket connection established');
             };
 
-            ws.onmessage = function(event) {
+            socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
                 if (data.status === "typing") {
                     if (data.sender === "doctor") {
@@ -137,14 +135,13 @@
                 addMessageToList(message, data.sender === "doctor" ? 'doctor-message' : 'bot-message');
             };
 
-            ws.onerror = function(error) {
+            socket.onerror = function(error) {
                 console.error('Doctor WebSocket error:', error);
             };
 
-            ws.onclose = function() {
+            socket.onclose = function() {
                 console.log('Doctor WebSocket connection closed');
                 isWebSocketOpen = false;
-                // Attempt to reconnect
                 setTimeout(() => connectDoctorWebSocket(clientId), 1000);
             };
         }
@@ -154,8 +151,8 @@
             const message = input.value;
             if (message.trim()) {
                 console.log('Sending message:', message);
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.send(JSON.stringify({ message: message, sender: "patient" }));
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ message: message, sender: "patient" }));
                     addMessageToList(message, 'user-message');
                     input.value = '';
                 } else {
@@ -165,14 +162,13 @@
         }
 
         function addMessageToList(message, sender) {
-            console.log('Adding message:', message); // Log message before appending to the DOM
+            console.log('Adding message:', message);
 
             const messageList = document.getElementById('message-list');
             const lastMessage = messageList.lastElementChild;
 
-            // Check if the last message is from the same sender and contains the same text
             if (lastMessage && lastMessage.textContent === message && lastMessage.classList.contains(sender)) {
-                console.log('Duplicate message from the same sender, not adding.');
+                console.log('Duplicate message from the same sender.');
                 return;
             }
 
@@ -191,8 +187,8 @@
                 event.preventDefault();
             } else {
                 console.log('Typing');
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.send(JSON.stringify({ status: "typing", sender: "patient" }));
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ status: "typing", sender: "patient" }));
                 }
             }
         });

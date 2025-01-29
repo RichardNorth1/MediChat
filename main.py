@@ -2,7 +2,7 @@ from typing import Dict, List
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.websockets import WebSocketState
-from src.chat import handle_chat
+from src.chat_v2 import handle_chat
 import logging
 import json
 

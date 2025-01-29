@@ -1,0 +1,114 @@
+[
+    {
+        "text": "mild headache but no other symptoms",
+        "label": 0
+    },
+    {
+        "text": "Chest pain and shortness of breath reported by patient",
+        "label": 1
+    },
+    {
+        "text": "Feeling slightly fatigued, no fever or cough",
+        "label": 0
+    },
+    {
+        "text": "Severe abdominal pain persisting for hours",
+        "label": 1
+    },
+    {
+        "text": "dizziness after standing, resolved with rest",
+        "label": 0
+    },
+    {
+        "text": "High fever and uncontrollable shivering",
+        "label": 1
+    },
+    {
+        "text": "can i speak to a doctor",
+        "label": 1
+    },
+    {
+        "text": "i need to see a doctor",
+        "label": 1
+    },
+    {
+        "text": "can i speak to a human",
+        "label": 1
+    },
+    {
+        "text": "sudden loss of vision in one eye",
+        "label": 1
+    },
+    {
+        "text": "Signs of anaphylaxis",
+        "label": 1
+    },
+    {
+        "text": "rapid lip and tongue swelling",
+        "label": 1
+    },
+    {
+        "text": "severe chest pain radiating to the back",
+        "label": 1
+    },
+    {
+        "text": "difficulty breathing and chest tightness",
+        "label": 1
+    },
+    {
+        "text": "difficulty breathing",
+        "label": 1
+    },
+    {
+        "text": "unable to swallow own saliva",
+        "label": 1
+    },
+    {
+        "text": "severe abdominal pain",
+        "label": 1
+    },
+    {
+        "text": "bleeding from ears",
+        "label": 1
+    },
+    {
+        "text": "bruising behind the ear",
+        "label": 1
+    },
+    {
+        "text": "noisy breathing and struggling to speak in full sentences",
+        "label": 1
+    },
+    {
+        "text": "child has suckinng under the ribcage and breathing very fast",
+        "label": 1
+    },
+    {
+        "text": "has fast heart rate and feeling unwell",
+        "label": 1
+    },
+    {
+        "text": "central crushing chest pain,radiating to the left arm or jaw, has nausea and sweating",
+        "label": 1
+    },
+    {
+        "text": "shivering, extreme pain, pale, sleepy, feeling unwell and short of breath",
+        "label": 1
+    },
+    {
+        "text": "sudden onset of severe headache, vomiting, neck stiffness, photophobia",
+        "label": 1
+    },
+    {
+        "text": "tummy pain, vomiting, fever, rash, drowsy",
+        "label": 1
+    },
+    {
+        "text": " tummy feels hard to touch and very painful, vomiting, fever, sweaty ",
+        "label": 1
+    },
+    {
+        "text": "",
+        "label": 1
+    }
+]

@@ -1,0 +1,141 @@
+{
+    "qa_pairs": [
+      {
+        "question": "What are lumps and bumps?",
+        "answer": "Lumps and bumps are abnormal swellings or masses that can develop anywhere on the body. They may be caused by infections, cysts, benign growths, or more serious conditions."
+      },
+      {
+        "question": "Are all lumps cancerous?",
+        "answer": "No, most lumps are benign and caused by conditions like cysts, lipomas, or swollen lymph nodes. However, some lumps can be cancerous, so it's important to get any unusual lump checked by a doctor."
+      },
+      {
+        "question": "What causes lumps and bumps under the skin?",
+        "answer": "Common causes include cysts, lipomas (fatty lumps), swollen lymph nodes, abscesses, warts, and fibromas. Some lumps may also result from infections or injuries."
+      },
+      {
+        "question": "How do I know if a lump is serious?",
+        "answer": "A lump may be concerning if it is hard, immovable, growing rapidly, painful, or accompanied by symptoms like weight loss, night sweats, or fatigue. In such cases, consult a doctor."
+      },
+      {
+        "question": "What is a lipoma?",
+        "answer": "A lipoma is a slow-growing, benign fatty lump that forms under the skin. It is usually soft, painless, and moves slightly when pressed."
+      },
+      {
+        "question": "What is a cyst?",
+        "answer": "A cyst is a fluid-filled sac that can develop under the skin or in tissues. Common types include sebaceous cysts, ganglion cysts, and epidermoid cysts."
+      },
+      {
+        "question": "What causes swollen lymph nodes?",
+        "answer": "Swollen lymph nodes are often caused by infections, such as colds, flu, or strep throat. In some cases, they can indicate more serious conditions like lymphoma or autoimmune diseases."
+      },
+      {
+        "question": "What is an abscess?",
+        "answer": "An abscess is a swollen, painful lump filled with pus caused by a bacterial infection. It often requires drainage and antibiotics."
+      },
+      {
+        "question": "What is a ganglion cyst?",
+        "answer": "A ganglion cyst is a non-cancerous lump filled with jelly-like fluid that usually develops on the wrist, hand, or foot."
+      },
+      {
+        "question": "Can stress cause lumps or bumps?",
+        "answer": "Stress itself does not directly cause lumps, but it can weaken the immune system and make you more susceptible to infections or skin conditions that lead to lumps."
+      },
+      {
+        "question": "How can I tell if a lump is a tumor?",
+        "answer": "Tumors can be benign or cancerous. Warning signs of a cancerous lump include rapid growth, hardness, immobility, and changes in the overlying skin. A doctor can confirm with tests like a biopsy."
+      },
+      {
+        "question": "What is a boil?",
+        "answer": "A boil is a painful, pus-filled lump caused by a bacterial infection of a hair follicle or oil gland. It often starts as a red, tender bump and grows over time."
+      },
+      {
+        "question": "Can a lump be caused by an allergic reaction?",
+        "answer": "Yes, allergic reactions can cause lumps, hives, or swelling, especially in response to insect bites, medications, or certain foods."
+      },
+      {
+        "question": "Can a lump appear after an injury?",
+        "answer": "Yes, trauma or injury can cause swelling, hematomas (blood collections under the skin), or scar tissue, which may feel like a lump."
+      },
+      {
+        "question": "What is a dermatofibroma?",
+        "answer": "A dermatofibroma is a small, firm, benign skin lump that often appears on the legs. It is usually harmless and does not require treatment."
+      },
+      {
+        "question": "Can hormonal changes cause lumps?",
+        "answer": "Yes, hormonal fluctuations, such as those during pregnancy or menstruation, can cause lumps in areas like the breasts or under the skin."
+      },
+      {
+        "question": "What does a cancerous lump feel like?",
+        "answer": "A cancerous lump is often hard, painless, immobile, and may grow rapidly. It may also be irregular in shape or attached to deeper tissues."
+      },
+      {
+        "question": "When should I see a doctor about a lump?",
+        "answer": "Seek medical attention if the lump is painful, growing quickly, hard, immovable, or accompanied by other symptoms like fever, weight loss, or night sweats."
+      },
+      {
+        "question": "How are lumps diagnosed?",
+        "answer": "Doctors may use physical exams, ultrasound, MRI, CT scans, or biopsies to diagnose the nature of a lump."
+      },
+      {
+        "question": "Can I remove a lump at home?",
+        "answer": "No, attempting to remove a lump at home can lead to infections and complications. Always consult a healthcare professional for proper evaluation and treatment."
+      },
+      {
+        "question": "Do lumps go away on their own?",
+        "answer": "Some lumps, like swollen lymph nodes or minor cysts, may disappear on their own. Others, such as lipomas, may persist and require medical removal."
+      },
+      {
+        "question": "Can a lump be caused by an insect bite?",
+        "answer": "Yes, insect bites can cause temporary lumps due to inflammation, allergic reactions, or infections."
+      },
+      {
+        "question": "What is a sebaceous cyst?",
+        "answer": "A sebaceous cyst is a slow-growing lump filled with keratin or oil. It often forms on the scalp, face, or back and may become inflamed."
+      },
+      {
+        "question": "Can exercise cause lumps?",
+        "answer": "Exercise itself does not cause lumps, but muscle strains, hernias, or inflammation can create lump-like swelling."
+      },
+      {
+        "question": "What is a pilonidal cyst?",
+        "answer": "A pilonidal cyst is a painful lump near the tailbone, often caused by hair or debris trapped in the skin. It may become infected and require drainage."
+      },
+      {
+        "question": "Can a lump be a hernia?",
+        "answer": "Yes, a hernia appears as a lump when an organ or tissue pushes through a weak spot in a muscle wall, usually in the abdomen or groin."
+      },
+      {
+        "question": "What is a wart?",
+        "answer": "A wart is a small, rough lump caused by the human papillomavirus (HPV). It often appears on the hands, feet, or other areas of the skin."
+      },
+      {
+        "question": "What is a hemangioma?",
+        "answer": "A hemangioma is a benign, red lump made of blood vessels, commonly found in infants. Most resolve on their own over time."
+      },
+      {
+        "question": "Can diet affect lumps?",
+        "answer": "Certain dietary deficiencies or excesses, such as iodine deficiency, can contribute to lumps like goiters (thyroid swelling)."
+      },
+      {
+        "question": "What is a keloid?",
+        "answer": "A keloid is a thick, raised scar that forms after an injury. It is a benign overgrowth of scar tissue."
+      },
+      {
+        "question": "Are breast lumps always cancerous?",
+        "answer": "No, most breast lumps are benign and caused by cysts or fibroadenomas, but any new lump should be evaluated by a doctor."
+      },
+      {
+        "question": "Can a lump be a sign of infection?",
+        "answer": "Yes, infected lumps, such as abscesses or swollen lymph nodes, can occur due to bacterial, viral, or fungal infections."
+      },
+      {
+        "question": "Can lumps be genetic?",
+        "answer": "Some conditions that cause lumps, like lipomas or neurofibromas, can have a genetic component."
+      },
+      {
+        "question": "How are lumps treated?",
+        "answer": "Treatment depends on the cause. Options include observation, antibiotics, drainage, surgical removal, or cancer treatment if necessary."
+      }
+    ]
+  }
+  

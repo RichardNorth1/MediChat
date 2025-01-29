@@ -3,7 +3,6 @@ import requests
 
 app = Flask(__name__)
 
-# Flask API endpoint to fetch the escalated chats from FastAPI
 @app.route("/api/escalated_chats")
 def get_escalated_chats():
     """Fetch a list of escalated chats from FastAPI."""
@@ -14,7 +13,6 @@ def get_escalated_chats():
         return jsonify(data['escalated_chats'])
     return jsonify([])
 
-# The main route renders the chat interface for doctors
 @app.route("/")
 def index():
     """Render the main page where the doctor can view chats and send messages."""

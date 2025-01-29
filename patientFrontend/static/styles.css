@@ -33,28 +33,25 @@ body {
     max-width: 80%;
 }
 
-/* User message (sent by the patient, aligned to the right) */
 .user-message {
     justify-self: flex-end;
     background-color: #007aff;
     color: white;
-    margin-right: 10px; /* Optional: Space between user messages and chat edge */
+    margin-right: 10px;
 }
 
-/* Bot message (received, aligned to the left) */
 .bot-message {
     align-self: flex-start;
     background-color: #e5e5ea;
     color: black;
-    margin-left: 10px; /* Optional: Space between bot messages and chat edge */
+    margin-left: 10px;
 }
 
-/* Doctor message (received, aligned to the left, same as bot) */
 .doctor-message {
     align-self: flex-start;
     background-color: #f1f1f1;
     color: black;
-    margin-left: 10px; /* Optional: Space between doctor messages and chat edge */
+    margin-left: 10px; 
 }
 
 .input-container {
@@ -87,25 +84,12 @@ button {
     margin: 5px;
 }
 
-.typing-indicator {
+/* .typing-indicator {
     display: none;
     font-style: italic;
     color: gray;
     margin: 10px 0;
     text-align: center;
-}
+} */
 
-.spinner {
-    display: inline-block;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    animation: spin 1s linear infinite;
-}
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}

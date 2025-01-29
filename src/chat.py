@@ -1,5 +1,3 @@
-import os
-import json
 import logging
 import numpy as np
 import tensorflow as tf
@@ -10,12 +8,21 @@ import pickle
 import colorama 
 colorama.init()
 from colorama import Fore, Style
-import random
 import language_tool_python
+import os
+import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import random
 from . import data_loader
 
+
+# Load the fine-tuned model and tokenizer
+model_path = "data/models/fine_tuned_model"
+tranformer_tokenizer = AutoTokenizer.from_pretrained(model_path)
+transformer_model = AutoModelForSequenceClassification.from_pretrained(model_path)
+
 # Load the trained deep learning model
-model = keras.models.load_model('data/models/chat_model.h5')
+deep_learning_model = keras.models.load_model('data/models/chat_model.h5')
 
 # Load the tokenizer object
 with open('data/models/tokenizer.pickle', 'rb') as handle:
@@ -40,54 +47,11 @@ def get_response(intents_list, intents_json):
             break
     return result
 
-def symptom_checker(input_text):
-    escalation_symptoms = [
-        "chest pain", "shortness of breath", "severe headache", "high fever",
-        "uncontrolled bleeding", "loss of consciousness", "severe allergic reaction",
-        "persistent vomiting", "severe abdominal pain", "confusion"
-    ]
-    detected_symptoms = [symptom for symptom in escalation_symptoms if symptom in input_text.lower()]
-    return detected_symptoms
-
 def correct_grammar(input_text):
     tool = language_tool_python.LanguageTool('en-GB')
     matches = tool.check(input_text)
     corrected_text = language_tool_python.utils.correct(input_text, matches)
     return corrected_text
-
-def escalation_check(input_text):
-    escalate_text = [
-        "I need to speak to a human",
-        "Can I talk to a real person?",
-        "I want to escalate this issue",
-        "I need help from a human",
-        "Can you transfer me to a human agent?",
-        "I am not satisfied with this response",
-        "I need more assistance",
-        "This is not helping",
-        "I need to talk to someone",
-        "Can you connect me to a human?",
-        "I need to speak with a representative",
-        "I want to talk to a human",
-        "I need human assistance",
-        "Can I get help from a person?",
-        "I need to escalate this",
-        "I need to speak to customer service",
-        "I want to talk to a support agent",
-        "Can you escalate this issue?",
-        "I need to speak to someone in charge",
-        "I need to talk to a manager",
-        "can i speak to a doctor",
-        "can i speak to a nurse",
-        "can i speak to a physician",
-        "i need to speak to someone"
-    ]
-    
-    # Log the input text being checked for escalation
-    logging.info(f"Checking for escalation in input: {input_text}")
-    
-    return any(escalate_phrase in input_text.lower() for escalate_phrase in escalate_text)
-
 
 def get_response(intents, intent):
     for data in intents:
@@ -100,24 +64,36 @@ def get_response(intents, intent):
 def predict_intent(text):
     sequences = tokenizer.texts_to_sequences([text])
     padded_sequences = pad_sequences(sequences, truncating='post', maxlen=20)
-    predictions = model.predict(padded_sequences)
+    predictions = deep_learning_model.predict(padded_sequences)
     predicted_label = np.argmax(predictions)
     intent = label_encoder.inverse_transform([predicted_label])[0]
     return intent
+
+def classify_escalation(input_text):
+    inputs = tranformer_tokenizer(input_text, return_tensors="pt", padding=True, truncation=True, max_length=512)
+    with torch.no_grad():
+        outputs = transformer_model(**inputs)
+        logits = outputs.logits
+        probabilities = torch.softmax(logits, dim=1)
+        predicted_class = torch.argmax(probabilities, dim=1).item()
+        confidence = probabilities[0][predicted_class].item()
+    
+    # Modify this line to set a higher threshold (e.g., 0.7)
+    if confidence >= 0.57 and predicted_class == 1:
+        return predicted_class, confidence
+    else:
+        return 0, confidence  # Default to non-critical if confidence is low
+
 
 
 def handle_chat(input_text):
     # Correct grammar in the input text
     corrected_inp = correct_grammar(input_text)
 
-    # Check for symptoms that require escalation
-    detected_symptoms = symptom_checker(corrected_inp)
-    if detected_symptoms:
-        return {"message": f"Escalating the conversation to a human agent due to detected symptoms: {', '.join(detected_symptoms)}.", "escalate": True}
-
-    # Check if the input text contains any escalation trigger
-    if escalation_check(corrected_inp):
-        return {"message": "Escalating the conversation to a human agent.", "escalate": True}
+    # Check if escalation is needed
+    predicted_class, confidence = classify_escalation(input_text)
+    if predicted_class == 1:
+        return {"message": f"Escalating the conversation to a human agent due to detected critical input (Confidence: {confidence:.2f}).", "escalate": True}
 
     # Predict the intent of the user input
     intent = predict_intent(corrected_inp)
@@ -131,6 +107,8 @@ def chat():
     while True:
         user_input = input(Fore.LIGHTBLUE_EX + "User: " + Style.RESET_ALL)
         response = handle_chat(user_input)
-        print(Fore.YELLOW + "ChatBot: " + response + Style.RESET_ALL)
+        print(Fore.YELLOW + "ChatBot: " + response['message'] + Style.RESET_ALL)  # Fixed this line to use the 'message' key
+
+
 if __name__ == "__main__":
     chat()
