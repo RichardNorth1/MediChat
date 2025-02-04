@@ -1,0 +1,137 @@
+{
+    "qa_pairs": [
+      {
+        "question": "What is paracetamol?",
+        "answer": "Paracetamol (also known as acetaminophen) is a common pain reliever and fever reducer used to treat mild to moderate pain and fever."
+      },
+      {
+        "question": "What is ibuprofen?",
+        "answer": "Ibuprofen is a nonsteroidal anti-inflammatory drug (NSAID) used to reduce pain, inflammation, and fever."
+      },
+      {
+        "question": "What is the difference between paracetamol and ibuprofen?",
+        "answer": "Paracetamol is mainly a pain reliever and fever reducer, while ibuprofen also reduces inflammation in addition to relieving pain and fever."
+      },
+      {
+        "question": "What are the common uses of aspirin?",
+        "answer": "Aspirin is used to relieve pain, reduce inflammation, lower fever, and prevent blood clots in people at risk of heart attacks and strokes."
+      },
+      {
+        "question": "Can I take paracetamol and ibuprofen together?",
+        "answer": "Yes, paracetamol and ibuprofen can be taken together for stronger pain relief, but they should be taken as directed to avoid side effects."
+      },
+      {
+        "question": "What is the recommended dosage for paracetamol?",
+        "answer": "For adults, the usual dose of paracetamol is 500mg to 1g every 4-6 hours, with a maximum of 4g per day."
+      },
+      {
+        "question": "What is the recommended dosage for ibuprofen?",
+        "answer": "For adults, the usual dose of ibuprofen is 200-400mg every 4-6 hours, with a maximum of 1200-2400mg per day."
+      },
+      {
+        "question": "Who should not take ibuprofen?",
+        "answer": "People with stomach ulcers, kidney disease, heart disease, or a history of gastrointestinal bleeding should avoid ibuprofen unless prescribed by a doctor."
+      },
+      {
+        "question": "What are the side effects of paracetamol?",
+        "answer": "Paracetamol is generally safe but can cause liver damage if taken in excessive amounts. Other side effects are rare but may include skin rashes or allergic reactions."
+      },
+      {
+        "question": "What are the side effects of ibuprofen?",
+        "answer": "Common side effects of ibuprofen include stomach pain, nausea, heartburn, dizziness, and, in rare cases, stomach ulcers or kidney damage."
+      },
+      {
+        "question": "What happens if I take too much paracetamol?",
+        "answer": "Taking too much paracetamol can cause liver damage or failure. Seek medical help immediately if an overdose is suspected."
+      },
+      {
+        "question": "What happens if I take too much ibuprofen?",
+        "answer": "Taking too much ibuprofen can cause stomach ulcers, kidney damage, or even heart problems. Seek medical attention if an overdose occurs."
+      },
+      {
+        "question": "Can ibuprofen be taken on an empty stomach?",
+        "answer": "Ibuprofen should ideally be taken with food or milk to reduce the risk of stomach irritation."
+      },
+      {
+        "question": "Can I drink alcohol while taking paracetamol?",
+        "answer": "Drinking alcohol while taking paracetamol increases the risk of liver damage and should be avoided."
+      },
+      {
+        "question": "Can I drink alcohol while taking ibuprofen?",
+        "answer": "Alcohol can increase the risk of stomach ulcers and bleeding when taken with ibuprofen, so it is best to avoid it."
+      },
+      {
+        "question": "What are antihistamines used for?",
+        "answer": "Antihistamines are used to relieve allergy symptoms such as sneezing, itching, runny nose, and hives. They can also be used for motion sickness and sleep aid."
+      },
+      {
+        "question": "What is the difference between drowsy and non-drowsy antihistamines?",
+        "answer": "Drowsy antihistamines (e.g., diphenhydramine) can cause sleepiness, while non-drowsy antihistamines (e.g., loratadine, cetirizine) are less likely to cause drowsiness."
+      },
+      {
+        "question": "What are antibiotics used for?",
+        "answer": "Antibiotics are used to treat bacterial infections. They do not work against viral infections like colds or flu."
+      },
+      {
+        "question": "Why shouldn’t I take antibiotics for a viral infection?",
+        "answer": "Antibiotics only work against bacterial infections. Taking them for viral infections contributes to antibiotic resistance and does not help recovery."
+      },
+      {
+        "question": "Can I stop taking antibiotics once I feel better?",
+        "answer": "No, you should complete the full course of antibiotics as prescribed to prevent bacterial resistance and ensure the infection is fully treated."
+      },
+      {
+        "question": "What are common side effects of antibiotics?",
+        "answer": "Side effects of antibiotics include nausea, diarrhea, stomach pain, and, in some cases, allergic reactions."
+      },
+      {
+        "question": "Can I take painkillers with antibiotics?",
+        "answer": "Yes, most painkillers like paracetamol and ibuprofen can be taken with antibiotics, but always check with a healthcare professional."
+      },
+      {
+        "question": "What is codeine used for?",
+        "answer": "Codeine is a prescription opioid used to treat moderate to severe pain and sometimes as a cough suppressant."
+      },
+      {
+        "question": "Is codeine addictive?",
+        "answer": "Yes, codeine is an opioid and can be addictive if used for long periods or in high doses."
+      },
+      {
+        "question": "Can I take aspirin for a headache?",
+        "answer": "Yes, aspirin can be used to treat headaches, but it should not be taken by children under 16 due to the risk of Reye’s syndrome."
+      },
+      {
+        "question": "Who should not take aspirin?",
+        "answer": "People with bleeding disorders, stomach ulcers, or those taking blood thinners should avoid aspirin unless prescribed."
+      },
+      {
+        "question": "Can pregnant women take ibuprofen?",
+        "answer": "Ibuprofen is generally not recommended during pregnancy, especially in the third trimester, due to potential risks to the baby."
+      },
+      {
+        "question": "Can pregnant women take paracetamol?",
+        "answer": "Yes, paracetamol is considered safe for use during pregnancy when taken at recommended doses."
+      },
+      {
+        "question": "What medications should I avoid while breastfeeding?",
+        "answer": "Some medications, like aspirin and codeine, should be avoided while breastfeeding. Always check with a doctor before taking medication."
+      },
+      {
+        "question": "What is the best painkiller for period pain?",
+        "answer": "Ibuprofen and other NSAIDs are commonly recommended for period pain as they help reduce inflammation and cramps."
+      },
+      {
+        "question": "Can children take paracetamol?",
+        "answer": "Yes, paracetamol is safe for children in the correct dosage. Always use children's formulations and follow dosing instructions carefully."
+      },
+      {
+        "question": "Can children take ibuprofen?",
+        "answer": "Yes, ibuprofen is safe for children over three months old when given in the correct dosage. Always follow dosing guidelines."
+      },
+      {
+        "question": "What should I do if I miss a dose of my medication?",
+        "answer": "If you miss a dose, take it as soon as you remember. If it's almost time for the next dose, skip the missed dose and continue as normal. Do not double the dose."
+      }
+    ]
+  }
+  

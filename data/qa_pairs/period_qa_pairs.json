@@ -1,0 +1,141 @@
+{
+    "qa_pairs": [
+      {
+        "question": "What is a menstrual cycle?",
+        "answer": "The menstrual cycle is a monthly hormonal cycle in people with female reproductive systems that prepares the body for pregnancy. It typically lasts 21-35 days, with menstruation occurring if pregnancy does not happen."
+      },
+      {
+        "question": "What are the phases of the menstrual cycle?",
+        "answer": "The menstrual cycle consists of four phases: the menstrual phase, the follicular phase, ovulation, and the luteal phase."
+      },
+      {
+        "question": "What happens during the menstrual phase?",
+        "answer": "During the menstrual phase, the uterine lining sheds, resulting in menstrual bleeding. This phase usually lasts between 3-7 days."
+      },
+      {
+        "question": "What happens during the follicular phase?",
+        "answer": "The follicular phase begins on the first day of menstruation and lasts until ovulation. The body produces follicle-stimulating hormone (FSH) to stimulate egg development in the ovaries."
+      },
+      {
+        "question": "What happens during ovulation?",
+        "answer": "Ovulation occurs when a mature egg is released from the ovary around the middle of the cycle (usually day 14 in a 28-day cycle). This is the most fertile time."
+      },
+      {
+        "question": "What happens during the luteal phase?",
+        "answer": "During the luteal phase, the body produces progesterone to prepare the uterus for a possible pregnancy. If fertilization does not occur, hormone levels drop, leading to menstruation."
+      },
+      {
+        "question": "What is a normal period length?",
+        "answer": "A normal period lasts between 3-7 days, though some variations are normal depending on individual hormonal balance and health."
+      },
+      {
+        "question": "What is considered an irregular period?",
+        "answer": "Irregular periods refer to cycles that vary significantly in length, missed periods, or unusually heavy or light bleeding."
+      },
+      {
+        "question": "What causes irregular periods?",
+        "answer": "Irregular periods can be caused by stress, hormonal imbalances, polycystic ovary syndrome (PCOS), thyroid disorders, excessive exercise, and significant weight changes."
+      },
+      {
+        "question": "What are common period symptoms?",
+        "answer": "Common symptoms include cramps, bloating, mood swings, fatigue, breast tenderness, headaches, and changes in appetite."
+      },
+      {
+        "question": "What are menstrual cramps?",
+        "answer": "Menstrual cramps, or dysmenorrhea, are painful contractions of the uterus that occur before or during menstruation, caused by hormone-induced uterine contractions."
+      },
+      {
+        "question": "How can I relieve period cramps?",
+        "answer": "Period cramps can be relieved with pain relievers, heating pads, exercise, hydration, and certain herbal remedies like ginger or chamomile tea."
+      },
+      {
+        "question": "What is heavy menstrual bleeding?",
+        "answer": "Heavy menstrual bleeding (menorrhagia) is excessive blood loss during a period, lasting longer than 7 days or requiring frequent pad/tampon changes within a short period."
+      },
+      {
+        "question": "What causes heavy menstrual bleeding?",
+        "answer": "Causes include hormonal imbalances, fibroids, polyps, endometriosis, bleeding disorders, and thyroid issues."
+      },
+      {
+        "question": "What is a missed period?",
+        "answer": "A missed period occurs when menstruation does not happen as expected. While pregnancy is a common cause, it can also result from stress, hormonal imbalances, or medical conditions."
+      },
+      {
+        "question": "How does stress affect the menstrual cycle?",
+        "answer": "Stress can disrupt hormone levels, leading to delayed, missed, or irregular periods due to increased cortisol production."
+      },
+      {
+        "question": "What is PMS (premenstrual syndrome)?",
+        "answer": "PMS refers to a group of symptoms, including mood swings, bloating, headaches, and fatigue, that occur before menstruation due to hormonal fluctuations."
+      },
+      {
+        "question": "What is PMDD (premenstrual dysphoric disorder)?",
+        "answer": "PMDD is a severe form of PMS characterized by extreme mood swings, depression, irritability, and physical symptoms that interfere with daily life."
+      },
+      {
+        "question": "Can diet affect periods?",
+        "answer": "Yes, a healthy diet rich in iron, calcium, and healthy fats can support regular cycles, while excessive sugar, processed foods, and caffeine can contribute to hormonal imbalances."
+      },
+      {
+        "question": "How does exercise affect the menstrual cycle?",
+        "answer": "Regular exercise can help reduce period symptoms, but excessive exercise can lead to missed periods or irregular cycles due to reduced body fat and hormonal disruption."
+      },
+      {
+        "question": "Can weight changes affect periods?",
+        "answer": "Yes, sudden weight loss or gain can disrupt hormone levels, leading to irregular or missed periods."
+      },
+      {
+        "question": "What is PCOS and how does it affect periods?",
+        "answer": "Polycystic ovary syndrome (PCOS) is a hormonal disorder that can cause irregular periods, ovarian cysts, excess androgen levels, and difficulty with ovulation."
+      },
+      {
+        "question": "What is endometriosis?",
+        "answer": "Endometriosis is a condition where tissue similar to the uterine lining grows outside the uterus, causing painful periods, heavy bleeding, and infertility."
+      },
+      {
+        "question": "Can birth control help regulate periods?",
+        "answer": "Yes, hormonal birth control methods like pills, patches, and IUDs can help regulate periods, reduce cramps, and manage heavy bleeding."
+      },
+      {
+        "question": "Can you get pregnant while on your period?",
+        "answer": "Although rare, pregnancy is possible during menstruation, especially if ovulation occurs early and sperm survives in the reproductive tract."
+      },
+      {
+        "question": "How does perimenopause affect the menstrual cycle?",
+        "answer": "Perimenopause is the transition to menopause, marked by irregular cycles, hormonal changes, and symptoms like hot flashes and mood swings."
+      },
+      {
+        "question": "At what age does menopause typically occur?",
+        "answer": "Menopause typically occurs between the ages of 45-55, marking the end of menstrual cycles due to a natural decline in reproductive hormones."
+      },
+      {
+        "question": "What is a normal age for a first period?",
+        "answer": "A first period, or menarche, typically occurs between ages 9-16, with the average being around 12-13 years old."
+      },
+      {
+        "question": "What should I do if I get my first period at school?",
+        "answer": "If you get your first period at school, ask a teacher or nurse for a pad or tampon, use toilet paper if needed, and track your cycle for future preparation."
+      },
+      {
+        "question": "How often should I change my pad or tampon?",
+        "answer": "Pads should be changed every 4-6 hours, and tampons should be changed every 4-8 hours to prevent leaks and infections."
+      },
+      {
+        "question": "What is toxic shock syndrome (TSS)?",
+        "answer": "TSS is a rare but serious bacterial infection associated with prolonged tampon use. Symptoms include fever, rash, dizziness, and low blood pressure."
+      },
+      {
+        "question": "Can period blood be different in color?",
+        "answer": "Yes, period blood can vary from bright red to dark brown or even black, depending on how long it takes to leave the body."
+      },
+      {
+        "question": "Can period tracking apps help manage cycles?",
+        "answer": "Yes, period tracking apps can help predict cycles, symptoms, ovulation, and fertility windows, aiding in menstrual health awareness."
+      },
+      {
+        "question": "What is a menstrual cup?",
+        "answer": "A menstrual cup is a reusable silicone or rubber cup inserted into the vagina to collect menstrual blood, offering an eco-friendly alternative to pads and tampons."
+      }
+    ]
+  }
+  

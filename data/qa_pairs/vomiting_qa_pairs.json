@@ -1,0 +1,153 @@
+{
+    "qa_pairs": [
+      {
+        "question": "What is vomiting?",
+        "answer": "Vomiting, also known as emesis, is the forceful expulsion of stomach contents through the mouth, usually due to illness, infection, or digestive issues."
+      },
+      {
+        "question": "What causes vomiting?",
+        "answer": "Vomiting can be caused by infections, food poisoning, motion sickness, pregnancy, migraines, digestive disorders, medications, or toxins."
+      },
+      {
+        "question": "What are the common symptoms that occur with vomiting?",
+        "answer": "Common symptoms include nausea, stomach pain, dizziness, sweating, fever, diarrhea, and dehydration."
+      },
+      {
+        "question": "What is the difference between nausea and vomiting?",
+        "answer": "Nausea is the sensation of feeling like you need to vomit, while vomiting is the physical act of expelling stomach contents."
+      },
+      {
+        "question": "When should I see a doctor for vomiting?",
+        "answer": "Seek medical attention if vomiting persists for more than 24 hours, is accompanied by severe dehydration, blood in vomit, high fever, or severe abdominal pain."
+      },
+      {
+        "question": "Can dehydration occur due to vomiting?",
+        "answer": "Yes, excessive vomiting can lead to dehydration, causing symptoms like dry mouth, dizziness, fatigue, and reduced urination."
+      },
+      {
+        "question": "What are the best home remedies for vomiting?",
+        "answer": "Drinking small sips of water, ginger tea, peppermint tea, clear broths, or using acupressure on the wrist can help reduce vomiting."
+      },
+      {
+        "question": "What foods should I eat after vomiting?",
+        "answer": "Start with bland foods like crackers, toast, bananas, rice, applesauce, and clear liquids to ease digestion."
+      },
+      {
+        "question": "Can stress or anxiety cause vomiting?",
+        "answer": "Yes, stress and anxiety can trigger nausea and vomiting due to the body's response to stress hormones."
+      },
+      {
+        "question": "What is cyclic vomiting syndrome?",
+        "answer": "Cyclic vomiting syndrome (CVS) is a rare disorder causing recurrent episodes of severe vomiting without an identifiable cause."
+      },
+      {
+        "question": "What is projectile vomiting?",
+        "answer": "Projectile vomiting is a forceful and sudden ejection of vomit, often seen in infants with pyloric stenosis or people with gastrointestinal obstructions."
+      },
+      {
+        "question": "Is vomiting a symptom of food poisoning?",
+        "answer": "Yes, vomiting is a common symptom of food poisoning caused by consuming contaminated food or water."
+      },
+      {
+        "question": "Can pregnancy cause vomiting?",
+        "answer": "Yes, pregnancy-related vomiting, known as morning sickness, is common in the first trimester due to hormonal changes."
+      },
+      {
+        "question": "How is vomiting treated?",
+        "answer": "Treatment depends on the cause but may include hydration, anti-nausea medications, rest, and dietary modifications."
+      },
+      {
+        "question": "Can vomiting be a symptom of a more serious condition?",
+        "answer": "Yes, persistent vomiting can indicate serious conditions like appendicitis, kidney disease, brain injury, or gastrointestinal blockage."
+      },
+      {
+        "question": "What medications can help stop vomiting?",
+        "answer": "Medications like ondansetron, promethazine, and metoclopramide are commonly used to treat nausea and vomiting."
+      },
+      {
+        "question": "Can motion sickness cause vomiting?",
+        "answer": "Yes, motion sickness occurs when the brain receives conflicting signals from the inner ear and eyes, leading to nausea and vomiting."
+      },
+      {
+        "question": "Can vomiting be a symptom of COVID-19?",
+        "answer": "Yes, vomiting can be a symptom of COVID-19, especially in children, along with fever, cough, and body aches."
+      },
+      {
+        "question": "How can I prevent vomiting?",
+        "answer": "Prevent vomiting by avoiding contaminated food, staying hydrated, eating smaller meals, and managing stress."
+      },
+      {
+        "question": "What should I do if my child is vomiting?",
+        "answer": "Keep them hydrated with small sips of fluids, monitor for dehydration, and seek medical attention if vomiting is persistent or severe."
+      },
+      {
+        "question": "What is the BRAT diet, and how does it help with vomiting?",
+        "answer": "The BRAT diet (Bananas, Rice, Applesauce, Toast) is a bland diet that helps soothe the stomach and prevent further irritation after vomiting."
+      },
+      {
+        "question": "Can alcohol consumption cause vomiting?",
+        "answer": "Yes, excessive alcohol consumption can irritate the stomach lining, leading to nausea and vomiting."
+      },
+      {
+        "question": "What should I do if I vomit blood?",
+        "answer": "Vomiting blood (hematemesis) is a medical emergency and may indicate conditions like ulcers, esophageal tears, or internal bleeding."
+      },
+      {
+        "question": "Is vomiting contagious?",
+        "answer": "Vomiting itself is not contagious, but infections that cause vomiting, like norovirus, can be spread through contact with contaminated surfaces or fluids."
+      },
+      {
+        "question": "How does food poisoning lead to vomiting?",
+        "answer": "Food poisoning occurs when harmful bacteria, viruses, or toxins in contaminated food cause irritation and inflammation in the digestive system."
+      },
+      {
+        "question": "Can vomiting cause damage to the body?",
+        "answer": "Frequent vomiting can lead to dehydration, electrolyte imbalances, tooth erosion, and irritation of the esophagus."
+      },
+      {
+        "question": "What is the best way to rehydrate after vomiting?",
+        "answer": "Rehydrate by drinking electrolyte solutions, clear broth, diluted juice, or sports drinks to restore lost fluids and salts."
+      },
+      {
+        "question": "Can certain medications cause vomiting?",
+        "answer": "Yes, some medications like chemotherapy drugs, painkillers, and antibiotics can cause nausea and vomiting as side effects."
+      },
+      {
+        "question": "Can vomiting be a symptom of a migraine?",
+        "answer": "Yes, migraines can cause nausea and vomiting due to changes in brain chemistry and pain sensitivity."
+      },
+      {
+        "question": "What is gastroenteritis, and can it cause vomiting?",
+        "answer": "Gastroenteritis, also known as the stomach flu, is an infection of the digestive tract that can cause vomiting, diarrhea, and stomach cramps."
+      },
+      {
+        "question": "Can vomiting lead to weight loss?",
+        "answer": "Persistent vomiting can lead to weight loss due to reduced nutrient absorption and fluid loss."
+      },
+      {
+        "question": "Can vomiting occur due to an allergic reaction?",
+        "answer": "Yes, severe food allergies or anaphylaxis can cause vomiting along with hives, swelling, and difficulty breathing."
+      },
+      {
+        "question": "How does the body control vomiting?",
+        "answer": "The brain’s vomiting center in the medulla oblongata controls vomiting by receiving signals from the stomach, inner ear, and nervous system."
+      },
+      {
+        "question": "Can vomiting be prevented during chemotherapy?",
+        "answer": "Yes, anti-nausea medications like ondansetron and lifestyle changes can help prevent chemotherapy-induced vomiting."
+      },
+      {
+        "question": "Can vomiting be a symptom of appendicitis?",
+        "answer": "Yes, appendicitis can cause nausea, vomiting, severe abdominal pain, and fever."
+      },
+      {
+        "question": "What is acid reflux, and can it cause vomiting?",
+        "answer": "Acid reflux occurs when stomach acid flows back into the esophagus, leading to nausea, heartburn, and sometimes vomiting."
+      },
+      {
+        "question": "Can lack of sleep cause nausea and vomiting?",
+        "answer": "Yes, sleep deprivation can lead to nausea and vomiting due to hormonal and digestive system disruptions."
+      }
+    ]
+  }
+  

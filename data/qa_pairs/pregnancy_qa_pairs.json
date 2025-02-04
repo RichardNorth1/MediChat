@@ -1,0 +1,157 @@
+{
+    "qa_pairs": [
+      {
+        "question": "What is pregnancy?",
+        "answer": "Pregnancy is the condition in which a woman carries and nurtures a developing fetus in her uterus, typically lasting about 40 weeks from the first day of the last menstrual period."
+      },
+      {
+        "question": "What are the early signs of pregnancy?",
+        "answer": "Early signs of pregnancy can include missed periods, nausea, fatigue, frequent urination, tender breasts, and mood swings."
+      },
+      {
+        "question": "How can I confirm that I am pregnant?",
+        "answer": "You can confirm pregnancy through a home pregnancy test, which detects the hormone hCG, or by visiting a doctor for a blood test or ultrasound."
+      },
+      {
+        "question": "What is morning sickness?",
+        "answer": "Morning sickness refers to nausea and vomiting that typically occurs in the first trimester of pregnancy, though it can happen at any time of day."
+      },
+      {
+        "question": "When should I see a doctor during pregnancy?",
+        "answer": "You should see a doctor as soon as you suspect you are pregnant. Regular prenatal visits are recommended every 4-6 weeks throughout the pregnancy."
+      },
+      {
+        "question": "What is the first trimester of pregnancy?",
+        "answer": "The first trimester of pregnancy covers weeks 1 through 12 and is a critical period when the baby’s organs begin to form."
+      },
+      {
+        "question": "What are the symptoms during the second trimester?",
+        "answer": "In the second trimester (weeks 13-26), symptoms may include a growing belly, increased energy, reduced nausea, and potential swelling in the feet and hands."
+      },
+      {
+        "question": "What happens during the third trimester of pregnancy?",
+        "answer": "The third trimester (weeks 27-40) is when the baby grows rapidly and prepares for birth. Symptoms can include more frequent urination, back pain, and difficulty sleeping."
+      },
+      {
+        "question": "What should I eat during pregnancy?",
+        "answer": "A balanced diet during pregnancy should include fruits, vegetables, whole grains, lean proteins, dairy, and sufficient folic acid to support fetal development."
+      },
+      {
+        "question": "How can I stay healthy during pregnancy?",
+        "answer": "Stay healthy during pregnancy by eating a nutritious diet, staying active (with your doctor’s approval), taking prenatal vitamins, staying hydrated, and getting enough rest."
+      },
+      {
+        "question": "What are prenatal vitamins, and why are they important?",
+        "answer": "Prenatal vitamins contain essential nutrients like folic acid, iron, and calcium that support the health of both mother and baby during pregnancy."
+      },
+      {
+        "question": "What is folic acid, and why is it important during pregnancy?",
+        "answer": "Folic acid is a B vitamin that helps prevent birth defects of the baby’s brain and spine. It is recommended that women take 400-800 mcg of folic acid daily before conception and during pregnancy."
+      },
+      {
+        "question": "What are some common pregnancy complications?",
+        "answer": "Common pregnancy complications include gestational diabetes, preeclampsia, ectopic pregnancy, and miscarriage."
+      },
+      {
+        "question": "What is gestational diabetes?",
+        "answer": "Gestational diabetes is a form of high blood sugar that occurs during pregnancy, which can lead to complications for both mother and baby."
+      },
+      {
+        "question": "What is preeclampsia?",
+        "answer": "Preeclampsia is a pregnancy complication characterized by high blood pressure and damage to organs, often affecting the kidneys and liver. It typically develops after 20 weeks of pregnancy."
+      },
+      {
+        "question": "What is an ectopic pregnancy?",
+        "answer": "An ectopic pregnancy occurs when a fertilized egg implants outside the uterus, typically in a fallopian tube, and can cause serious complications if not treated."
+      },
+      {
+        "question": "What are the signs of preterm labor?",
+        "answer": "Signs of preterm labor include regular contractions, lower back pain, pelvic pressure, changes in vaginal discharge, and a feeling of cramping."
+      },
+      {
+        "question": "What is a miscarriage?",
+        "answer": "A miscarriage is the loss of a pregnancy before the 20th week. Common symptoms include bleeding, cramping, and the passing of tissue from the vagina."
+      },
+      {
+        "question": "Can I exercise during pregnancy?",
+        "answer": "Yes, moderate exercise, such as walking, swimming, and prenatal yoga, is generally safe and beneficial during pregnancy. Always consult your healthcare provider before starting any exercise regimen."
+      },
+      {
+        "question": "What should I avoid during pregnancy?",
+        "answer": "During pregnancy, avoid alcohol, tobacco, drugs, raw or undercooked foods, unpasteurized dairy, certain seafood, and exposure to harmful chemicals."
+      },
+      {
+        "question": "Can I travel during pregnancy?",
+        "answer": "Travel is generally safe during pregnancy, especially during the second trimester, but always consult your healthcare provider for advice and precautions, especially during long flights or trips to areas with health risks."
+      },
+      {
+        "question": "What is labor?",
+        "answer": "Labor is the process of giving birth, consisting of contractions that help the baby move through the birth canal and the eventual delivery of the baby and placenta."
+      },
+      {
+        "question": "What is the difference between Braxton Hicks contractions and real labor?",
+        "answer": "Braxton Hicks contractions are irregular, painless contractions that can occur in the second and third trimesters, while real labor contractions become regular, intense, and increase in frequency."
+      },
+      {
+        "question": "What is the role of a midwife in pregnancy?",
+        "answer": "A midwife is a trained healthcare professional who provides prenatal care, assists with labor and delivery, and offers postpartum support for women having a low-risk pregnancy."
+      },
+      {
+        "question": "What are the signs that labor is starting?",
+        "answer": "Signs that labor is starting include regular contractions, a mucus plug being discharged, water breaking, and the cervix dilating."
+      },
+      {
+        "question": "What is water breaking?",
+        "answer": "Water breaking refers to the rupture of the amniotic sac, which releases the fluid surrounding the baby. It usually happens shortly before or during labor."
+      },
+      {
+        "question": "What should I do when my water breaks?",
+        "answer": "If your water breaks, contact your healthcare provider immediately, as it can indicate that labor is imminent or require medical attention if the baby is not in position or there are signs of infection."
+      },
+      {
+        "question": "What is a cesarean section (C-section)?",
+        "answer": "A C-section is a surgical procedure in which the baby is delivered through an incision made in the mother's abdomen and uterus, typically performed when vaginal delivery is not possible or safe."
+      },
+      {
+        "question": "What is the recovery time after childbirth?",
+        "answer": "Recovery time varies, but most women recover physically within 6-8 weeks after childbirth. Full recovery may take longer, depending on whether you had a vaginal delivery or C-section."
+      },
+      {
+        "question": "Can I breastfeed after giving birth?",
+        "answer": "Yes, breastfeeding is encouraged immediately after birth if possible, as it provides important nutrients and antibodies for the baby. Your healthcare provider can offer guidance on proper technique and positioning."
+      },
+      {
+        "question": "What is postpartum depression?",
+        "answer": "Postpartum depression is a mood disorder that affects some women after childbirth, characterized by feelings of sadness, anxiety, and exhaustion that interfere with daily life."
+      },
+      {
+        "question": "How can I manage postpartum depression?",
+        "answer": "Managing postpartum depression may involve therapy, support groups, medication, and self-care practices. It's important to seek help if you experience symptoms of depression after childbirth."
+      },
+      {
+        "question": "What is the importance of prenatal care?",
+        "answer": "Prenatal care is crucial for monitoring the health of both mother and baby, identifying potential complications early, and ensuring proper fetal development."
+      },
+      {
+        "question": "When should I start prenatal care?",
+        "answer": "Prenatal care should start as soon as you confirm your pregnancy, ideally during the first trimester, to ensure proper monitoring and care throughout your pregnancy."
+      },
+      {
+        "question": "How can I prepare for childbirth?",
+        "answer": "Preparing for childbirth involves taking prenatal classes, discussing your birth plan with your healthcare provider, preparing your home, and having a support system in place for the big day."
+      },
+      {
+        "question": "What is the best way to sleep during pregnancy?",
+        "answer": "Sleeping on your left side is recommended during pregnancy to improve blood flow to the placenta and avoid pressure on the organs. Using pillows for support can make sleeping more comfortable."
+      },
+      {
+        "question": "What are common discomforts during pregnancy?",
+        "answer": "Common discomforts include morning sickness, fatigue, back pain, heartburn, swelling in the legs, and mood swings."
+      },
+      {
+        "question": "Can I have sex during pregnancy?",
+        "answer": "Sex during pregnancy is generally safe unless there are complications such as bleeding, preterm labor, or other medical concerns. Always consult your healthcare provider if you have concerns."
+      }
+    ]
+  }
+  

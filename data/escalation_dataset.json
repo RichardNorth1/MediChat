@@ -108,7 +108,465 @@
         "label": 1
     },
     {
-        "text": "",
+        "text": "What are common symptoms of a cold?", 
+        "label": 0
+    },
+    {
+        "text": "How can I boost my immune system?", 
+        "label": 0
+    },
+    {
+        "text": "What are some home remedies for a sore throat?", 
+        "label": 0
+    },
+    {
+        "text": "Can you tell me about seasonal allergies?", 
+        "label": 0
+    },
+    {
+        "text": "How do I know if I have a cold or the flu?", 
+        "label": 0
+    },
+    {
+        "text": "What foods help with digestion?", 
+        "label": 0
+    },
+    {
+        "text": "How many hours of sleep do I need?", 
+        "label": 0
+    },
+    {
+        "text": "What are some tips for better sleep?", 
+        "label": 0
+    },
+    {
+        "text": "How much water should I drink daily?", 
+        "label": 0
+    },
+    {
+        "text": "What are the benefits of regular exercise?", 
+        "label": 0
+    },
+    {
+        "text": "Is it safe to drink coffee every day?", 
+        "label": 0
+    },
+    {
+        "text": "Can stress cause headaches?", 
+        "label": 0
+    },
+    {
+        "text": "What are the side effects of too much caffeine?", 
+        "label": 0
+    },
+    {
+        "text": "How can I reduce stress naturally?", 
+        "label": 0
+    },
+    {
+        "text": "What are some good foods for brain health?",
+        "label": 0
+    },
+    {
+        "text": "How does vitamin D affect the body?", 
+        "label": 0
+    },
+    {
+        "text": "What are probiotics, and how do they help?",
+        "label": 0
+    },
+    {
+        "text": "Can you explain what antioxidants do?", 
+        "label": 0
+    },
+    {
+        "text": "How does meditation improve mental health?", 
+        "label": 0
+    },
+    {
+        "text": "Is it normal to feel tired after eating?", 
+        "label": 0
+    },
+    {
+        "text": "Why do I get headaches when I'm dehydrated?", 
+        "label": 0
+    },
+    {
+        "text": "What are the symptoms of mild dehydration?",
+        "label": 0
+    },
+    {
+        "text": "How can I improve my posture?", 
+        "label": 0
+    },
+    {
+        "text": "What are the benefits of stretching daily?", 
+        "label": 0
+    },
+    {
+        "text": "What is the best way to recover after exercise?", 
+        "label": 0
+    },
+    {
+        "text": "Can poor sleep affect my memory?", 
+        "label": 0
+    },
+    {
+        "text": "How do I know if I have a food intolerance?", 
+        "label": 0
+    },
+    {
+        "text": "Are artificial sweeteners bad for me?", 
+        "label": 0
+    },
+    {
+        "text": "What is a balanced diet?", 
+        "label": 0
+    },
+    {
+        "text": "How can I naturally boost my energy levels?", 
+        "label": 0
+    },
+    {
+        "text": "What are some signs of a weak immune system?", 
+        "label": 0
+    },
+    {
+        "text": "How often should I wash my hands?", 
+        "label": 0
+    },
+    {
+        "text": "What is the best way to treat minor burns?", 
+        "label": 0
+    },
+    {
+        "text": "How can I prevent muscle cramps?", 
+        "label": 0
+    },
+    {
+        "text": "What are some ways to improve focus and concentration?", 
+        "label": 0
+    },
+    {
+        "text": "Is it normal to feel dizzy after standing up quickly?", 
+        "label": 0
+    },
+    {
+        "text": "What is the best way to protect my skin from the sun?", 
+        "label": 0
+    },
+    {
+        "text": "Can you give me tips for healthy weight loss?", 
+        "label": 0
+    },
+    {
+        "text": "How can I improve my lung capacity?", 
+        "label": 0
+    },
+    {
+        "text": "Are there any natural remedies for nausea?",
+        "label": 0
+    },
+    {
+        "text": "What are the benefits of drinking herbal tea?", 
+        "label": 0
+    },
+    {
+        "text": "How often should I replace my toothbrush?", 
+        "label": 0
+    },
+    {
+        "text": "Can certain foods help with anxiety?", 
+        "label": 0
+    },
+    {
+        "text": "Is it okay to eat late at night?", 
+        "label": 0
+    },
+    {
+        "text": "What is the difference between good and bad cholesterol?", 
+        "label": 0
+    },
+    {
+        "text": "How can I strengthen my immune system in winter?", 
+        "label": 0
+    },
+    {
+        "text": "Are there any risks to intermittent fasting?", 
+        "label": 0
+    },
+    {
+        "text": "What are some beginner-friendly exercises?", 
+        "label": 0
+    },
+    {
+        "text": "How long should I rest between workouts?", 
+        "label": 0
+    },
+    {
+        "text": "What are the best foods for muscle recovery?", 
+        "label": 0
+    },
+    {
+        "text": "Can too much screen time affect sleep?", 
+        "label": 0
+    },
+    {
+        "text": "Severe chest pain radiating to the left arm and jaw", 
         "label": 1
+    },
+    {
+        "text": "I am experiencing difficulty breathing and wheezing", 
+        "label": 1
+    },
+    {
+        "text": "My vision is suddenly blurry and I have a severe headache", 
+        "label": 1
+    },
+    {
+        "text": "I have been vomiting blood", 
+        "label": 1
+    },
+    {
+        "text": "My child is having trouble breathing and turning blue", 
+        "label": 1
+    },
+    {
+        "text": "I feel extreme pressure in my chest and dizziness", 
+        "label": 1
+    },
+    {
+        "text": "There is a sudden loss of movement in my left arm", 
+        "label": 1
+    },
+    {
+        "text": "I have severe stomach pain that has lasted for hours", 
+        "label": 1
+    },
+    {
+        "text": "My heart is beating extremely fast and I feel faint", 
+        "label": 1
+    },
+    {
+        "text": "I have had a high fever for more than 3 days and feel very weak", 
+        "label": 1
+    },
+    {
+        "text": "There is heavy bleeding that won't stop after an injury", 
+        "label": 1
+    },
+    {
+        "text": "I just fainted and still feel very dizzy", 
+        "label": 1
+    },
+    {
+        "text": "My lips and tongue are swelling rapidly", 
+        "label": 1
+    },
+    {
+        "text": "I have severe abdominal pain with vomiting and fever", 
+        "label": 1
+    },
+    {
+        "text": "My child is unconscious and unresponsive", 
+        "label": 1
+    },
+    {
+        "text": "I have a deep wound with visible bone", 
+        "label": 1
+    },
+    {
+        "text": "My breathing is extremely shallow and fast", 
+        "label": 1
+    },
+    {
+        "text": "I have a severe allergic reaction with trouble swallowing", 
+        "label": 1
+    },
+    {
+        "text": "My skin is turning yellow and I have extreme fatigue", 
+        "label": 1
+    },
+    {
+        "text": "My child has a high fever and is very drowsy", 
+        "label": 1
+    },
+    {
+        "text": "I am experiencing a severe migraine with vision loss", 
+        "label": 1
+    },
+    {
+        "text": "There is a large amount of blood in my urine", 
+        "label": 1
+    },
+    {
+        "text": "I have lost consciousness multiple times today", 
+        "label": 1
+    },
+    {
+        "text": "My legs are suddenly numb and I cannot walk", 
+        "label": 1
+    },
+    {
+        "text": "I have sudden, intense chest pain and nausea", 
+        "label": 1
+    },
+    {
+        "text": "My hand has gone completely numb and I can't move it", 
+        "label": 1
+    },
+    {
+        "text": "I have a crushing headache and extreme sensitivity to light", 
+        "label": 1
+    },
+    {
+        "text": "My arm is suddenly weak and I cannot grip anything", 
+        "label": 1
+    },
+    {
+        "text": "I feel like I'm going to pass out and my heart is racing", 
+        "label": 1
+    },
+    {
+        "text": "My child is breathing very fast and struggling to stay awake", 
+        "label": 1
+    },
+    {
+        "text": "I have a severe burn that is blistering and turning white", 
+        "label": 1
+    },
+    {
+        "text": "I was in a car accident and I feel pain in my neck and spine", 
+        "label": 1
+    },
+    {
+        "text": "My vision has completely gone in one eye", 
+        "label": 1
+    },
+    {
+        "text": "I have extreme dizziness and can't stand up", 
+        "label": 1
+    },
+    {
+        "text": "My arm is swelling very quickly after a bite or sting", 
+        "label": 1
+    },
+    {
+        "text": "My chest feels extremely tight and I can't breathe properly", 
+        "label": 1
+    },
+    {
+        "text": "I feel severe pain in my lower abdomen and cannot urinate", 
+        "label": 1
+    },
+    {
+        "text": "I have a fever and my skin is covered in a purple rash", 
+        "label": 1
+    },
+    {
+        "text": "I am unable to swallow my own saliva", 
+        "label": 1
+    },
+    {
+        "text": "I have slurred speech and weakness in my face", 
+        "label": 1
+    },
+    {
+        "text": "I am coughing up large amounts of blood", 
+        "label": 1
+    },
+    {
+        "text": "My child is making grunting noises while breathing", 
+        "label": 1
+    },
+    {
+        "text": "I have extreme chills and sweating with a very high fever", 
+        "label": 1
+    },
+    {
+        "text": "I feel numbness in my face and cannot lift my arms", 
+        "label": 1
+    },
+    {
+        "text": "My fingers are turning blue and I feel cold", 
+        "label": 1
+    },
+    {
+        "text": "I was hit on the head and now feel confused and drowsy", 
+        "label": 1
+    },
+    {
+        "text": "I am extremely dizzy and my vision is going black", 
+        "label": 1
+    },
+    {
+        "text": "I feel severe pressure in my head and I am vomiting", 
+        "label": 1
+    },
+    {
+        "text": "I was electrocuted and now I feel weak", 
+        "label": 1
+    },
+    {
+        "text": "My child is lethargic and not responding to me", 
+        "label": 1
+    },
+    {
+        "text": "I have a painful, swollen leg that is warm to touch", 
+        "label": 1
+    },
+    {
+        "text": "I feel lightheaded and my blood pressure is very low", 
+        "label": 1
+    },
+    {
+        "text": "I was exposed to poison and feel nauseous and dizzy", 
+        "label": 1
+    },
+    {
+        "text": "I have a very high fever and a stiff neck", 
+        "label": 1
+    },
+    {
+        "text": "My skin is peeling off after a burn", 
+        "label": 1
+    },
+    {
+        "text": "I am in extreme pain and my body is shaking", 
+        "label": 1
+    },
+    {
+        "text": "hello", 
+        "label": 0
+    },
+    {
+        "text": "Tell me a joke",
+        "label": 0
+    },
+    {
+        "text": "can you Tell me a joke",
+        "label": 0
+    },
+    {
+        "text": "i have a nose bleed what should i do ",
+        "label": 0
+    },
+    {
+        "text": "i have a cut on my finger ",
+        "label": 0
+    },
+    {
+        "text": "i have bruised my leg",
+        "label": 0
+    },
+    
+    {
+        "text": "i have chipped my finger nail",
+        "label": 0
+    },
+    {
+        "text": "i cut my finger ",
+        "label": 0
     }
 ]
+
