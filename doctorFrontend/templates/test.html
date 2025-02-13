@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="sidebar">
+            <h2>Escalated Chats</h2>
+            <ul id="escalated-chats"></ul>
+        </div>
+        <div class="chat-window">
+            <div id="messages" class="messages"></div>
+            <div id="typing-indicator" class="typing-indicator" style="display: none;">Patient is typing...</div>
+            <div class="input-area">
+                <input type="text" id="input" placeholder="Type a message...">
+                <button id="send">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chatHistory = {};
+        let currentChat = null;
+        let socket;
+
+        function showTypingIndicator() {
+            document.getElementById('typing-indicator').style.display = 'block';
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typing-indicator').style.display = 'none';
+        }
+
+        async function loadEscalatedChats() {
+            const response = await fetch('http://localhost:8000/api/escalated_chats');
+            const chats = await response.json();
+            const list = document.getElementById('escalated-chats');
+            list.innerHTML = '';
+            chats.forEach(chat => {
+                const item = document.createElement('li');
+                item.textContent = `Patient ID: ${chat.client_id}`;
+                item.onclick = () => startChat(chat.client_id);
+                list.appendChild(item);
+            });
+        }
+
+        function startChat(clientId) {
+            if (currentChat === clientId) return;
+            if (socket) {
+                socket.close();
+            }
+
+            document.getElementById('messages').innerHTML = '';
+            currentChat = clientId;
+            if (localStorage.getItem(`chatHistory_${clientId}`)) {
+                chatHistory[clientId] = JSON.parse(localStorage.getItem(`chatHistory_${clientId}`));
+                chatHistory[clientId].forEach(msg => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message', msg.type);
+                    messageElement.textContent = msg.content;
+                    document.getElementById('messages').appendChild(messageElement);
+                });
+            } else {
+                chatHistory[clientId] = [];
+            }
+
+            socket = new WebSocket(`ws://localhost:8000/ws/doctor/${clientId}`);
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                if (data.status === "typing") {
+                    if (data.sender === "patient") {
+                        showTypingIndicator();
+                        setTimeout(hideTypingIndicator, 3000);
+                    }
+                    return;
+                }
+
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'incoming');
+                messageElement.textContent = data.message;
+                document.getElementById('messages').appendChild(messageElement);
+                scrollToBottom();
+                hideTypingIndicator();
+            };
+
+            const sendMessage = function() {
+                const message = document.getElementById('input').value;
+                if (message.trim() === "") return;
+                socket.send(JSON.stringify({ message: message, sender: "doctor" }));
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'outgoing');
+                messageElement.textContent = message;
+                document.getElementById('messages').appendChild(messageElement);
+                if (!chatHistory[clientId]) {
+                    chatHistory[clientId] = [];
+                }
+                chatHistory[clientId].push({ type: 'outgoing', content: message });
+                localStorage.setItem(`chatHistory_${clientId}`, JSON.stringify(chatHistory[clientId]));
+                document.getElementById('input').value = '';
+                scrollToBottom();
+            };
+
+            document.getElementById('send').onclick = sendMessage;
+            document.getElementById('input').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                    event.preventDefault();
+                } else {
+                    socket.send(JSON.stringify({ status: "typing", sender: "doctor" }));
+                }
+            });
+
+            loadEscalatedChats();
+        }
+
+        function scrollToBottom() {
+            const messages = document.getElementById('messages');
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        loadEscalatedChats();
+        setInterval(loadEscalatedChats, 5000);
+    </script>
+</body>
+</html>
