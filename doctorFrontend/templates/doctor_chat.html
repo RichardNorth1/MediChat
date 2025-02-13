@@ -53,7 +53,7 @@
             if (socket) {
                 socket.close();
             }
-            
+
             document.getElementById('messages').innerHTML = '';
             currentChat = clientId;
             if (localStorage.getItem(`chatHistory_${clientId}`)) {
@@ -110,7 +110,6 @@
                     sendMessage();
                     event.preventDefault();
                 } else {
-                    console.log('Typing');
                     socket.send(JSON.stringify({ status: "typing", sender: "doctor" }));
                 }
             });
