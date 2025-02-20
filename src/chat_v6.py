@@ -62,16 +62,19 @@ accuracy = logistic_regression_model.score(X_test, y_test)
 print(f"Accuracy: {accuracy * 100:.2f}%")
 
 def get_answer(query):
-    """Get the best answer for the query."""
+    """
+    Get the best answer for the query using chatbot_model.similarity().
+    """
+    # Encode the query to get its embedding
     query_embedding = chatbot_model.encode(query, convert_to_tensor=True, device=device)
-    
-    # Compute cosine similarities
-    cosine_scores = util.pytorch_cos_sim(query_embedding, stored_embeddings.to(device))
-    
-    # Find the index of the highest score
-    best_match_idx = torch.argmax(cosine_scores)
-    
-    # Return the corresponding answer
+
+    # Compute similarity scores between the query and all stored embeddings
+    similarity_scores = chatbot_model.similarity(query_embedding, stored_embeddings.to(device))[0]
+
+    # Find the index of the maximum similarity score
+    best_match_idx = torch.argmax(similarity_scores).item()
+
+    # Return the answer corresponding to the best match
     return answers[best_match_idx]
 
 def correct_grammar(input_text):
