@@ -88,14 +88,14 @@ class ConnectionManager:
             print(f"Doctor {doctor_id} claimed escalated chat with Patient {patient_id}")
             return True
         return False
-
+ 
     async def disconnect_doctor(self, doctor_id: str):
         """ Removes a doctor from active connections """
         if doctor_id in self.active_connections:
             await self.active_connections[doctor_id].close()
             del self.active_connections[doctor_id]
             print(f"Doctor {doctor_id} disconnected.")
-        
+            
         if doctor_id in self.assigned_chats:
             del self.assigned_chats[doctor_id]
 
