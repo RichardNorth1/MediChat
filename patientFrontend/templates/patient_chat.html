@@ -9,24 +9,50 @@
 <body>
     <div class="chat-container">
         <div class="message-list" id="message-list" style="overflow-y: auto; height: 80vh;"></div>
+        <div class="modal-overlay" id="modal-overlay" style="display: none;"></div>
+
+        <div class="modal" id="modal-form" style="display: none;">
+            <div class="modal-content">
+                <h3>Provide Your Details</h3>
+                <form id="patient-form" onsubmit="submitForm(event)">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                    
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" placeholder="Your age" required>
+                    
+                    <label for="symptoms">Symptoms:</label>
+                    <textarea id="symptoms" name="symptoms" rows="4" placeholder="Describe your symptoms" required></textarea>
+                    
+                    <div class="modal-buttons">
+                        <button type="button" onclick="closeModal()">Cancel</button>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div id="typing-indicator" class="typing-indicator" style="display: none;">Chatbot is typing...</div>
         <div id="doctor-typing-text" class="typing-indicator" style="display: none;">Doctor is typing...</div>
         <div class="input-container">
             <input type="text" id="message-input" placeholder="Type a message...">
             <button onclick="sendMessage()">Send</button>
         </div>
+        
     </div>
 
     <script>
         let socket;
+        let patientSocket = null;
         let chatId = "";
-        let endpoint = "chatbot";
-        let typingTimeout;
         let isWebSocketOpen = false;
 
         function generateUUID() {
-            chatId = crypto.randomUUID();
-            console.log("Generated chat ID:", chatId);
+            // Generate a random UUID
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
         }
 
         function showDoctorTypingIndicator() {
@@ -45,35 +71,55 @@
             document.getElementById('typing-indicator').style.display = 'none';
         }
 
+        function showModal() {
+            document.getElementById('modal-overlay').style.display = 'block';
+            document.getElementById('modal-form').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.getElementById('modal-form').style.display = 'none';
+        }
+
+        function submitForm(event) {
+            event.preventDefault(); 
+
+            const name = document.getElementById('name').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const symptoms = document.getElementById('symptoms').value.trim();
+
+            if (name && age && symptoms) {
+                const formData = {
+                    name,
+                    age,
+                    symptoms,
+                };
+
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ status: "form_data", data: formData }));
+                }
+
+                closeModal();
+
+                alert("Form submitted successfully. A doctor will review your details.");
+            } else {
+                alert("Please fill in all fields before submitting.");
+            }
+        }
+
         function connectWebSocket() {
-            if (isWebSocketOpen) {
-                console.log("WebSocket is already open");
-                return;
-            }
-
-            if (!chatId) {
-                console.error('Chat ID is not set');
-                return;
-            }
-
-            socket = new WebSocket(`ws://localhost:8000/ws/${endpoint}/${chatId}`);
-            console.log('websocket = ', socket);
-            console.log('endpoint = ', endpoint);
-
+            socket = new WebSocket(`ws://localhost:8000/ws/chatbot/${chatId}`);            
             socket.onopen = function() {
                 isWebSocketOpen = true;
-                console.log('WebSocket connection established');
             };
 
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                console.log('Received message:', data);
-                
+
                 if (data.status === "typing") {
-                    console.log('Typing indicator received');
                     if (data.sender === "chatbot") {
                         showChatbotTypingIndicator();
-                        setTimeout(hideChatbotTypingIndicator, 3000);
+                        setTimeout(hideChatbotTypingIndicator, 6000);
                     } else if (data.sender === "doctor") {
                         showDoctorTypingIndicator();
                         setTimeout(hideDoctorTypingIndicator, 3000);
@@ -82,9 +128,13 @@
                 }
 
                 if (data.status === "escalated") {
-                    console.log('Conversation escalated, switching to doctor chat...');
-                    connectDoctorWebSocket(data.client_id);
-                    endpoint = "doctor";
+                    
+                    if (socket && socket.readyState === WebSocket.OPEN) {
+                        socket.close();
+                        isWebSocketOpen = false; 
+                    }
+                    connectToPatientChat(chatId);
+                    showModal();
                     return;
                 }
 
@@ -92,57 +142,36 @@
                 addMessageToList(message, data.sender === "doctor" ? 'doctor-message' : 'bot-message');
             };
 
-            socket.onerror = function(error) {
-                console.error('WebSocket error:', error);
-            };
-
             socket.onclose = function() {
-                console.log('WebSocket connection closed');
                 isWebSocketOpen = false;
                 setTimeout(connectWebSocket, 1000);
             };
         }
 
-        function connectDoctorWebSocket(clientId) {
-            console.log("Attempting to connect to doctor WebSocket with clientId:", clientId);
+        function connectToPatientChat(chatId) {
+            patientSocket = new WebSocket(`ws://localhost:8000/ws/patient/${chatId}`);
 
-            if (socket) {
-                socket.close();
-            }
-
-            let endpoint = "doctor";
-
-            socket = new WebSocket(`ws://localhost:8000/ws/${endpoint}/${clientId}`);
-
-            socket.onopen = function() {
-                console.log('Doctor WebSocket connection established');
+            patientSocket.onopen = function() {
+                isWebSocketOpen = true; 
             };
 
-            socket.onmessage = function(event) {
+            patientSocket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
+
                 if (data.status === "typing") {
                     if (data.sender === "doctor") {
                         showDoctorTypingIndicator();
                         setTimeout(hideDoctorTypingIndicator, 3000);
-                    } else if (data.sender === "chatbot") {
-                        showChatbotTypingIndicator();
-                        setTimeout(hideChatbotTypingIndicator, 3000);
                     }
                     return;
                 }
 
                 const message = data.message || "No message received";
-                addMessageToList(message, data.sender === "doctor" ? 'doctor-message' : 'bot-message');
+                addMessageToList(message, 'doctor-message');
             };
 
-            socket.onerror = function(error) {
-                console.error('Doctor WebSocket error:', error);
-            };
-
-            socket.onclose = function() {
-                console.log('Doctor WebSocket connection closed');
+            patientSocket.onclose = function() {
                 isWebSocketOpen = false;
-                setTimeout(() => connectDoctorWebSocket(clientId), 1000);
             };
         }
 
@@ -150,27 +179,21 @@
             const input = document.getElementById('message-input');
             const message = input.value;
             if (message.trim()) {
-                console.log('Sending message:', message);
-                if (socket && socket.readyState === WebSocket.OPEN) {
+                if (patientSocket && patientSocket.readyState === WebSocket.OPEN) {
+                    patientSocket.send(JSON.stringify({ message: message, sender: "patient" }));
+                    addMessageToList(message, 'user-message');
+                    input.value = '';
+                } else if (socket && socket.readyState === WebSocket.OPEN) {
                     socket.send(JSON.stringify({ message: message, sender: "patient" }));
                     addMessageToList(message, 'user-message');
                     input.value = '';
-                } else {
-                    console.error('WebSocket is not open');
                 }
             }
         }
 
         function addMessageToList(message, sender) {
-            console.log('Adding message:', message);
 
             const messageList = document.getElementById('message-list');
-            const lastMessage = messageList.lastElementChild;
-
-            if (lastMessage && lastMessage.textContent === message && lastMessage.classList.contains(sender)) {
-                console.log('Duplicate message from the same sender.');
-                return;
-            }
 
             const messageElement = document.createElement('div');
             messageElement.className = `message ${sender}`;
@@ -180,21 +203,21 @@
             messageList.scrollTop = messageList.scrollHeight;
         }
 
-
         document.getElementById('message-input').addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 sendMessage();
                 event.preventDefault();
             } else {
-                console.log('Typing');
                 if (socket && socket.readyState === WebSocket.OPEN) {
                     socket.send(JSON.stringify({ status: "typing", sender: "patient" }));
+                } else if (patientSocket && patientSocket.readyState === WebSocket.OPEN) {
+                    patientSocket.send(JSON.stringify({ status: "typing", sender: "patient" }));
                 }
             }
         });
 
         window.onload = function() {
-            generateUUID();
+            chatId = generateUUID();
             connectWebSocket();
         };
     </script>

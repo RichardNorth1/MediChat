@@ -9,9 +9,12 @@
 <body>
     <div class="chat-container">
         <div class="sidebar">
+            <h2>Waiting Patients</h2>
+            <ul id="lobby"></ul>
             <h2>Escalated Chats</h2>
             <ul id="escalated-chats"></ul>
         </div>
+
         <div class="chat-window">
             <div id="messages" class="messages"></div>
             <div id="typing-indicator" class="typing-indicator" style="display: none;">Patient is typing...</div>
@@ -26,6 +29,15 @@
         let chatHistory = {};
         let currentChat = null;
         let socket;
+        let doctorId = "";
+
+        function generateUUID() {
+            // Generate a random UUID
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
 
         function showTypingIndicator() {
             document.getElementById('typing-indicator').style.display = 'block';
@@ -35,17 +47,49 @@
             document.getElementById('typing-indicator').style.display = 'none';
         }
 
+        async function loadLobby() {
+            const response = await fetch('http://localhost:8000/api/lobby');
+            const lobbyList = document.getElementById('lobby');
+            lobbyList.innerHTML = '';
+
+            const data = await response.json();
+            console.log('Lobby Data:', data);
+
+            if (data && Array.isArray(data.lobby)) {
+                data.lobby.forEach(patient => {
+                    if (patient.patient_id) {
+                        const item = document.createElement('li');
+                        item.textContent = `Patient ID: ${patient.patient_id}`;
+                        const claimButton = document.createElement('button');
+                        claimButton.textContent = "Claim";
+                        claimButton.onclick = () => claimPatient(patient.patient_id);
+                        item.appendChild(claimButton);
+                        lobbyList.appendChild(item);
+                    } 
+                });
+            }
+        }
+
+        function claimPatient(patientId) {
+            socket.send(JSON.stringify({ type: "claim", patient_id: patientId }));
+        }
+
         async function loadEscalatedChats() {
             const response = await fetch('http://localhost:8000/api/escalated_chats');
-            const chats = await response.json();
             const list = document.getElementById('escalated-chats');
             list.innerHTML = '';
-            chats.forEach(chat => {
-                const item = document.createElement('li');
-                item.textContent = `Patient ID: ${chat.client_id}`;
-                item.onclick = () => startChat(chat.client_id);
-                list.appendChild(item);
-            });
+
+            const chats = await response.json();
+            if (chats && Array.isArray(chats)) {
+                chats.forEach(chat => {
+                    if (chat.client_id) {
+                        const item = document.createElement('li');
+                        item.textContent = `Patient ID: ${chat.client_id}`;
+                        item.onclick = () => startChat(chat.client_id);
+                        list.appendChild(item);
+                    }
+                });
+            }
         }
 
         function startChat(clientId) {
@@ -56,6 +100,7 @@
 
             document.getElementById('messages').innerHTML = '';
             currentChat = clientId;
+
             if (localStorage.getItem(`chatHistory_${clientId}`)) {
                 chatHistory[clientId] = JSON.parse(localStorage.getItem(`chatHistory_${clientId}`));
                 chatHistory[clientId].forEach(msg => {
@@ -68,14 +113,38 @@
                 chatHistory[clientId] = [];
             }
 
-            socket = new WebSocket(`ws://localhost:8000/ws/doctor/${clientId}`);
+            socket = new WebSocket(`ws://localhost:8000/ws/doctor/${doctorId}`);
+
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
+
+                if (data.type === "lobby_update") {
+                    loadLobby();
+                }
+
+                if (data.type === "assigned" && data.doctor_id === doctorId) {
+                    alert(`You have been assigned a patient!`);
+                    loadEscalatedChats();
+                }
+
                 if (data.status === "typing") {
                     if (data.sender === "patient") {
+                        console.log('Received typing status from patient');
                         showTypingIndicator();
                         setTimeout(hideTypingIndicator, 3000);
                     }
+                    return;
+                }
+
+                if (data.status === "form_data") {
+                    console.log(data);
+                    const formData = data.data;
+                    const formMessage = `Patient Details:\nName: ${formData.name}\nAge: ${formData.age}\nSymptoms: ${formData.symptoms}`;
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message', 'incoming');
+                    messageElement.textContent = formMessage;
+                    document.getElementById('messages').appendChild(messageElement);
+                    scrollToBottom();
                     return;
                 }
 
@@ -90,7 +159,7 @@
             const sendMessage = function() {
                 const message = document.getElementById('input').value;
                 if (message.trim() === "") return;
-                socket.send(JSON.stringify({ message: message, sender: "doctor" }));
+                socket.send(JSON.stringify({ message: message, sender: "doctor", patient_id: currentChat }));
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message', 'outgoing');
                 messageElement.textContent = message;
@@ -110,7 +179,8 @@
                     sendMessage();
                     event.preventDefault();
                 } else {
-                    socket.send(JSON.stringify({ status: "typing", sender: "doctor" }));
+                    console.log('Doctor is typing');
+                    socket.send(JSON.stringify({ status: "typing", sender: "doctor", patient_id: currentChat }));
                 }
             });
 
@@ -122,8 +192,38 @@
             messages.scrollTop = messages.scrollHeight;
         }
 
-        loadEscalatedChats();
-        setInterval(loadEscalatedChats, 5000);
+        function startWebSocket() {
+            socket = new WebSocket(`ws://localhost:8000/ws/doctor/${doctorId}`);
+
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+
+                if (data.type === "lobby_update") {
+                    loadLobby();
+                }
+
+                if (data.type === "assigned" && data.doctor_id === doctorId) {
+                    alert(`You have been assigned a patient!`);
+                    loadEscalatedChats();
+                }
+
+                if (data.message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message', 'incoming');
+                    messageElement.textContent = data.message;
+                    document.getElementById('messages').appendChild(messageElement);
+                }
+            };
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            doctorId = generateUUID();
+            startWebSocket();
+            loadLobby();
+            loadEscalatedChats();
+            setInterval(loadLobby, 5000);
+        });
+
     </script>
 </body>
 </html>

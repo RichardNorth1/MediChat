@@ -156,8 +156,10 @@ async def chatbot_endpoint(websocket: WebSocket, client_id: str):
             if not response or "message" not in response:
                 response = {"message": "No message received"}
 
-            await websocket.send_text(json.dumps(response))
-            logging.info(f"Sent to user {client_id}: {response}")
+            # Only send the chatbot's response back to the client
+            response_message = json.dumps({"message": response["message"], "sender": "chatbot"})
+            await websocket.send_text(response_message)
+            logging.info(f"Sent to user {client_id}: {response_message}")
 
             if response.get("escalate"):
                 connection_manager.client_statuses[client_id] = "escalated"

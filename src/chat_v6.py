@@ -15,10 +15,10 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 qa_file = "./data/qa_pairs"
 
 # Load Sentence Transformer model for the chatbot
-chatbot_model = SentenceTransformer("all-MiniLM-L6-v2", device=device)
+chatbot_model = SentenceTransformer("all-mpnet-base-v2", device=device)
 
 # Load Sentence Transformer model for the escalation feature
-escalation_model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
+escalation_model = SentenceTransformer('all-mpnet-base-v2', device=device)
 
 def load_qa_pairs(json_path):
     """Load QA pairs from the given JSON file."""
@@ -63,7 +63,7 @@ print(f"Accuracy: {accuracy * 100:.2f}%")
 
 def get_answer(query):
     """
-    Get the best answer for the query using chatbot_model.similarity().
+    Get the best answer for the query.
     """
     # Encode the query to get its embedding
     query_embedding = chatbot_model.encode(query, convert_to_tensor=True, device=device)
@@ -77,13 +77,6 @@ def get_answer(query):
     # Return the answer corresponding to the best match
     return answers[best_match_idx]
 
-def correct_grammar(input_text):
-    """Correct grammatical errors in the input text."""
-    tool = language_tool_python.LanguageTool('en-GB')
-    matches = tool.check(input_text)
-    corrected_text = language_tool_python.utils.correct(input_text, matches)
-    return corrected_text
-
 def predict_escalation(user_input):
     """Predict whether the input text requires escalation."""
     embedding = escalation_model.encode([user_input])
@@ -92,6 +85,13 @@ def predict_escalation(user_input):
         return True
     else:
         return False
+    
+def correct_grammar(input_text):
+    """Correct grammatical errors in the input text."""
+    tool = language_tool_python.LanguageTool('en-GB')
+    matches = tool.check(input_text)
+    corrected_text = language_tool_python.utils.correct(input_text, matches)
+    return corrected_text
 
 def handle_chat(input_text):
     """Handle the chat by predicting the intent and providing a response."""
