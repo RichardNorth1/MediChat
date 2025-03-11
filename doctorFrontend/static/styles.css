@@ -106,143 +106,138 @@
 .input-area button:hover {
     background-color: #006bb3;
 }
-        /* General Container Styling */
-        .chat-container {
-            display: flex;
-            height: 100vh;
-            background-color: #e5e5ea;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
+.chat-container {
+    display: flex;
+    height: 100vh;
+    background-color: #e5e5ea;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 
-        /* Sidebar Styling */
-        .sidebar {
-            width: 320px;
-            background-color: #f8f8f8;
-            color: #000;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-right: 1px solid #d1d1d6;
-        }
+.sidebar {
+    width: 320px;
+    background-color: #f8f8f8;
+    color: #000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid #d1d1d6;
+}
 
-        .sidebar h2 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
+.sidebar h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
 
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
 
-        .sidebar li {
-            background-color: #ffffff;
-            margin-bottom: 10px;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 15px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
+.sidebar li {
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-        .sidebar li:hover {
-            background-color: #f2f2f7;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-        }
+.sidebar li:hover {
+    background-color: #f2f2f7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
 
-        /* Chat Window Styling */
-        .chat-window {
-            flex-grow: 1;
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            border-radius: 20px 0 0 20px;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-        }
+.chat-window {
+    flex-grow: 1;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px 0 0 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
 
-        .messages {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .message {
-            max-width: 70%;
-            margin: 5px 0;
-            padding: 10px 15px;
-            border-radius: 20px;
-            word-wrap: break-word;
-            font-size: 15px;
-            line-height: 1.4;
-        }
+.message {
+    max-width: 70%;
+    margin: 5px 0;
+    padding: 10px 15px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.4;
+}
 
-        .message.outgoing {
-            align-self: flex-end;
-            background-color: #007aff;
-            color: white;
-            border-bottom-right-radius: 5px;
-            border-bottom-left-radius: 20px;
-        }
+.message.outgoing {
+    align-self: flex-end;
+    background-color: #007aff;
+    color: white;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+}
 
-        .message.incoming {
-            align-self: flex-start;
-            background-color: #f1f0f0;
-            color: #000;
-            border-bottom-right-radius: 20px;
-            border-bottom-left-radius: 5px;
-        }
+.message.incoming {
+    align-self: flex-start;
+    background-color: #f1f0f0;
+    color: #000;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 5px;
+}
 
-        /* Input Area Styling */
-        .input-area {
-            padding: 10px;
-            background-color: #f8f8f8;
-            display: flex;
-            align-items: center;
-            border-top: 1px solid #d1d1d6;
-        }
+.input-area {
+    padding: 10px;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #d1d1d6;
+}
 
-        .input-area input {
-            flex-grow: 1;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 20px;
-            background-color: #ffffff;
-            font-size: 15px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-right: 10px;
-        }
+.input-area input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #ffffff;
+    font-size: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
+}
 
-        .input-area input:focus {
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 122, 255, 0.5);
-        }
+.input-area input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 122, 255, 0.5);
+}
 
-        .input-area button {
-            padding: 10px 20px;
-            background-color: #007aff;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 15px;
-            transition: background-color 0.3s ease;
-        }
+.input-area button {
+    padding: 10px 20px;
+    background-color: #007aff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
 
-        .input-area button:hover {
-            background-color: #005bb5;
-        }
+.input-area button:hover {
+    background-color: #005bb5;
+}
 
-        /* Typing Indicator Styling */
-        .typing-indicator {
-            font-style: italic;
-            color: #a1a1a1;
-            margin: 10px;
-            font-size: 14px;
-        }
+.typing-indicator {
+    font-style: italic;
+    color: #a1a1a1;
+    margin: 10px;
+    font-size: 14px;
+}
