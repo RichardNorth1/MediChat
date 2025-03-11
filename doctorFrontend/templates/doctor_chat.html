@@ -32,7 +32,6 @@
         let doctorId = "";
 
         function generateUUID() {
-            // Generate a random UUID
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
@@ -72,7 +71,22 @@
 
         function claimPatient(patientId) {
             socket.send(JSON.stringify({ type: "claim", patient_id: patientId }));
+
+            const lobbyList = document.getElementById('lobby');
+            const escalatedList = document.getElementById('escalated-chats');
+
+            const claimedItem = [...lobbyList.children].find(item => item.textContent.includes(patientId));
+            if (claimedItem) {
+                lobbyList.removeChild(claimedItem);
+                
+                const escalatedItem = document.createElement('li');
+                escalatedItem.textContent = `Patient ID: ${patientId}`;
+                escalatedItem.onclick = () => startChat(patientId);
+                escalatedList.appendChild(escalatedItem);
+            }
         }
+
+
 
         async function loadEscalatedChats() {
             const response = await fetch('http://localhost:8000/api/escalated_chats');

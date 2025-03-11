@@ -679,7 +679,27 @@
     {
         "text": "my thumbs hurt",
         "label": 0
-    }
+    },
+    {
+        "text": "What is COVID-19?",
+        "label": 0
+      },
+      {
+        "text": "What are the common symptoms of COVID-19?",
+        "label": 0
+      },
+      {
+        "text": "How is COVID-19 spread?",
+        "label": 0
+      },
+      {
+        "text": "What are the preventive measures for COVID-19?",
+        "label": 0
+      },
+      {
+        "text": "How can I protect myself from COVID-19?",
+        "label": 0
+      }
     
 ]
 

@@ -6,10 +6,13 @@ from chat import handle_chat
 import logging
 import json
 
+# Set up logging
 logging.basicConfig(level=logging.INFO)
 
+# Create the FastAPI app
 app = FastAPI()
 
+# Add CORS middleware to allow cross-origin requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  
@@ -81,13 +84,22 @@ class ConnectionManager:
         return patient_id
 
     async def claim_escalated_chat(self, doctor_id: str, patient_id: str):
-        """ Claims an escalated chat for a doctor """
+        """ Claims an escalated chat for a doctor and removes it from the escalated list """
         if patient_id in self.escalated_chats:
             self.escalated_chats.remove(patient_id)
             self.assigned_chats[doctor_id] = patient_id
             print(f"Doctor {doctor_id} claimed escalated chat with Patient {patient_id}")
+
+            for doc_id, doctor_websocket in self.active_connections.items():
+                await doctor_websocket.send_text(json.dumps({
+                    "type": "lobby_update",
+                    "lobby": self.get_waiting_patients(),
+                    "escalated_chats": self.get_escalated_chats()
+                }))
+
             return True
         return False
+
  
     async def disconnect_doctor(self, doctor_id: str):
         """ Removes a doctor from active connections """
@@ -166,10 +178,11 @@ async def websocket_doctor(websocket: WebSocket, doctor_id: str):
         while True:
             data = await websocket.receive_text()
             json_data = json.loads(data)
-
+            # Assign patient to doctor
             if json_data.get("type") == "claim":
                 patient_id = json_data.get("patient_id")
                 await manager.assign_patient_to_doctor(doctor_id, patient_id)
+            # Send typing status to patient
             elif json_data.get("status") == "typing":
                 patient_id = manager.assigned_chats.get(doctor_id)
                 if patient_id and patient_id in manager.patient_connections:
@@ -177,6 +190,7 @@ async def websocket_doctor(websocket: WebSocket, doctor_id: str):
                         "status": "typing",
                         "sender": "doctor"
                     }))
+            # If not typing status or assignment, forward message to patient
             else:
                 patient_id = manager.assigned_chats.get(doctor_id)
                 if patient_id and patient_id in manager.patient_connections:
@@ -197,7 +211,7 @@ async def websocket_patient(websocket: WebSocket, patient_id: str):
             json_data = json.loads(data)
 
             if json_data.get("status") == "typing":
-                # Notify doctor that patient is typing
+                # Send patient is typing message to doctor
                 doctor_id = next((doc for doc, pat in manager.assigned_chats.items() if pat == patient_id), None)
                 if doctor_id and doctor_id in manager.active_connections:
                     await manager.send_message(patient_id, doctor_id, json.dumps({
@@ -222,7 +236,7 @@ async def chatbot_endpoint(websocket: WebSocket, client_id: str):
     await manager.connect_chatbot(client_id, websocket)
     try:
         while True:
-            data = await websocket.receive_text()  # Receive message
+            data = await websocket.receive_text()
             if not data:
                 continue
 
@@ -262,5 +276,6 @@ async def chatbot_endpoint(websocket: WebSocket, client_id: str):
         logging.info(f"Patient {client_id} disconnected from chatbot")
 
 if __name__ == "__main__":
+
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
