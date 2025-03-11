@@ -34,14 +34,14 @@ class ConnectionManager:
         """ Adds a doctor to active connections """
         await websocket.accept()
         self.active_connections[doctor_id] = websocket
-        print(f"Doctor {doctor_id} connected.")
+        logging.info(f"Doctor {doctor_id} connected.")
 
     async def connect_patient(self, patient_id: str, websocket: WebSocket):
         """ Adds a patient to the lobby or active connections """
         await websocket.accept()
         self.patient_connections[patient_id] = websocket
         self.lobby.append(patient_id) 
-        print(f"Patient {patient_id} connected and added to the lobby.")
+        logging.info(f"Patient {patient_id} connected and added to the lobby.")
         
         for doctor_id, doctor_websocket in self.active_connections.items():
             await doctor_websocket.send_text(json.dumps({
@@ -53,21 +53,21 @@ class ConnectionManager:
         """ Adds a chatbot connection """
         await websocket.accept()
         self.chatbot_connections[client_id] = websocket
-        print(f"Chatbot {client_id} connected.")
+        logging.info(f"Chatbot {client_id} connected.")
 
     async def assign_patient_to_doctor(self, doctor_id: str, patient_id: str):
         """ Assigns a patient to a doctor """
         if doctor_id not in self.active_connections:
-            print(f"Doctor {doctor_id} not connected.")
+            logging.error(f"Doctor {doctor_id} not connected.")
             return None
         
         if patient_id not in self.lobby:
-            print(f"Patient {patient_id} not in the lobby.")
+            logging.error(f"Patient {patient_id} not in the lobby.")
             return None
 
         self.lobby.remove(patient_id)
         self.assigned_chats[doctor_id] = patient_id
-        print(f"Doctor {doctor_id} assigned to Patient {patient_id}")
+        logging.info(f"Doctor {doctor_id} assigned to Patient {patient_id}")
 
         await self.active_connections[doctor_id].send_text(json.dumps({
             "type": "assigned",
@@ -88,7 +88,7 @@ class ConnectionManager:
         if patient_id in self.escalated_chats:
             self.escalated_chats.remove(patient_id)
             self.assigned_chats[doctor_id] = patient_id
-            print(f"Doctor {doctor_id} claimed escalated chat with Patient {patient_id}")
+            logging.info(f"Doctor {doctor_id} claimed escalated chat with Patient {patient_id}")
 
             for doc_id, doctor_websocket in self.active_connections.items():
                 await doctor_websocket.send_text(json.dumps({
@@ -100,13 +100,13 @@ class ConnectionManager:
             return True
         return False
 
- 
     async def disconnect_doctor(self, doctor_id: str):
         """ Removes a doctor from active connections """
         if doctor_id in self.active_connections:
-            await self.active_connections[doctor_id].close()
+            if self.active_connections[doctor_id].application_state == WebSocketState.CONNECTED:
+                await self.active_connections[doctor_id].close()
             del self.active_connections[doctor_id]
-            print(f"Doctor {doctor_id} disconnected.")
+            logging.info(f"Doctor {doctor_id} disconnected.")
             
         if doctor_id in self.assigned_chats:
             del self.assigned_chats[doctor_id]
@@ -114,9 +114,10 @@ class ConnectionManager:
     async def disconnect_patient(self, patient_id: str):
         """ Removes a patient from connections and lobby """
         if patient_id in self.patient_connections:
-            await self.patient_connections[patient_id].close()
+            if self.patient_connections[patient_id].application_state == WebSocketState.CONNECTED:
+                await self.patient_connections[patient_id].close()
             del self.patient_connections[patient_id]
-            print(f"Patient {patient_id} disconnected.")
+            logging.info(f"Patient {patient_id} disconnected.")
 
         if patient_id in self.lobby:
             self.lobby.remove(patient_id)
@@ -126,15 +127,16 @@ class ConnectionManager:
     async def disconnect_chatbot(self, client_id: str):
         """ Disconnect the chatbot client """
         if client_id in self.chatbot_connections:
-            await self.chatbot_connections[client_id].close()
+            if self.chatbot_connections[client_id].application_state == WebSocketState.CONNECTED:
+                await self.chatbot_connections[client_id].close()
             del self.chatbot_connections[client_id]
-            print(f"Chatbot {client_id} disconnected.")
+            logging.info(f"Chatbot {client_id} disconnected.")
 
     async def escalate_chat(self, patient_id: str):
         """ Moves a patient to the escalated chats list """
         if patient_id not in self.escalated_chats:
             self.escalated_chats.append(patient_id)
-            print(f"Chat with Patient {patient_id} escalated.")
+            logging.info(f"Chat with Patient {patient_id} escalated.")
             for doctor_id, doctor_websocket in self.active_connections.items():
                 await doctor_websocket.send_text(json.dumps({
                     "type": "lobby_update",
@@ -143,12 +145,13 @@ class ConnectionManager:
 
     async def send_message(self, sender_id: str, receiver_id: str, message: str):
         """ Sends a message from a doctor or patient to the other """
+        logging.info(f"Sending message from {sender_id} to {receiver_id}: {message}")
         if receiver_id in self.active_connections:
             await self.active_connections[receiver_id].send_text(message)
         elif receiver_id in self.patient_connections:
             await self.patient_connections[receiver_id].send_text(message)
         else:
-            print(f"Receiver {receiver_id} not connected.")
+            logging.error(f"Receiver {receiver_id} not connected.")
 
     def get_waiting_patients(self):
         """ Get list of patients in the lobby """ 
@@ -181,24 +184,28 @@ async def websocket_doctor(websocket: WebSocket, doctor_id: str):
             # Assign patient to doctor
             if json_data.get("type") == "claim":
                 patient_id = json_data.get("patient_id")
+                logging.info(f"Doctor {doctor_id} is claiming patient {patient_id}")
                 await manager.assign_patient_to_doctor(doctor_id, patient_id)
             # Send typing status to patient
             elif json_data.get("status") == "typing":
                 patient_id = manager.assigned_chats.get(doctor_id)
                 if patient_id and patient_id in manager.patient_connections:
+                    logging.info(f"Doctor {doctor_id} is typing to patient {patient_id}")
                     await manager.send_message(doctor_id, patient_id, json.dumps({
                         "status": "typing",
                         "sender": "doctor"
                     }))
             # If not typing status or assignment, forward message to patient
             else:
-                patient_id = manager.assigned_chats.get(doctor_id)
+                patient_id = json_data.get("patient_id")
+                logging.info(f"Forwarding message to patient {patient_id}")
                 if patient_id and patient_id in manager.patient_connections:
                     await manager.send_message(doctor_id, patient_id, json.dumps({
                         "message": json_data.get("message"),
                         "sender": "doctor"
                     }))
     except WebSocketDisconnect:
+        logging.info(f"Doctor {doctor_id} disconnected due to WebSocketDisconnect")
         await manager.disconnect_doctor(doctor_id)
 
 @app.websocket("/ws/patient/{patient_id}")
@@ -214,6 +221,7 @@ async def websocket_patient(websocket: WebSocket, patient_id: str):
                 # Send patient is typing message to doctor
                 doctor_id = next((doc for doc, pat in manager.assigned_chats.items() if pat == patient_id), None)
                 if doctor_id and doctor_id in manager.active_connections:
+                    logging.info(f"Patient {patient_id} is typing to doctor {doctor_id}")
                     await manager.send_message(patient_id, doctor_id, json.dumps({
                         "status": "typing",
                         "sender": "patient",
@@ -222,12 +230,14 @@ async def websocket_patient(websocket: WebSocket, patient_id: str):
             else:
                 # Forward messages from patient to doctor
                 doctor_id = next((doc for doc, pat in manager.assigned_chats.items() if pat == patient_id), None)
+                logging.info(f"Forwarding message from patient {patient_id} to doctor {doctor_id}")
                 if doctor_id and doctor_id in manager.active_connections:
                     await manager.send_message(patient_id, doctor_id, json.dumps({
                         "message": json_data.get("message"),
                         "sender": "patient"
                     }))
     except WebSocketDisconnect:
+        logging.info(f"Patient {patient_id} disconnected due to WebSocketDisconnect")
         await manager.disconnect_patient(patient_id)
 
 @app.websocket("/ws/chatbot/{client_id}")
@@ -272,10 +282,9 @@ async def chatbot_endpoint(websocket: WebSocket, client_id: str):
                     await websocket.send_text(json.dumps(escalation_message))
 
     except WebSocketDisconnect:
+        logging.info(f"Patient {client_id} disconnected due to WebSocketDisconnect")
         await manager.disconnect_chatbot(client_id)
-        logging.info(f"Patient {client_id} disconnected from chatbot")
 
 if __name__ == "__main__":
-
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

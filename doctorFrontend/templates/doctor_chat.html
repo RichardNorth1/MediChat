@@ -70,6 +70,7 @@
         }
 
         function claimPatient(patientId) {
+            console.log(`Claiming patient with ID: ${patientId}`);
             socket.send(JSON.stringify({ type: "claim", patient_id: patientId }));
 
             const lobbyList = document.getElementById('lobby');
@@ -85,8 +86,6 @@
                 escalatedList.appendChild(escalatedItem);
             }
         }
-
-
 
         async function loadEscalatedChats() {
             const response = await fetch('http://localhost:8000/api/escalated_chats');
@@ -108,12 +107,14 @@
 
         function startChat(clientId) {
             if (currentChat === clientId) return;
+            console.log(`Switching to chat with client ID: ${clientId}`);
             if (socket) {
                 socket.close();
             }
 
             document.getElementById('messages').innerHTML = '';
             currentChat = clientId;
+            console.log(`Current chat set to: ${currentChat}`);
 
             if (localStorage.getItem(`chatHistory_${clientId}`)) {
                 chatHistory[clientId] = JSON.parse(localStorage.getItem(`chatHistory_${clientId}`));
@@ -128,9 +129,11 @@
             }
 
             socket = new WebSocket(`ws://localhost:8000/ws/doctor/${doctorId}`);
+            console.log(`WebSocket connected for doctor ${doctorId} with patient ${clientId}`);
 
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
+                console.log('WebSocket message received:', data);
 
                 if (data.type === "lobby_update") {
                     loadLobby();
@@ -168,21 +171,29 @@
                 document.getElementById('messages').appendChild(messageElement);
                 scrollToBottom();
                 hideTypingIndicator();
+
+                // Save received message to chat history
+                if (!chatHistory[currentChat]) {
+                    chatHistory[currentChat] = [];
+                }
+                chatHistory[currentChat].push({ type: 'incoming', content: data.message });
+                localStorage.setItem(`chatHistory_${currentChat}`, JSON.stringify(chatHistory[currentChat]));
             };
 
             const sendMessage = function() {
                 const message = document.getElementById('input').value;
                 if (message.trim() === "") return;
+                console.log(`Sending message to patient ${currentChat}: ${message}`);
                 socket.send(JSON.stringify({ message: message, sender: "doctor", patient_id: currentChat }));
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message', 'outgoing');
                 messageElement.textContent = message;
                 document.getElementById('messages').appendChild(messageElement);
-                if (!chatHistory[clientId]) {
-                    chatHistory[clientId] = [];
+                if (!chatHistory[currentChat]) {
+                    chatHistory[currentChat] = [];
                 }
-                chatHistory[clientId].push({ type: 'outgoing', content: message });
-                localStorage.setItem(`chatHistory_${clientId}`, JSON.stringify(chatHistory[clientId]));
+                chatHistory[currentChat].push({ type: 'outgoing', content: message });
+                localStorage.setItem(`chatHistory_${currentChat}`, JSON.stringify(chatHistory[currentChat]));
                 document.getElementById('input').value = '';
                 scrollToBottom();
             };
@@ -212,6 +223,8 @@
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
 
+                console.log('Received WebSocket message:', data);
+
                 if (data.type === "lobby_update") {
                     loadLobby();
                 }
@@ -232,12 +245,12 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             doctorId = generateUUID();
+            console.log(`Doctor ID generated: ${doctorId}`);
             startWebSocket();
             loadLobby();
             loadEscalatedChats();
             setInterval(loadLobby, 5000);
         });
-
     </script>
 </body>
 </html>
