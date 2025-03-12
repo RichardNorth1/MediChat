@@ -26,11 +26,13 @@
     </div>
 
     <script>
+        // Initialize variables
         let chatHistory = {};
         let currentChat = null;
         let socket;
         let doctorId = "";
 
+        // Function to generate a unique UUID
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -38,14 +40,17 @@
             });
         }
 
+        // Function to show the typing indicator
         function showTypingIndicator() {
             document.getElementById('typing-indicator').style.display = 'block';
         }
 
+        // Function to hide the typing indicator
         function hideTypingIndicator() {
             document.getElementById('typing-indicator').style.display = 'none';
         }
 
+        // Function to load the lobby data
         async function loadLobby() {
             const response = await fetch('http://localhost:8000/api/lobby');
             const lobbyList = document.getElementById('lobby');
@@ -69,6 +74,7 @@
             }
         }
 
+        // Function to claim a patient
         function claimPatient(patientId) {
             console.log(`Claiming patient with ID: ${patientId}`);
             socket.send(JSON.stringify({ type: "claim", patient_id: patientId }));
@@ -87,6 +93,7 @@
             }
         }
 
+        // Function to load escalated chats
         async function loadEscalatedChats() {
             const response = await fetch('http://localhost:8000/api/escalated_chats');
             const list = document.getElementById('escalated-chats');
@@ -105,6 +112,7 @@
             }
         }
 
+        // Function to start a chat with a patient
         function startChat(clientId) {
             if (currentChat === clientId) return;
             console.log(`Switching to chat with client ID: ${clientId}`);
@@ -211,11 +219,13 @@
             loadEscalatedChats();
         }
 
+        // Function to scroll to the bottom of the messages
         function scrollToBottom() {
             const messages = document.getElementById('messages');
             messages.scrollTop = messages.scrollHeight;
         }
 
+        // Function to start the WebSocket connection
         function startWebSocket() {
             socket = new WebSocket(`ws://localhost:8000/ws/doctor/${doctorId}`);
 
@@ -242,6 +252,7 @@
             };
         }
 
+        // Initialize the WebSocket connection and load initial data when the document is ready
         document.addEventListener("DOMContentLoaded", () => {
             doctorId = generateUUID();
             console.log(`Doctor ID generated: ${doctorId}`);
