@@ -47,6 +47,7 @@
         let chatId = "";
         let isWebSocketOpen = false;
 
+        // function to generate a random UUID 
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -54,32 +55,39 @@
             });
         }
 
+        // function to show typing indicator for doctor
         function showDoctorTypingIndicator() {
             document.getElementById('doctor-typing-text').style.display = 'block';
         }
 
+        // function to show typing indicator for chatbot
         function showChatbotTypingIndicator() {
             document.getElementById('typing-indicator').style.display = 'block';
         }
 
+        // function to hide typing indicator for doctor
         function hideDoctorTypingIndicator() {
             document.getElementById('doctor-typing-text').style.display = 'none';
         }
 
+        // function to hide typing indicator for chatbot
         function hideChatbotTypingIndicator() {
             document.getElementById('typing-indicator').style.display = 'none';
         }
 
+        // function to show modal form
         function showModal() {
             document.getElementById('modal-overlay').style.display = 'block';
             document.getElementById('modal-form').style.display = 'block';
         }
 
+        // function to close modal form
         function closeModal() {
             document.getElementById('modal-overlay').style.display = 'none';
             document.getElementById('modal-form').style.display = 'none';
         }
 
+        // function to submit patient details form
         function submitForm(event) {
             event.preventDefault(); 
 
@@ -106,6 +114,7 @@
             }
         }
 
+        // function to connect to the chatbot websocket endpoint
         function connectWebSocket() {
             socket = new WebSocket(`ws://localhost:8000/ws/chatbot/${chatId}`);            
             socket.onopen = function() {
@@ -115,6 +124,7 @@
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
 
+                // if typing status received, show typing indicator
                 if (data.status === "typing") {
                     if (data.sender === "chatbot") {
                         showChatbotTypingIndicator();
@@ -126,6 +136,7 @@
                     return;
                 }
 
+                // if escalated status received, close current socket and connect to patient chat
                 if (data.status === "escalated") {
                     
                     if (socket && socket.readyState === WebSocket.OPEN) {
@@ -137,26 +148,33 @@
                     return;
                 }
 
+                // if message received, add it to the message list
                 const message = data.message || "No message received";
                 addMessageToList(message, data.sender === "doctor" ? 'doctor-message' : 'bot-message');
             };
 
+            // if socket is closed, try to reconnect after 1 second
             socket.onclose = function() {
                 isWebSocketOpen = false;
                 setTimeout(connectWebSocket, 1000);
             };
         }
 
+        // function to connect to the patient chat websocket endpoint
         function connectToPatientChat(chatId) {
+            // connect to the patient chat websocket endpoint
             patientSocket = new WebSocket(`ws://localhost:8000/ws/patient/${chatId}`);
 
+            // if socket is opened, set isWebSocketOpen to true
             patientSocket.onopen = function() {
                 isWebSocketOpen = true; 
             };
 
+            // handle messages received from the patient chat websocket endpoint
             patientSocket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
 
+                // if typing status received, show typing indicator
                 if (data.status === "typing") {
                     if (data.sender === "doctor") {
                         showDoctorTypingIndicator();
@@ -165,24 +183,33 @@
                     return;
                 }
 
+                // if message received, add it to the message list
                 const message = data.message || "No message received";
                 addMessageToList(message, 'doctor-message');
             };
 
+            // if socket is closed, set isWebSocketOpen to false
             patientSocket.onclose = function() {
                 isWebSocketOpen = false;
             };
         }
 
+        // function to send message to the chatbot or doctor
         function sendMessage() {
+            // get the message input element
             const input = document.getElementById('message-input');
+            // get the message from the input element
             const message = input.value;
             if (message.trim()) {
+                // if patient websocket is open, send message to doctor
                 if (patientSocket && patientSocket.readyState === WebSocket.OPEN) {
                     patientSocket.send(JSON.stringify({ message: message, sender: "patient" }));
                     addMessageToList(message, 'user-message');
                     input.value = '';
-                } else if (socket && socket.readyState === WebSocket.OPEN) {
+                
+                }
+                // if chatbot websocket is open, send message to chatbot
+                else if (socket && socket.readyState === WebSocket.OPEN) {
                     socket.send(JSON.stringify({ message: message, sender: "patient" }));
                     addMessageToList(message, 'user-message');
                     input.value = '';
@@ -190,23 +217,32 @@
             }
         }
 
+        // function to add message to the message list
         function addMessageToList(message, sender) {
 
+            // get the message list element
             const messageList = document.getElementById('message-list');
 
+            // create a new message element
             const messageElement = document.createElement('div');
+            // set the class name of the message element
             messageElement.className = `message ${sender}`;
+            // set the text content of the message element
             messageElement.textContent = message;
+            // append the message element to the message list
             messageList.appendChild(messageElement);
-
+            // scroll to the bottom of the message list
             messageList.scrollTop = messageList.scrollHeight;
         }
-
+        // if the user is pressing keys
         document.getElementById('message-input').addEventListener('keydown', function(event) {
+            // if the key pressed is Enter send the message
             if (event.key === 'Enter') {
                 sendMessage();
                 event.preventDefault();
-            } else {
+            } 
+            // if the key pressed is not Enter, send typing status
+            else {
                 if (socket && socket.readyState === WebSocket.OPEN) {
                     socket.send(JSON.stringify({ status: "typing", sender: "patient" }));
                 } else if (patientSocket && patientSocket.readyState === WebSocket.OPEN) {
@@ -215,6 +251,7 @@
             }
         });
 
+        // when the window is loaded, generate a chatId and connect to the chatbot websocket endpoint
         window.onload = function() {
             chatId = generateUUID();
             connectWebSocket();

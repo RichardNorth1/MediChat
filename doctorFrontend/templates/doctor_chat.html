@@ -26,240 +26,277 @@
     </div>
 
     <script>
-        // Initialize variables
-        let chatHistory = {};
-        let currentChat = null;
-        let socket;
         let doctorId = "";
+        let currentChat = null;
+        let chatHistory = {};
+        let doctorSocket = null;
 
-        // Function to generate a unique UUID
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         }
-
-        // Function to show the typing indicator
-        function showTypingIndicator() {
-            document.getElementById('typing-indicator').style.display = 'block';
-        }
-
-        // Function to hide the typing indicator
-        function hideTypingIndicator() {
-            document.getElementById('typing-indicator').style.display = 'none';
-        }
-
-        // Function to load the lobby data
+        // Function to load the lobby of patients waiting for a doctor
         async function loadLobby() {
-            const response = await fetch('http://localhost:8000/api/lobby');
-            const lobbyList = document.getElementById('lobby');
-            lobbyList.innerHTML = '';
+            try {
+                // Fetch the lobby data from the server
+                const response = await fetch('http://localhost:8000/api/lobby/');
+                // Parse the JSON response
+                const data = await response.json();
+                // Get the lobby list element
+                const lobbyList = document.getElementById('lobby');
+                // Clear the existing list items    
+                lobbyList.innerHTML = '';
 
-            const data = await response.json();
-            console.log('Lobby Data:', data);
-
-            if (data && Array.isArray(data.lobby)) {
-                data.lobby.forEach(patient => {
-                    if (patient.patient_id) {
-                        const item = document.createElement('li');
-                        item.textContent = `Patient ID: ${patient.patient_id}`;
-                        const claimButton = document.createElement('button');
-                        claimButton.textContent = "Claim";
-                        claimButton.onclick = () => claimPatient(patient.patient_id);
-                        item.appendChild(claimButton);
-                        lobbyList.appendChild(item);
-                    } 
-                });
+                if (data && Array.isArray(data.lobby)) {
+                    // Loop through the list of patients in the lobby
+                    data.lobby.forEach(patient => {
+                        // Check if the patient has a valid ID
+                        if (patient.patient_id) {
+                            // Create a new list item element
+                            const item = document.createElement('li');
+                            // Set the text content of the list item to display the patient ID
+                            item.textContent = `Patient ID: ${patient.patient_id}`;
+                            // create the claim button
+                            const claimButton = document.createElement('button');
+                            // set the button text to "Claim"
+                            claimButton.textContent = "Claim";
+                            // add an event listener to the button to claim the patient
+                            claimButton.onclick = () => claimPatient(patient.patient_id);
+                            // append the button to the list item
+                            item.appendChild(claimButton);
+                            // append the list item to the lobby list
+                            lobbyList.appendChild(item);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching lobby data:", error);
             }
         }
 
-        // Function to claim a patient
-        function claimPatient(patientId) {
-            console.log(`Claiming patient with ID: ${patientId}`);
-            socket.send(JSON.stringify({ type: "claim", patient_id: patientId }));
+        // Function to claim a patient from the lobby
+        async function claimPatient(patientId) {
+            try {
+                // Fetch the lobby data from the server
+                loadLobby();
+                // reload the page
+                location.reload();
+                // post the claim_patient request to the server
+                const response = await fetch('http://localhost:8000/api/claim_patient', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ doctor_id: doctorId, patient_id: patientId })
+                });
+                // Parse the JSON response
+                const result = await response.json();
+                if (result.success) {
+                    movePatientToEscalated(patientId);
+                } else {
+                    alert("Failed to claim patient: " + result.message);
+                }
+            } catch (error) {
+                console.error("Error claiming patient:", error);
+            }
+        }
 
+        // Function to move a patient from the lobby to the escalated chats list
+        function movePatientToEscalated(patientId) {
+            // Get the lobby and escalated chats list elements
             const lobbyList = document.getElementById('lobby');
             const escalatedList = document.getElementById('escalated-chats');
 
+            // Find the claimed item in the lobby list
             const claimedItem = [...lobbyList.children].find(item => item.textContent.includes(patientId));
+            // if it exists
             if (claimedItem) {
+                // remove the claimed item from the lobby list
                 lobbyList.removeChild(claimedItem);
-                
+
+                // Create a new list item element
                 const escalatedItem = document.createElement('li');
                 escalatedItem.textContent = `Patient ID: ${patientId}`;
+                // add an event listener to the item to start a chat with the patient
                 escalatedItem.onclick = () => startChat(patientId);
                 escalatedList.appendChild(escalatedItem);
             }
         }
 
-        // Function to load escalated chats
         async function loadEscalatedChats() {
-            const response = await fetch('http://localhost:8000/api/escalated_chats');
-            const list = document.getElementById('escalated-chats');
-            list.innerHTML = '';
+            try {
+                // Fetch the escalated chats data from the server
+                const response = await fetch(`http://localhost:8000/api/assigned_patients/${doctorId}`);
+                // get the escalated chats list element
+                const list = document.getElementById('escalated-chats');
+                // clear the existing list items
+                list.innerHTML = '';
 
-            const chats = await response.json();
-            if (chats && Array.isArray(chats)) {
-                chats.forEach(chat => {
-                    if (chat.client_id) {
+                // Parse the JSON response
+                const data = await response.json();
+                console.log("Escalated chats data:", data);
+
+                if (data && Array.isArray(data.patients)) {
+                    // Loop through the list of escalated chats
+                    data.patients.forEach(patientId => {
+                        // Create a new list item element
                         const item = document.createElement('li');
-                        item.textContent = `Patient ID: ${chat.client_id}`;
-                        item.onclick = () => startChat(chat.client_id);
+                        item.textContent = `Patient ID: ${patientId}`;
+                        // add an event listener to the item to start a chat with the patient
+                        item.onclick = () => startChat(patientId);
                         list.appendChild(item);
-                    }
-                });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching escalated chats:", error);
             }
         }
 
-        // Function to start a chat with a patient
-        function startChat(clientId) {
-            if (currentChat === clientId) return;
-            console.log(`Switching to chat with client ID: ${clientId}`);
-            if (socket) {
-                socket.close();
-            }
-
+        function startChat(patientId) {
+            // If the patient ID is the same as the current chat, do nothing
+            if (currentChat === patientId) return;
+            // Set the current chat to the patient ID
+            currentChat = patientId;
+            // Clear the messages area
             document.getElementById('messages').innerHTML = '';
-            currentChat = clientId;
-            console.log(`Current chat set to: ${currentChat}`);
 
-            if (localStorage.getItem(`chatHistory_${clientId}`)) {
-                chatHistory[clientId] = JSON.parse(localStorage.getItem(`chatHistory_${clientId}`));
-                chatHistory[clientId].forEach(msg => {
+            // Load the chat history from local storage
+            if (localStorage.getItem(`chatHistory_${patientId}`)) {
+                // Parse the chat history from JSON
+                chatHistory[patientId] = JSON.parse(localStorage.getItem(`chatHistory_${patientId}`));
+                // Loop through the chat history and display the messages
+                chatHistory[patientId].forEach(msg => {
                     const messageElement = document.createElement('div');
                     messageElement.classList.add('message', msg.type);
                     messageElement.textContent = msg.content;
                     document.getElementById('messages').appendChild(messageElement);
                 });
             } else {
-                chatHistory[clientId] = [];
+                chatHistory[patientId] = [];
             }
 
-            socket = new WebSocket(`ws://localhost:8000/ws/doctor/${doctorId}`);
-            console.log(`WebSocket connected for doctor ${doctorId} with patient ${clientId}`);
+            // Close the existing WebSocket connection if it exists
+            if (doctorSocket) {
+                doctorSocket.close();
+            }
 
-            socket.onmessage = function(event) {
-                const data = JSON.parse(event.data);
-                console.log('WebSocket message received:', data);
+            // Create a new WebSocket connection for the doctor
+            doctorSocket = new WebSocket(`ws://localhost:8000/ws/doctor/${doctorId}`);
+            // Set up the event handlers for the WebSocket connection
+            doctorSocket.onmessage = function(event) {
+            console.log("Received message:", event.data);
+            // Parse the JSON data from the WebSocket message
+            const data = JSON.parse(event.data);
 
-                if (data.type === "lobby_update") {
-                    loadLobby();
-                }
+            // Check if the message has a patient ID
+            if (!data.patient_id) {
+                console.error("Error: Missing patient_id in WebSocket message:", data);
+                return;
+            }
 
-                if (data.type === "assigned" && data.doctor_id === doctorId) {
-                    alert(`You have been assigned a patient!`);
-                    loadEscalatedChats();
-                }
+            // Check if the message is a lobby update
+            if (data.type === "lobby_update") {
+                loadLobby();
+                return;
+            }
 
-                if (data.status === "typing") {
-                    if (data.sender === "patient") {
-                        console.log('Received typing status from patient');
-                        showTypingIndicator();
-                        setTimeout(hideTypingIndicator, 3000);
-                    }
-                    return;
-                }
+            // Check if the message is an escalated chat update
+            if (data.type === "assigned" && data.doctor_id === doctorId) {
+                alert(`You have been assigned a patient!`);
+                loadEscalatedChats();
+                return;
+            }
 
-                if (data.status === "form_data") {
-                    console.log(data);
-                    const formData = data.data;
-                    const formMessage = `Patient Details:\nName: ${formData.name}\nAge: ${formData.age}\nSymptoms: ${formData.symptoms}`;
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('message', 'incoming');
-                    messageElement.textContent = formMessage;
-                    document.getElementById('messages').appendChild(messageElement);
-                    scrollToBottom();
-                    return;
-                }
+            // Check if the message is a typing indicator
+            if (data.status === "typing" && data.patient_id === currentChat) {
+                showTypingIndicator();
+                setTimeout(hideTypingIndicator, 3000);
+                return;
+            }
 
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message', 'incoming');
-                messageElement.textContent = data.message;
-                document.getElementById('messages').appendChild(messageElement);
-                scrollToBottom();
-                hideTypingIndicator();
+            // If the message is not for the current chat, store it but don't display it
+            if (data.patient_id !== currentChat) {
+                console.log(`Message from ${data.patient_id}, but current chat is ${currentChat}. Saving to history.`);
 
-                if (!chatHistory[currentChat]) {
-                    chatHistory[currentChat] = [];
-                }
-                chatHistory[currentChat].push({ type: 'incoming', content: data.message });
-                localStorage.setItem(`chatHistory_${currentChat}`, JSON.stringify(chatHistory[currentChat]));
+                if (!chatHistory[data.patient_id]) chatHistory[data.patient_id] = [];
+                chatHistory[data.patient_id].push({ type: 'incoming', content: data.message });
+
+                localStorage.setItem(`chatHistory_${data.patient_id}`, JSON.stringify(chatHistory[data.patient_id]));
+                return;
+            }
+
+            // If the message is for the current chat, display it
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'incoming');
+            messageElement.textContent = data.message;
+            document.getElementById('messages').appendChild(messageElement);
+            scrollToBottom();
+
+            // Save the message to the chat history
+            if (!chatHistory[currentChat]) chatHistory[currentChat] = [];
+            chatHistory[currentChat].push({ type: 'incoming', content: data.message });
+            localStorage.setItem(`chatHistory_${currentChat}`, JSON.stringify(chatHistory[currentChat]));
             };
 
-            const sendMessage = function() {
-                const message = document.getElementById('input').value;
-                if (message.trim() === "") return;
-                console.log(`Sending message to patient ${currentChat}: ${message}`);
-                socket.send(JSON.stringify({ message: message, sender: "doctor", patient_id: currentChat }));
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message', 'outgoing');
-                messageElement.textContent = message;
-                document.getElementById('messages').appendChild(messageElement);
-                if (!chatHistory[currentChat]) {
-                    chatHistory[currentChat] = [];
-                }
-                chatHistory[currentChat].push({ type: 'outgoing', content: message });
-                localStorage.setItem(`chatHistory_${currentChat}`, JSON.stringify(chatHistory[currentChat]));
-                document.getElementById('input').value = '';
-                scrollToBottom();
-            };
-
+            // Send a message to the patient when the "Send" button is clicked
             document.getElementById('send').onclick = sendMessage;
             document.getElementById('input').addEventListener('keydown', function(event) {
+                // Send a message to the patient when the "Enter" key is pressed
                 if (event.key === 'Enter') {
                     sendMessage();
                     event.preventDefault();
-                } else {
-                    console.log('Doctor is typing');
-                    socket.send(JSON.stringify({ status: "typing", sender: "doctor", patient_id: currentChat }));
+                }
+                // Send a typing indicator to the patient when typing
+                 else {
+                    doctorSocket.send(JSON.stringify({ status: "typing", sender: "doctor", patient_id: currentChat }));
                 }
             });
 
             loadEscalatedChats();
         }
 
-        // Function to scroll to the bottom of the messages
-        function scrollToBottom() {
-            const messages = document.getElementById('messages');
-            messages.scrollTop = messages.scrollHeight;
+        function sendMessage() {
+            // Get the message from the input field
+            const message = document.getElementById('input').value;
+            if (message.trim() === "") return;
+            // Send the message to the patient via the WebSocket connection
+            doctorSocket.send(JSON.stringify({ message: message, sender: "doctor", patient_id: currentChat }));
+
+            // Display the message in the chat window
+            const messageElement = document.createElement('div');
+            // Add the "outgoing" class to the message element
+            messageElement.classList.add('message', 'outgoing');
+            messageElement.textContent = message;
+            // Append the message element to the messages area
+            document.getElementById('messages').appendChild(messageElement);
+
+            // Save the message to the chat history
+            if (!chatHistory[currentChat]) chatHistory[currentChat] = [];
+            chatHistory[currentChat].push({ type: 'outgoing', content: message });
+            localStorage.setItem(`chatHistory_${currentChat}`, JSON.stringify(chatHistory[currentChat]));
+
+            // Clear the input field and scroll to the bottom of the chat window
+            document.getElementById('input').value = '';
+            scrollToBottom();
         }
 
-        // Function to start the WebSocket connection
-        function startWebSocket() {
-            socket = new WebSocket(`ws://localhost:8000/ws/doctor/${doctorId}`);
+        function showTypingIndicator() { document.getElementById('typing-indicator').style.display = 'block'; }
+        function hideTypingIndicator() { document.getElementById('typing-indicator').style.display = 'none'; }
+        function scrollToBottom() { document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight; }
 
-            socket.onmessage = function(event) {
-                const data = JSON.parse(event.data);
-
-                console.log('Received WebSocket message:', data);
-
-                if (data.type === "lobby_update") {
-                    loadLobby();
-                }
-
-                if (data.type === "assigned" && data.doctor_id === doctorId) {
-                    alert(`You have been assigned a patient!`);
-                    loadEscalatedChats();
-                }
-
-                if (data.message) {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('message', 'incoming');
-                    messageElement.textContent = data.message;
-                    document.getElementById('messages').appendChild(messageElement);
-                }
-            };
-        }
-
-        // Initialize the WebSocket connection and load initial data when the document is ready
         document.addEventListener("DOMContentLoaded", () => {
-            doctorId = generateUUID();
-            console.log(`Doctor ID generated: ${doctorId}`);
-            startWebSocket();
+            // store the doctor ID in local storage so that the session can persist
+            doctorId = localStorage.getItem('doctorId');
+
+            if (!doctorId) {
+                doctorId = generateUUID();
+                localStorage.setItem('doctorId', doctorId);
+            }
+            startChat();
             loadLobby();
             loadEscalatedChats();
             setInterval(loadLobby, 5000);
+            setInterval(loadEscalatedChats, 5000);
         });
     </script>
 </body>

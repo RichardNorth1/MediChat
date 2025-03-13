@@ -2,9 +2,14 @@ from typing import Dict, List
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.websockets import WebSocketState
+from pydantic import BaseModel
 from chat import handle_chat
 import logging
 import json
+
+class ClaimRequest(BaseModel):
+    doctor_id: str
+    patient_id: str
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -27,320 +32,300 @@ class ConnectionManager:
         self.active_connections: Dict[str, WebSocket] = {} # Doctor connections
         self.patient_connections: Dict[str, WebSocket] = {} # Patient connections
         self.chatbot_connections: Dict[str, WebSocket] = {} # Chatbot connections
-        self.escalated_chats: List[str] = [] # Escalated chats
         self.lobby: List[str] = [] # Patients in the lobby
-        self.assigned_chats: Dict[str, str] = {} # Assigned chats (doctor_id: patient_id)
+        self.assigned_chats: Dict[str, List[str]] = {} # Assigned chats
 
     async def connect_doctor(self, doctor_id: str, websocket: WebSocket):
         """ Adds a doctor to active connections """
         await websocket.accept()
-        #add the doctor to the active connections
         self.active_connections[doctor_id] = websocket
         logging.info(f"Doctor {doctor_id} connected.")
 
     async def connect_patient(self, patient_id: str, websocket: WebSocket):
         """ Adds a patient to the lobby or active connections """
         await websocket.accept()
-        # Add the patient to the patient connections
         self.patient_connections[patient_id] = websocket
-        self.lobby.append(patient_id) 
         logging.info(f"Patient {patient_id} connected and added to the lobby.")
-        # update lobby 
-        lobby_update_message = json.dumps({
-            "type": "lobby_update",
-            "lobby": self.get_waiting_patients()
-        })
-        # Broadcast the updated lobby to all doctors
-        await self.broadcast_to_doctors(lobby_update_message)
+        await self.broadcast_lobby_update()
 
     async def connect_chatbot(self, client_id: str, websocket: WebSocket):
         """ Adds a chatbot connection """
         await websocket.accept()
-        # Add the chatbo client to the chatbot connections
         self.chatbot_connections[client_id] = websocket
         logging.info(f"Chatbot {client_id} connected.")
 
-    async def assign_patient_to_doctor(self, doctor_id: str, patient_id: str):
-        """ Assigns a patient to a doctor """
-        # check if the doctor is connected
+    async def assign_patient(self, doctor_id: str, patient_id: str):
+        """Assigns a patient to a doctor from the lobby."""
+        logging.info("Assigning patient")
+        # Check if doctor is connected
         if doctor_id not in self.active_connections:
             logging.error(f"Doctor {doctor_id} not connected.")
-            return None
+            return {"success": False, "message": "Doctor not connected."}
         
-        # check if the patient is in the lobby
-        if patient_id not in self.lobby:
-            logging.error(f"Patient {patient_id} not in the lobby.")
-            return None
-        # remove the patient from the lobby and assign to the doctor
-        self.lobby.remove(patient_id)
-        self.assigned_chats[doctor_id] = patient_id
-        logging.info(f"Doctor {doctor_id} assigned to Patient {patient_id}")
+        # Check if patient is in the lobby
+        if patient_id in self.lobby:
+            self.lobby.remove(patient_id)
+            logging.info(f"Patient {patient_id} removed from lobby.")
+        else:
+            logging.error(f"Patient {patient_id} not found in lobby.")
+            return {"success": False, "message": "Patient not found in lobby."}
+        
+        # if doctor is not in assigned chats, add them
+        if doctor_id not in self.assigned_chats:
+            self.assigned_chats[doctor_id] = []
 
-        # send assigned message to the doctor
+        # Assign the patient to the doctor
+        self.assigned_chats[doctor_id].append(patient_id)
+        logging.info(f"Doctor {doctor_id} assigned to Patient {patient_id}.")
+
+        # Notify the doctor of the assignment
         await self.active_connections[doctor_id].send_text(json.dumps({
             "type": "assigned",
             "doctor_id": doctor_id,
-            "patient_id": patient_id
+            "assigned_patients": self.assigned_chats[doctor_id]
         }))
 
-        # send lobby update to all doctors
-        for doc_id, doctor_websocket in self.active_connections.items():
-            await doctor_websocket.send_text(json.dumps({
-                "type": "lobby_update",
-                "lobby": self.get_waiting_patients()
-            }))
+        # Broadcast the updated lobby list
+        await self.broadcast_lobby_update()
 
-        return patient_id
+        return {"success": True, "message": "Patient assigned successfully."}
+
+    async def broadcast_lobby_update(self):
+        """ Broadcast the updated lobby list to all connected doctors """
+        lobby_update_message = json.dumps({
+            "type": "lobby_update",
+            "lobby": self.get_waiting_patients()
+        })
+        await self.broadcast_to_doctors(lobby_update_message)
 
     async def broadcast_to_doctors(self, message: str):
         """ Broadcast a message to all connected doctors """
         for doctor_websocket in self.active_connections.values():
             await doctor_websocket.send_text(message)
 
-    async def claim_escalated_chat(self, doctor_id: str, patient_id: str):
-        """ Claims an escalated chat for a doctor and removes it from the escalated list """
-        # check if the patient is in the escalated chats
-        if patient_id in self.escalated_chats:
-            # remove the patient from the escalated chats and assign to the doctor
-            self.escalated_chats.remove(patient_id)
-            self.assigned_chats[doctor_id] = patient_id
-            logging.info(f"Doctor {doctor_id} claimed escalated chat with Patient {patient_id}")
-
-            # send assigned message to the doctors
-            for doc_id, doctor_websocket in self.active_connections.items():
-                await doctor_websocket.send_text(json.dumps({
-                    "type": "lobby_update",
-                    "lobby": self.get_waiting_patients(),
-                    "escalated_chats": self.get_escalated_chats()
-                }))
-            #return the is successful
-            return True
-        return False
-
     async def disconnect_doctor(self, doctor_id: str):
         """ Removes a doctor from active connections """
-        # check if the doctor is in the active connections
+        # if doctor is connected
         if doctor_id in self.active_connections:
-            # check if the doctor is connected
+            # if doctor is connected, close the connection
             if self.active_connections[doctor_id].application_state == WebSocketState.CONNECTED:
-                # close the connection
                 await self.active_connections[doctor_id].close()
-            # remove the doctor from the active connections
+            # remove the doctor from active connections
             del self.active_connections[doctor_id]
             logging.info(f"Doctor {doctor_id} disconnected.")
-        # check if the doctor is in the assigned chats
+        # remove the doctor from assigned chats
         if doctor_id in self.assigned_chats:
-            # remove the doctor from the assigned chats
             del self.assigned_chats[doctor_id]
 
     async def disconnect_patient(self, patient_id: str):
         """ Removes a patient from connections and lobby """
-        # check if the patient is in the patient connections
+        # if patient in patient connections
         if patient_id in self.patient_connections:
-            # check if the patient is connected
+            # if patient is connected, close the connection
             if self.patient_connections[patient_id].application_state == WebSocketState.CONNECTED:
-                # close the connection
                 await self.patient_connections[patient_id].close()
-            # remove the patient from the patient connections
+            # remove the patient from patient connections
             del self.patient_connections[patient_id]
             logging.info(f"Patient {patient_id} disconnected.")
-
-        # check if the patient is in the lobby
+        # remove the patient from the lobby
         if patient_id in self.lobby:
-            # remove the patient from the lobby
             self.lobby.remove(patient_id)
-        # check if the patient is in the escalated chats
-        if patient_id in self.escalated_chats:
-            # remove the patient from the escalated chats
-            self.escalated_chats.remove(patient_id)
 
     async def disconnect_chatbot(self, client_id: str):
         """ Disconnect the chatbot client """
-        # check if the chatbot client is in the chatbot connections
+        # if client in chatbot connections
         if client_id in self.chatbot_connections:
-            # check if the chatbot client is connected
+            # if client is connected, close the connection
             if self.chatbot_connections[client_id].application_state == WebSocketState.CONNECTED:
-                # close the connection
                 await self.chatbot_connections[client_id].close()
-            # remove the chatbot client from the chatbot connections
+            # remove the client from chatbot connections
             del self.chatbot_connections[client_id]
             logging.info(f"Chatbot {client_id} disconnected.")
 
     async def escalate_chat(self, patient_id: str):
-        """ Moves a patient to the escalated chats list """
-        # check if the patient is in the escalated chats
-        if patient_id not in self.escalated_chats:
-            # add the patient to the escalated chats
-            self.escalated_chats.append(patient_id)
+        """ Moves a patient to the lobby """
+        # if patient is not in lobby
+        if patient_id not in self.lobby:
+            # add patient to lobby
+            self.lobby.append(patient_id)
             logging.info(f"Chat with Patient {patient_id} escalated.")
-            # send lobby update to all doctors
-            for doctor_id, doctor_websocket in self.active_connections.items():
-                await doctor_websocket.send_text(json.dumps({
-                    "type": "lobby_update",
-                    "lobby": self.get_waiting_patients()
-                }))
+            # broadcast the updated lobby list
+            await self.broadcast_lobby_update()
+
 
     async def send_message(self, sender_id: str, receiver_id: str, message: str):
-        """ Sends a message from a doctor or patient to the other """
+        """ Sends a message from a doctor to a patient or vice versa. """
         logging.info(f"Sending message from {sender_id} to {receiver_id}: {message}")
-        # check if the receiver is in the doctor connections
-        if receiver_id in self.active_connections:
-            # send the message to the receiver
-            await self.active_connections[receiver_id].send_text(message)
-        # check if the receiver is in the patient connections
-        elif receiver_id in self.patient_connections:
-            # send the message to the receiver
-            await self.patient_connections[receiver_id].send_text(message)
-        else:
-            logging.error(f"Receiver {receiver_id} not connected.")
+        # if sender is in active connections and assigned chats
+        if sender_id in self.active_connections and sender_id in self.assigned_chats:
+            # if receiver is in assigned chats
+            if receiver_id in self.assigned_chats[sender_id]:
+                # if receiver is in patient connections
+                if receiver_id in self.patient_connections:
+                    # send the message to the receiver
+                    await self.patient_connections[receiver_id].send_text(message)
+                else:
+                    logging.error(f"Patient {receiver_id} not connected.")
+            else:
+                logging.error(f"Doctor {sender_id} is not assigned to Patient {receiver_id}.")
+        # if sender is in patient connections
+        elif sender_id in self.patient_connections:
+            # find the dooctor ID
+            doctor_id = next((doc for doc, patients in self.assigned_chats.items() if sender_id in patients), None)
+            # if doctor ID is found and doctor is in active connections
+            if doctor_id and doctor_id in self.active_connections:
+                # send the message to the doctor
+                await self.active_connections[doctor_id].send_text(message)
+            else:
+                logging.error(f"Doctor for Patient {sender_id} not connected.")
 
     def get_waiting_patients(self):
         """ Get list of patients in the lobby """ 
         return [{"patient_id": patient_id} for patient_id in self.lobby]
 
-    def get_escalated_chats(self):
-        """ Get list of patients in the escalated chats """
-        return [{"client_id": patient_id} for patient_id in self.escalated_chats]
+    def get_doctors_assigned_patients(self, doctor_id: str):
+        """ Get the list of patients assigned to a doctor """
+        return self.assigned_chats.get(doctor_id, [])
 
 # Create a ConnectionManager instance
 manager = ConnectionManager()
 
-@app.get("/api/escalated_chats")
-async def get_escalated_chats():
-    """Return the list of escalated chats (client IDs)."""
-    return manager.get_escalated_chats()
+@app.get("/api/assigned_patients/{doctor_id}")
+async def get_assigned_patients(doctor_id: str):
+    """Return the list of patients assigned to a doctor."""
+    print(manager.get_doctors_assigned_patients(doctor_id))
+    return {"patients": manager.get_doctors_assigned_patients(doctor_id)}
 
 @app.get("/api/lobby/")
 async def get_lobby():
     """Return the list of waiting patients."""
     return {"lobby": manager.get_waiting_patients()}
 
+@app.post("/api/claim_patient")
+async def claim_patient(request: ClaimRequest):
+    """Assign a patient to a doctor with detailed error handling."""
+    logging.info("Assigning patient via API")
+    success = await manager.assign_patient(request.doctor_id, request.patient_id)
+    if not success:
+        return {"success": False, "message": "Patient claim unsuccessful"}
+    return {"success": True, "message": "Patient claimed successfully"}
+
 @app.websocket("/ws/doctor/{doctor_id}")
 async def websocket_doctor(websocket: WebSocket, doctor_id: str):
-    # Connect doctor to WebSocket
     await manager.connect_doctor(doctor_id, websocket)
     try:
         while True:
-            # Receive incoming messages from the doctor
+            # recieve messages from the doctor
             data = await websocket.receive_text()
-            # Parse JSON data
+            #parse the message
             json_data = json.loads(data)
-            # if the message is a claim message
-            if json_data.get("type") == "claim":
-                patient_id = json_data.get("patient_id")
-                logging.info(f"Doctor {doctor_id} is claiming patient {patient_id}")
-                # Claim the escalated chat
-                await manager.assign_patient_to_doctor(doctor_id, patient_id)
-            # if message is a typing status
-            elif json_data.get("status") == "typing":
+            # if the message is a typing status
+            if json_data.get("status") == "typing":
                 # get the patient ID
-                patient_id = manager.assigned_chats.get(doctor_id)
-                # check if the patient is connected
-                if patient_id and patient_id in manager.patient_connections:
-                    logging.info(f"Doctor {doctor_id} is typing to patient {patient_id}")
-                    # send the typing status to the patient
+                patient_id = json_data.get("patient_id")
+                # if the patient is in the assigned chats
+                if patient_id in manager.assigned_chats.get(doctor_id, []):
+                    # send a typing status to the patient
                     await manager.send_message(doctor_id, patient_id, json.dumps({
                         "status": "typing",
                         "sender": "doctor"
                     }))
-            # If it is a message
+            # if the message is not a typing status e.g. a message
             else:
-                # get patient ID
+                # get the patient ID
                 patient_id = json_data.get("patient_id")
-                logging.info(f"Forwarding message to patient {patient_id}")
-                # check if the patient is connected
-                if patient_id and patient_id in manager.patient_connections:
-                    # forward the message to the patient
+                # if the patient is in the assigned chats
+                if patient_id in manager.assigned_chats.get(doctor_id, []):
+                    # send the message to the patient
                     await manager.send_message(doctor_id, patient_id, json.dumps({
                         "message": json_data.get("message"),
                         "sender": "doctor"
                     }))
     except WebSocketDisconnect:
-        logging.info(f"Doctor {doctor_id} disconnected due to WebSocketDisconnect")
+        logging.info(f"Doctor {doctor_id} disconnected")
         await manager.disconnect_doctor(doctor_id)
 
 @app.websocket("/ws/patient/{patient_id}")
 async def websocket_patient(websocket: WebSocket, patient_id: str):
     await manager.connect_patient(patient_id, websocket)
-
     try:
         while True:
-            # Receive incoming messages from the patient
+            # recieve messages from the patient
             data = await websocket.receive_text()
-            # Parse the data as JSON
+            #parse the message
             json_data = json.loads(data)
-
-            # Check if the message is a typing status
+            # if the message is a typing status
             if json_data.get("status") == "typing":
-                # find the doctor ID from the assigned chats
-                doctor_id = next((doc for doc, pat in manager.assigned_chats.items() if pat == patient_id), None)
-                # check if the doctor is connected
+                # find the doctor ID
+                doctor_id = next((doc for doc, patients in manager.assigned_chats.items() if patient_id in patients), None)
+                # if doctor ID is found and doctor is in active connections
                 if doctor_id and doctor_id in manager.active_connections:
-                    logging.info(f"Patient {patient_id} is typing to doctor {doctor_id}")
-                    # send the typing status to the doctor
+                    # send a typing status to the doctor
                     await manager.send_message(patient_id, doctor_id, json.dumps({
                         "status": "typing",
                         "sender": "patient",
                         "patient_id": patient_id
                     }))
+            # if the message is not a typing status e.g. a message
             else:
-                # find the doctor ID from the assigned chats
-                doctor_id = next((doc for doc, pat in manager.assigned_chats.items() if pat == patient_id), None)
-                logging.info(f"Forwarding message from patient {patient_id} to doctor {doctor_id}")
-                # check if the doctor is connected
+                # find the doctor ID
+                doctor_id = next((doc for doc, patients in manager.assigned_chats.items() if patient_id in patients), None)
+                # if doctor ID is found and doctor is in active connections
                 if doctor_id and doctor_id in manager.active_connections:
-                    # forward the message to the doctor
+                    # send the message to the doctor
                     await manager.send_message(patient_id, doctor_id, json.dumps({
                         "message": json_data.get("message"),
-                        "sender": "patient"
+                        "patient_id": patient_id
                     }))
     except WebSocketDisconnect:
-        logging.info(f"Patient {patient_id} disconnected due to WebSocketDisconnect")
+        logging.info(f"Patient {patient_id} disconnected")
         await manager.disconnect_patient(patient_id)
 
 @app.websocket("/ws/chatbot/{client_id}")
 async def chatbot_endpoint(websocket: WebSocket, client_id: str):
-    """WebSocket endpoint for chatbot."""
     await manager.connect_chatbot(client_id, websocket)
     try:
         while True:
-            # Receive incoming messages from the user
+            # recieve messages from the patient
             data = await websocket.receive_text()
-            # Parse the data as JSON
+            #parse the message
             data_json = json.loads(data)
-
-            # check if the message is a typing status
+            # if the message is a typing status
             if data_json.get("status") == "typing":
-                # Send typing status from the patient    
+                # get the sender
                 sender = data_json.get("sender", "patient")
                 logging.info(f"Patient {client_id} is typing")
+                # send a typing status from the patient to the chatbot
                 await websocket.send_text(json.dumps({"status": "typing", "sender": sender}))
                 continue
-            # check if the message is a form data
+            # if the message is form data type
             if data_json.get("status") == "form_data":
-                # Send the form data to the doctor
+                #broadcast the form data to all doctors
                 await manager.broadcast_to_doctors(data_json.get("message", ""))
                 continue
+
+            # if the message is a message
             else:
-                # send the typing status from the chatbot to the user
+                # send a typing status to the user
                 typing_message = json.dumps({"status": "typing", "sender": "chatbot"})
+                # send the typing status to the user
                 await websocket.send_text(typing_message)
-                # use the chat function to handle the message and get the response from the chatbot
+                # use the handle chat function to get a response
                 response = handle_chat(data_json.get("message", ""))
-                # transform the response to JSON
+                #transform the data to json
                 response_message = json.dumps({"message": response["message"], "sender": "chatbot"})
                 # send the response to the user
                 await websocket.send_text(response_message)
                 logging.info(f"Sent to user {client_id}: {response_message}")
                 
-                # check if the response from the chatbot is an escalation message
+                # if the response has an escalate key
                 if response.get("escalate"):
-                    # add the patient to the escalated chats list
+                    # escalate the chat
                     await manager.escalate_chat(client_id)
+                    # create escalation message for the frontend
                     escalation_message = {"status": "escalated", "client_id": client_id}
-                    # send the escalation message to the frontend for the endpoint switch
+                    # send the escalation message to the frontend to switch active socket
                     await websocket.send_text(json.dumps(escalation_message))
-
     except WebSocketDisconnect:
         logging.info(f"Patient {client_id} disconnected due to WebSocketDisconnect")
         await manager.disconnect_chatbot(client_id)
